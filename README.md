@@ -2,7 +2,7 @@
 Operating Systems Project 3, Distributed Reading/Writing
 - Sean Harding
 - Christopher Sparks
--
+- Wataru Takahashi
 
 ## Group Project 3: Distributed File Reading and Writing
 ### Purpose
