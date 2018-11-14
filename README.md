@@ -1,5 +1,8 @@
 # OS-Project-3
 Operating Systems Project 3, Distributed Reading/Writing
+- Sean Harding
+- Christopher Sparks
+-
 
 ## Group Project 3: Distributed File Reading and Writing
 ### Purpose
