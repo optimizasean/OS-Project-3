@@ -16,7 +16,7 @@ public class LockingExample {
 			// release the lock
 			exclusiveLock.release();
             // this locks the second half of the file - shared
-			sharedLock = ch.lock(raf.length()/2+1, raf.length(), 				SHARED);
+			sharedLock = ch.lock(raf.length()/2+1, raf.length(), SHARED);
 			/** Now read the data . . . */
 			// release the lock
 			sharedLock.release();
