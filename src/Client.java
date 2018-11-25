@@ -7,8 +7,8 @@ import javax.swing.JScrollPane;
 
 //Layouts and Constraints
 import java.awt.BorderLayout;
-import java.awt.BoxLayout;
 import java.awt.GridLayout;
+import javax.swing.BoxLayout;
 
 //Labels and Text
 import javax.swing.JLabel;
@@ -46,7 +46,7 @@ public class Client extends JPanel {
     private JButton readPlus = null;
     private JButton readMinus = null;
     private JButton writePlus = null;
-    private Jbutton writeMinus = null;
+    private JButton writeMinus = null;
 
     public Client(int clientNumber) {
         //Set base panel background
@@ -63,8 +63,8 @@ public class Client extends JPanel {
         //Prepare and add west(left) panel for +/- of setting read
         readPanel = new JPanel();
         readPanel.setBackground(Color.LIGHT_GRAY);
-        readLayout = new BoxLayout();
-        readPanel.setLayout(readLayout, BoxLayout.Y_AXIS);
+        readLayout = new BoxLayout(readPanel, BoxLayout.Y_AXIS);
+        readPanel.setLayout(readLayout);
         readLabel = new JLabel("READ");
         readPanel.add(readLabel);
         readPlus = new JButton("+");
@@ -74,7 +74,7 @@ public class Client extends JPanel {
         this.add(readPanel, BorderLayout.WEST);
 
         //Prepare and add pclog to the center
-        pcLog = new JTextArea(50, 50);
+        pcLog = new JTextArea();
         pcLogPane = new JScrollPane(pcLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         pcLogPane.setBackground(Color.WHITE);
         this.add(pcLogPane, BorderLayout.CENTER);
@@ -82,8 +82,8 @@ public class Client extends JPanel {
         //Prepare and add the write panel for +/- to east(right)
         writePanel = new JPanel();
         writePanel.setBackground(Color.LIGHT_GRAY);
-        writeLayout = new BorderLayout();
-        writePanel.setLayout(writeLayout, javax.swing.BoxLayout.Y_AXIS);
+        writeLayout = new BoxLayout(writePanel, BoxLayout.Y_AXIS);
+        writePanel.setLayout(writeLayout);
         writeLabel = new JLabel("WRITE");
         writePanel.add(writeLabel);
         writePlus = new JButton("+");

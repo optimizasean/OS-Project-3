@@ -5,6 +5,7 @@ images/
 build/
 classes/
 data/
+temp/
 
 # Compressed Files #
 ####################
