@@ -8,11 +8,11 @@ public class DirectoryStructure {
 
     private final String path = "data/";
     private final String con = "CONTROLLER/";
-    private final String pc1 = "PC_1/";
-    private final String pc2 = "PC_2/";
-    private final String pc3 = "PC_3/";
-    private final String pc4 = "PC_4/";
-    private final String pc5 = "PC_5/";
+    private final String pc1 = "PC1/";
+    private final String pc2 = "PC2/";
+    private final String pc3 = "PC3/";
+    private final String pc4 = "PC4/";
+    private final String pc5 = "PC5/";
     private final String name = "log.txt";
     private final String target = "target.txt";
 

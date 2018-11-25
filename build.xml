@@ -27,8 +27,8 @@
         <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
     </target>
 
-    <target name="cb" depends="clean,jar"/>
+    <target name="cb" depends="clean, jar"/>
 
-    <target name="main" depends="clean,run"/>
+    <target name="main" depends="clean, run"/>
 
 </project>
