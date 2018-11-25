@@ -1,14 +1,31 @@
+//Operating Systems Project (osp) package
 package osp;
 
+//Special
+import javax.swing.SwingUtilities;
+
+//Frames, Panes, and Panels
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+//Layouts and Constraints
+import java.awt.FlowLayout;
+import java.awt.BoxLayout;
+
+//Color
+import javax.awt.Color;
+
+
+
+//WHAT ARE THOSE vvvvvvvvvvvvvv
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.shape.Box;
-
-import java.awt.Color;
-import java.awt.FlowLayout;
-
-import javax.swing.*;
-
 import com.sun.javafx.scene.paint.GradientUtils;
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+
 
 
 public class Main {
@@ -16,6 +33,7 @@ public class Main {
     private static JPanel mainPanel = null;
     private static JPanel clientsPanel = null;
     private static FlowLayout mainLayout = null;
+    private static BoxLayout clientsLayout = null;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater (new Runnable() {
@@ -35,6 +53,8 @@ public class Main {
         // creating 2 panels for left and right
         clientsPanel = new JPanel();
         clientsPanel.setBackground(Color.DARK_GRAY);
+        clientsLayout = new BoxLayout();
+        clientsLayout.
         clientsPanel.setLayout(new BoxLayout(clientsPanel, BoxLayout.Y_AXIS));
         mainPanel.add(clientsPanel);
 
@@ -51,7 +71,4 @@ public class Main {
         frame.pack();
         frame.setVisible(true);
     }
-    
-    
 }
-

@@ -1,14 +1,27 @@
+//Operating Systems Project (osp) package
 package osp;
 
+//Frames, Panes, and Panels
 import javax.swing.JPanel;
-import java.awt.Color;
+import javax.swing.JScrollPane;
+
+//Layouts and Constraints
 import java.awt.BorderLayout;
 import java.awt.BoxLayout;
 import java.awt.GridLayout;
+
+//Labels and Text
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+
+//Buttons
 import javax.swing.JButton;
+
+//Color
+import java.awt.Color;
+
+
 
 public class Client extends JPanel {
     /**************************
@@ -17,6 +30,7 @@ public class Client extends JPanel {
     private JPanel readPanel = null;
     private JPanel writePanel = null;
     private JPanel viewPanel = null;
+    private JScrollPane pcLogPane = null;
     private BorderLayout base = null;
     private BoxLayout readLayout = null;
     private BoxLayout writeLayout = null;
@@ -35,14 +49,18 @@ public class Client extends JPanel {
     private Jbutton writeMinus = null;
 
     public Client(int clientNumber) {
+        //Set base panel background
         this.setBackground(Color.GRAY);
 
+        //Set base panel layout
         base = new BorderLayout();
         this.setLayout(base);
 
+        //Add base panel label north(top)
         windowLabel = new JLabel("PC " + clientNumber);
         this.add(windowLabel, BorderLayout.NORTH);
 
+        //Prepare and add west(left) panel for +/- of setting read
         readPanel = new JPanel();
         readPanel.setBackground(Color.LIGHT_GRAY);
         readLayout = new BoxLayout();
@@ -55,9 +73,13 @@ public class Client extends JPanel {
         readPanel.add(readMinus);
         this.add(readPanel, BorderLayout.WEST);
 
+        //Prepare and add pclog to the center
         pcLog = new JTextArea(50, 50);
-        this.add(pcLog, BorderLayout.CENTER);
+        pcLogPane = new JScrollPane(pcLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        pcLogPane.setBackground(Color.WHITE);
+        this.add(pcLogPane, BorderLayout.CENTER);
 
+        //Prepare and add the write panel for +/- to east(right)
         writePanel = new JPanel();
         writePanel.setBackground(Color.LIGHT_GRAY);
         writeLayout = new BorderLayout();
@@ -70,6 +92,7 @@ public class Client extends JPanel {
         writePanel.add(writeMinus);
         this.add(writePanel, BorderLayout.EAST);
 
+        //Prepare the text view panel for read and write percentages to go south(bottom)
         viewPanel = new JPanel();
         viewPanel.setBackground(Color.LIGHT_GRAY);
         viewLayout = new GridLayout(2, 2);

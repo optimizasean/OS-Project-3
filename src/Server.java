@@ -1,18 +1,30 @@
+//Operating Systems Project (osp) package
 package osp;
 
+//Frames, Panes, and Panels
 import javax.swing.JPanel;
-import java.awt.Color;
+import javax.swing.JScrollPane;
+
+//Layouts and Constraints
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+
+//Labels and Text
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 
+//Color
+import java.awt.Color;
+
+
+
 public class Server extends JPanel {
     /**************************
      * Define Swing variables
      **************************/
+    private JScrollPane serverLogPane = null;
     private GridBagLayout base = null;
     private GridBagConstraints baseConstraints = null;
     private JLabel windowLabel = null;
@@ -24,13 +36,17 @@ public class Server extends JPanel {
     private JButton quitButton = null;
 
     public Server() {
+        //Set base panel background
         this.setBackground(Color.GRAY);
 
+        //Set base panel layout
         base = new GridBagLayout();
         this.setLayout(base);
 
+        //Prepare constraints object for GridBagLayout
         baseConstraints = new GridBagConstraints();
 
+        //Label for top of base panel
         windowLabel = new JLabel("SERVER");
         baseConstraints.gridx = 1;
         baseConstraints.gridy = 0;
@@ -44,7 +60,10 @@ public class Server extends JPanel {
         baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(windowLabel, baseConstraints);
 
+        //Log for server on center of panel
         serverLog = new JTextArea();
+        serverLogPane = new ScrollPane(serverLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        serverLogPane.setBackground(Color.WHITE);
         baseConstraints.gridx = 0;
         baseConstraints.gridy = 1;
         baseConstraints.gridwidth = 4;
@@ -55,8 +74,9 @@ public class Server extends JPanel {
         baseConstraints.insets = null;
         baseConstraints.anchor = GridBagConstraints.CENTER;
         baseConstraints.fill = GridBagConstraints.BOTH;
-        this.add(serverLog, baseConstraints);
+        this.add(serverLogPane, baseConstraints);
 
+        //Label for port under server log
         portLabel = new JLabel("Port:");
         baseConstraints.gridx = 1;
         baseConstraints.gridy = 2;
@@ -70,6 +90,7 @@ public class Server extends JPanel {
         baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(portLabel, baseConstraints);
 
+        //Field for taking port abot start button
         portField = new JTextField("9001");
         baseConstraints.gridx = 2;
         baseConstraints.gridy = 2;
@@ -83,6 +104,7 @@ public class Server extends JPanel {
         baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(portField, baseConstraints);
 
+        //Button to start server
         startButton = new JButton("START");
         baseConstraints.gridx = 1;
         baseConstraints.gridy = 3;
@@ -96,6 +118,7 @@ public class Server extends JPanel {
         baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(startButton, baseConstraints);
 
+        //Button to stop server under start button
         stopButton = new JButton("STOP");
         baseConstraints.gridx = 1;
         baseConstraints.gridy = 4;
@@ -109,6 +132,7 @@ public class Server extends JPanel {
         baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(stopButton, baseConstraints);
 
+        //Button to force quit on bottom
         quitButton = new JButton("QUIT");
         baseConstraints.gridx = 0;
         baseConstraints.gridy = 5;
