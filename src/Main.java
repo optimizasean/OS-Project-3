@@ -29,6 +29,7 @@ public class Main {
         frame.add(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
 
         frame.pack();
         frame.setVisible(true);
