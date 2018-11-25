@@ -1,3 +1,5 @@
+package osp;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -58,7 +60,6 @@ public class DirectoryStructure {
             file.mkdirs();
             file = new File(path + pc5 + name);
             file.createNewFile();
-
         } catch (IOException iex) {
             System.out.println("Failure at Directory Structure");
             System.exit(1);
