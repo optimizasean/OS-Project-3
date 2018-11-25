@@ -14,7 +14,11 @@ public class DirectoryStructure {
     private final String name = "log.txt";
     private final String target = "target.txt";
 
-    public DirectoryStructure() {
+    //Blank Constructor
+    public DirectoryStructure() {}
+
+    //Create the directories and files
+    public void run() {
         try {
             //CONTROLLER
             file = new File(path + con);
