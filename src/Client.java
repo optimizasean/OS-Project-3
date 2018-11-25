@@ -1,6 +1,7 @@
 package osp;
 
 import javax.swing.JPanel;
+import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.BoxLayout;
 import java.awt.GridLayout;
@@ -34,6 +35,8 @@ public class Client extends JPanel {
     private Jbutton writeMinus = null;
 
     public Client(int clientNumber) {
+        this.setBackground(Color.GRAY);
+
         base = new BorderLayout();
         this.setLayout(base);
 
@@ -41,8 +44,9 @@ public class Client extends JPanel {
         this.add(windowLabel, BorderLayout.NORTH);
 
         readPanel = new JPanel();
+        readPanel.setBackground(Color.LIGHT_GRAY);
         readLayout = new BoxLayout();
-        readPanel.setLayout(readLayout);
+        readPanel.setLayout(readLayout, BoxLayout.Y_AXIS);
         readLabel = new JLabel("READ");
         readPanel.add(readLabel);
         readPlus = new JButton("+");
@@ -55,8 +59,9 @@ public class Client extends JPanel {
         this.add(pcLog, BorderLayout.CENTER);
 
         writePanel = new JPanel();
+        writePanel.setBackground(Color.LIGHT_GRAY);
         writeLayout = new BorderLayout();
-        writePanel.setLayout(writeLayout);
+        writePanel.setLayout(writeLayout, javax.swing.BoxLayout.Y_AXIS);
         writeLabel = new JLabel("WRITE");
         writePanel.add(writeLabel);
         writePlus = new JButton("+");
@@ -66,6 +71,7 @@ public class Client extends JPanel {
         this.add(writePanel, BorderLayout.EAST);
 
         viewPanel = new JPanel();
+        viewPanel.setBackground(Color.LIGHT_GRAY);
         viewLayout = new GridLayout(2, 2);
         viewPanel.setLayout(viewLayout);
         readViewLabel = new JLabel("Read: %");

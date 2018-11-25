@@ -1,5 +1,4 @@
-package javaSwing;
-
+package osp;
 
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.shape.Box;
@@ -15,6 +14,8 @@ import com.sun.javafx.scene.paint.GradientUtils;
 public class Main {
     private static JFrame frame = null;
     private static JPanel mainPanel = null;
+    private static JPanel clientsPanel = null;
+    private static FlowLayout mainLayout = null;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater (new Runnable() {
@@ -27,25 +28,19 @@ public class Main {
     private static void GUI() {
         frame = new JFrame("OSP3");
         mainPanel = new JPanel();
-        
-        /******
-         * mainPanel.setLayout(STUFF);
-         * mainPanel.add(STUFF);
-         */
-        // setting up flow layout for left and right
-        mainPanel.setLayout(new FlowLayout());
+        mainPanel.setBackground(Color.BLACK);
+        mainLayout = new FlowLayout();
+        mainPanel.setLayout(mainLayout);
         
         // creating 2 panels for left and right
-        JPanel left = new JPanel();
-        left.setLayout(new BoxLayout(left, BoxLayout.Y_AXIS));
-        left.setBackground(Color.GRAY);
+        clientsPanel = new JPanel();
+        clientsPanel.setBackground(Color.DARK_GRAY);
+        clientsPanel.setLayout(new BoxLayout(clientsPanel, BoxLayout.Y_AXIS));
+        mainPanel.add(clientsPanel);
 
+        //ADD SERVER HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         JPanel right = new JPanel(); 
-        right.setBackground(Color.WHITE);
-
-
-        // add the panel for left and right in there
-        mainPanel.add(left);
+        right.setBackground(Color.BLUE);
         mainPanel.add(right);
 
         frame.add(mainPanel);

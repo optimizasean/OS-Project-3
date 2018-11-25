@@ -1,6 +1,7 @@
 package osp;
 
 import javax.swing.JPanel;
+import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
@@ -23,6 +24,8 @@ public class Server extends JPanel {
     private JButton quitButton = null;
 
     public Server() {
+        this.setBackground(Color.GRAY);
+
         base = new GridBagLayout();
         this.setLayout(base);
 
