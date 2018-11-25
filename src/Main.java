@@ -54,8 +54,7 @@ public class Main {
         clientsPanel = new JPanel();
         clientsPanel.setBackground(Color.DARK_GRAY);
         clientsLayout = new BoxLayout();
-        clientsLayout.
-        clientsPanel.setLayout(new BoxLayout(clientsPanel, BoxLayout.Y_AXIS));
+        clientsPanel.setLayout(clientsLayout, BoxLayout.Y_AXIS);
         mainPanel.add(clientsPanel);
 
         //ADD SERVER HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
