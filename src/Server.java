@@ -24,22 +24,22 @@ public class Server extends JPanel {
 
     public Server() {
         base = new GridBagLayout();
-        pane.setLayout(base);
+        this.setLayout(base);
 
         baseConstraints = new GridBagConstraints();
 
         windowLabel = new JLabel("SERVER");
         baseConstraints.gridx = 1;
         baseConstraints.gridy = 0;
-        baseConstraints.gridWidth = 2;
+        baseConstraints.gridwidth = 2;
         baseConstraints.ipadx = 0;
         baseConstraints.ipady = 0;
         baseConstraints.weightx = 0;
         baseConstraints.weighty = 0;
-        baseConstraints.insets = 0;
+        baseConstraints.insets = null;
         baseConstraints.anchor = GridBagConstraints.CENTER;
         baseConstraints.fill = GridBagConstraints.BOTH;
-        pane.add(windowLabel, baseConstraints);
+        this.add(windowLabel, baseConstraints);
 
         serverLog = new JTextArea();
         baseConstraints.gridx = 0;
@@ -49,10 +49,10 @@ public class Server extends JPanel {
         baseConstraints.ipady = 0;
         baseConstraints.weightx = 0;
         baseConstraints.weighty = 0;
-        baseConstraints.insets = 0;
+        baseConstraints.insets = null;
         baseConstraints.anchor = GridBagConstraints.CENTER;
         baseConstraints.fill = GridBagConstraints.BOTH;
-        pane.add(serverLog, baseConstraints);
+        this.add(serverLog, baseConstraints);
 
         portLabel = new JLabel("Port:");
         baseConstraints.gridx = 1;
@@ -62,10 +62,10 @@ public class Server extends JPanel {
         baseConstraints.ipady = 0;
         baseConstraints.weightx = 0;
         baseConstraints.weighty = 0;
-        baseConstraints.insets = 0;
-        baseConstraints.anchor = GridBagConstraints.RIGHT;
+        baseConstraints.insets = null;
+        baseConstraints.anchor = GridBagConstraints.LINE_END;
         baseConstraints.fill = GridBagConstraints.BOTH;
-        pane.add(portLabel, baseConstraints);
+        this.add(portLabel, baseConstraints);
 
         portField = new JTextField("9001");
         baseConstraints.gridx = 2;
@@ -75,10 +75,10 @@ public class Server extends JPanel {
         baseConstraints.ipady = 0;
         baseConstraints.weightx = 0;
         baseConstraints.weighty = 0;
-        baseConstraints.insets = 0;
-        baseConstraints.anchor = GridBagConstraints.LEFT;
+        baseConstraints.insets = null;
+        baseConstraints.anchor = GridBagConstraints.LINE_START;
         baseConstraints.fill = GridBagConstraints.BOTH;
-        pane.add(portField, baseConstraints);
+        this.add(portField, baseConstraints);
 
         startButton = new JButton("START");
         baseConstraints.gridx = 1;
@@ -88,10 +88,10 @@ public class Server extends JPanel {
         baseConstraints.ipady = 0;
         baseConstraints.weightx = 0;
         baseConstraints.weighty = 0;
-        baseConstraints.insets = 0;
+        baseConstraints.insets = null;
         baseConstraints.anchor = GridBagConstraints.CENTER;
         baseConstraints.fill = GridBagConstraints.BOTH;
-        pane.add(startButton, baseConstraints);
+        this.add(startButton, baseConstraints);
 
         stopButton = new JButton("STOP");
         baseConstraints.gridx = 1;
@@ -101,10 +101,10 @@ public class Server extends JPanel {
         baseConstraints.ipady = 0;
         baseConstraints.weightx = 0;
         baseConstraints.weighty = 0;
-        baseConstraints.insets = 0;
+        baseConstraints.insets = null;
         baseConstraints.anchor = GridBagConstraints.CENTER;
         baseConstraints.fill = GridBagConstraints.BOTH;
-        pane.add(stopButton, baseConstraints);
+        this.add(stopButton, baseConstraints);
 
         quitButton = new JButton("QUIT");
         baseConstraints.gridx = 0;
@@ -114,8 +114,9 @@ public class Server extends JPanel {
         baseConstraints.ipady = 0;
         baseConstraints.weightx = 0;
         baseConstraints.weighty = 0;
-        baseConstraints.insets = 0;
+        baseConstraints.insets = null;
         baseConstraints.anchor = GridBagConstraints.CENTER;
         baseConstraints.fill = GridBagConstraints.BOTH;
+        this.add(quitButton, baseConstraints);
     }
 }
