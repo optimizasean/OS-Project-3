@@ -1,0 +1,68 @@
+# Don't track content of these folders
+img/
+image/
+images/
+build/
+classes/
+data/
+
+# Compressed Files #
+####################
+*.zip
+*.7z
+*.gz
+*.tar
+*.rar
+
+# Compiled source #
+###################
+*.o
+*.so
+*.com
+*.dll
+*.iso
+*.bin
+*.swp
+
+# Java Compiled Files #
+#######################
+*.class
+*.jar
+
+# Windows Compiled Files #
+##########################
+*.exe
+*.msi
+
+# Mac Compiled Files #
+######################
+*.dmg
+*.pkg
+
+# Log Files #
+#############
+*.log
+log.txt
+
+# Keystore Files #
+##################
+*.jks
+*.keystore
+
+# System Specific Files #
+#########################
+# Mac #
+#######
+._whatever
+.DS_Store
+.Trashes/
+.hidden
+.hotfiles.btree
+.vol
+# Windows #
+###########
+boot.ini
+
+# Other #
+#########
+.vscode
