@@ -10,6 +10,9 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 
 public class Client extends JPanel {
+    /**************************
+     * Define Swing variables
+     **************************/
     private JPanel readPanel = null;
     private JPanel writePanel = null;
     private JPanel viewPanel = null;
