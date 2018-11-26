@@ -1,7 +1,5 @@
 import java.util.Vector;
 
-import javax.sound.midi.Receiver;
-
 public class TimeStamp {
 	
 	/**
@@ -26,7 +24,7 @@ public class TimeStamp {
 	 * @param receiverTS - PC's vector that is receiving the message
 	 */
 	public static void merge(int senderID, Vector<Integer> senderTS, int receiverID, Vector <Integer> receiverTS){
-		inc(senderID, senderTS);//(send event)
+		//inc(senderID, senderTS);//(send event)
 		for(int i=0; i<receiverTS.size(); i++) {
 			if(i == receiverID - 1){
 				inc(receiverID, receiverTS);//(receive event)
