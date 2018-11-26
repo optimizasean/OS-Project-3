@@ -11,7 +11,7 @@ public class GlobalLogger {
 	public static void write(int ID, String message) throws IOException {
 		String dir;
 		if (ID == 0) dir = Constants.DIRECTORY_PATH_CONTROLLER;
-		else dir = "./data/PC" + ID + "/" Constants.FILE_LOG;
+		else dir = "./data/PC" + ID + "/" + Constants.FILE_LOG;
 		
 		RandomAccessFile raf = new RandomAccessFile(dir, "rw");
 		raf.seek(raf.length());
@@ -21,7 +21,7 @@ public class GlobalLogger {
 	
 	public static void cleanup() throws FileNotFoundException {
 		for(int i = 1; i < 6; i++) {
-			PrintWriter pw = new PrintWriter("./data/PC" + i + Constants.FILE_LOG);
+			PrintWriter pw = new PrintWriter("./data/PC" + i + "/" + Constants.FILE_LOG);
 		}
 	}
 }
