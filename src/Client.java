@@ -23,6 +23,13 @@ import java.awt.Color;
 
 
 
+/***************************
+ * Client class is used for the client
+ * connections to the server and will
+ * also provide the GUI interface to
+ * interact with them whenever they
+ * successfully connect.
+ ***************************/
 public class Client extends JPanel {
     /**************************
      * Define Swing variables
@@ -48,6 +55,7 @@ public class Client extends JPanel {
     private JButton writePlus = null;
     private JButton writeMinus = null;
 
+    //Client constructor to setup basic client
     public Client(int clientNumber) {
         //Set base panel background
         this.setBackground(Color.GRAY);

@@ -36,6 +36,13 @@ public class Server extends JPanel {
     private JButton quitButton = null;
 
     public Server() {
+        this.GUI();
+    }
+
+    private void GUI() {
+        this.createVisual();
+    }
+    private void GUIVisual() {
         //Set base panel background
         this.setBackground(Color.GRAY);
 
@@ -44,113 +51,116 @@ public class Server extends JPanel {
         this.setLayout(base);
 
         //Prepare constraints object for GridBagLayout
-        baseConstraints = new GridBagConstraints();
+        this.baseConstraints = new GridBagConstraints();
 
         //Label for top of base panel
-        windowLabel = new JLabel("SERVER");
-        baseConstraints.gridx = 1;
-        baseConstraints.gridy = 0;
-        baseConstraints.gridwidth = 2;
-        baseConstraints.gridheight = 1;
-        baseConstraints.ipadx = 0;
-        baseConstraints.ipady = 0;
-        baseConstraints.weightx = 0.5;
-        baseConstraints.weighty = 0.5;
-        //baseConstraints.insets = null;
-        baseConstraints.anchor = GridBagConstraints.CENTER;
-        baseConstraints.fill = GridBagConstraints.BOTH;
+        this.windowLabel = new JLabel("SERVER");
+        this.baseConstraints.gridx = 1;
+        this.baseConstraints.gridy = 0;
+        this.baseConstraints.gridwidth = 2;
+        this.baseConstraints.gridheight = 1;
+        this.baseConstraints.ipadx = 0;
+        this.baseConstraints.ipady = 0;
+        this.baseConstraints.weightx = 0.5;
+        this.baseConstraints.weighty = 0.5;
+        //this.baseConstraints.insets = null;
+        this.baseConstraints.anchor = GridBagConstraints.CENTER;
+        this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(windowLabel, baseConstraints);
 
         //Log for server on center of panel
-        serverLog = new JTextArea();
-        serverLogPane = new JScrollPane(serverLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        serverLogPane.setBackground(Color.WHITE);
-        baseConstraints.gridx = 0;
-        baseConstraints.gridy = 1;
-        baseConstraints.gridwidth = 4;
-        baseConstraints.gridheight = 4;
-        baseConstraints.ipadx = 0;
-        baseConstraints.ipady = 0;
-        baseConstraints.weightx = 0.5;
-        baseConstraints.weighty = 0.5;
-        //baseConstraints.insets = null;
-        baseConstraints.anchor = GridBagConstraints.CENTER;
-        baseConstraints.fill = GridBagConstraints.BOTH;
+        this.serverLog = new JTextArea();
+        this.serverLogPane = new JScrollPane(serverLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.serverLogPane.setBackground(Color.WHITE);
+        this.baseConstraints.gridx = 0;
+        this.baseConstraints.gridy = 1;
+        this.baseConstraints.gridwidth = 4;
+        this.baseConstraints.gridheight = 4;
+        this.baseConstraints.ipadx = 0;
+        this.baseConstraints.ipady = 0;
+        this.baseConstraints.weightx = 0.5;
+        this.baseConstraints.weighty = 0.5;
+        //this.baseConstraints.insets = null;
+        this.baseConstraints.anchor = GridBagConstraints.CENTER;
+        this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(serverLogPane, baseConstraints);
 
         //Label for port under server log
-        portLabel = new JLabel("Port:");
-        baseConstraints.gridx = 1;
-        baseConstraints.gridy = 5;
-        baseConstraints.gridwidth = 1;
-        baseConstraints.gridheight = 1;
-        baseConstraints.ipadx = 0;
-        baseConstraints.ipady = 0;
-        baseConstraints.weightx = 0.5;
-        baseConstraints.weighty = 0.5;
-        //baseConstraints.insets = null;
-        baseConstraints.anchor = GridBagConstraints.LINE_END;
-        baseConstraints.fill = GridBagConstraints.BOTH;
+        this.portLabel = new JLabel("Port:");
+        this.baseConstraints.gridx = 1;
+        this.baseConstraints.gridy = 5;
+        this.baseConstraints.gridwidth = 1;
+        this.baseConstraints.gridheight = 1;
+        this.baseConstraints.ipadx = 0;
+        this.baseConstraints.ipady = 0;
+        this.baseConstraints.weightx = 0.5;
+        this.baseConstraints.weighty = 0.5;
+        //this.baseConstraints.insets = null;
+        this.baseConstraints.anchor = GridBagConstraints.LINE_END;
+        this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(portLabel, baseConstraints);
 
         //Field for taking port abot start button
-        portField = new JTextField("9001");
-        baseConstraints.gridx = 2;
-        baseConstraints.gridy = 5;
-        baseConstraints.gridwidth = 1;
-        baseConstraints.gridheight = 1;
-        baseConstraints.ipadx = 0;
-        baseConstraints.ipady = 0;
-        baseConstraints.weightx = 0.5;
-        baseConstraints.weighty = 0.5;
-        //baseConstraints.insets = null;
-        baseConstraints.anchor = GridBagConstraints.LINE_START;
-        baseConstraints.fill = GridBagConstraints.BOTH;
+        this.portField = new JTextField("9001");
+        this.baseConstraints.gridx = 2;
+        this.baseConstraints.gridy = 5;
+        this.baseConstraints.gridwidth = 1;
+        this.baseConstraints.gridheight = 1;
+        this.baseConstraints.ipadx = 0;
+        this.baseConstraints.ipady = 0;
+        this.baseConstraints.weightx = 0.5;
+        this.baseConstraints.weighty = 0.5;
+        //this.baseConstraints.insets = null;
+        this.baseConstraints.anchor = GridBagConstraints.LINE_START;
+        this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(portField, baseConstraints);
 
         //Button to start server
-        startButton = new JButton("START");
-        baseConstraints.gridx = 1;
-        baseConstraints.gridy = 6;
-        baseConstraints.gridwidth = 2;
-        baseConstraints.gridheight = 1;
-        baseConstraints.ipadx = 0;
-        baseConstraints.ipady = 0;
-        baseConstraints.weightx = 0.5;
-        baseConstraints.weighty = 0.5;
-        //baseConstraints.insets = null;
-        baseConstraints.anchor = GridBagConstraints.CENTER;
-        baseConstraints.fill = GridBagConstraints.BOTH;
+        this.startButton = new JButton("START");
+        this.baseConstraints.gridx = 1;
+        this.baseConstraints.gridy = 6;
+        this.baseConstraints.gridwidth = 2;
+        this.baseConstraints.gridheight = 1;
+        this.baseConstraints.ipadx = 0;
+        this.baseConstraints.ipady = 0;
+        this.baseConstraints.weightx = 0.5;
+        this.baseConstraints.weighty = 0.5;
+        //this.baseConstraints.insets = null;
+        this.baseConstraints.anchor = GridBagConstraints.CENTER;
+        this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(startButton, baseConstraints);
 
         //Button to stop server under start button
-        stopButton = new JButton("STOP");
-        baseConstraints.gridx = 1;
-        baseConstraints.gridy = 7;
-        baseConstraints.gridwidth = 2;
-        baseConstraints.gridheight = 1;
-        baseConstraints.ipadx = 0;
-        baseConstraints.ipady = 0;
-        baseConstraints.weightx = 0.5;
-        baseConstraints.weighty = 0.5;
-        //baseConstraints.insets = null;
-        baseConstraints.anchor = GridBagConstraints.CENTER;
-        baseConstraints.fill = GridBagConstraints.BOTH;
+        this.stopButton = new JButton("STOP");
+        this.baseConstraints.gridx = 1;
+        this.baseConstraints.gridy = 7;
+        this.baseConstraints.gridwidth = 2;
+        this.baseConstraints.gridheight = 1;
+        this.baseConstraints.ipadx = 0;
+        this.baseConstraints.ipady = 0;
+        this.baseConstraints.weightx = 0.5;
+        this.baseConstraints.weighty = 0.5;
+        //this.baseConstraints.insets = null;
+        this.baseConstraints.anchor = GridBagConstraints.CENTER;
+        this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(stopButton, baseConstraints);
 
         //Button to force quit on bottom
-        quitButton = new JButton("QUIT");
-        baseConstraints.gridx = 0;
-        baseConstraints.gridy = 8;
-        baseConstraints.gridwidth = 4;
-        baseConstraints.gridheight = 1;
-        baseConstraints.ipadx = 0;
-        baseConstraints.ipady = 0;
-        baseConstraints.weightx = 0.5;
-        baseConstraints.weighty = 0.5;
-        //baseConstraints.insets = null;
-        baseConstraints.anchor = GridBagConstraints.CENTER;
-        baseConstraints.fill = GridBagConstraints.BOTH;
+        this.quitButton = new JButton("QUIT");
+        this.baseConstraints.gridx = 0;
+        this.baseConstraints.gridy = 8;
+        this.baseConstraints.gridwidth = 4;
+        this.baseConstraints.gridheight = 1;
+        this.baseConstraints.ipadx = 0;
+        this.baseConstraints.ipady = 0;
+        this.baseConstraints.weightx = 0.5;
+        this.baseConstraints.weighty = 0.5;
+        //this.baseConstraints.insets = null;
+        this.baseConstraints.anchor = GridBagConstraints.CENTER;
+        this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(quitButton, baseConstraints);
+    }
+    private void GUIFunctional() {
+        //Do actionlistener stuff here
     }
 }
