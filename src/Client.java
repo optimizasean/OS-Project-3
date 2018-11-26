@@ -13,6 +13,9 @@ import javax.swing.BoxLayout;
 //Labels and Text
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import osp.LocalLogger;
+
 import javax.swing.JTextArea;
 
 //Buttons
@@ -54,6 +57,9 @@ public class Client extends JPanel {
     private JButton readMinus = null;
     private JButton writePlus = null;
     private JButton writeMinus = null;
+
+    //Logger
+    LocalLogger logger = null;
 
     //Client constructor to setup basic client
     public Client(int clientNumber) {

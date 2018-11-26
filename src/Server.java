@@ -19,7 +19,12 @@ import javax.swing.JButton;
 import java.awt.Color;
 
 
-
+/********************************
+ * Server class is used to start
+ * server and manage client
+ * connections as well as work with
+ * the GUI as a panel to show things
+ ********************************/
 public class Server extends JPanel {
     /**************************
      * Define Swing variables
@@ -34,6 +39,9 @@ public class Server extends JPanel {
     private JButton startButton = null;
     private JButton stopButton = null;
     private JButton quitButton = null;
+
+    //Logger
+    LocalLogger logger = null;
 
     public Server() {
         this.GUI();
