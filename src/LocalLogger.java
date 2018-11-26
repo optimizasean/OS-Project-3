@@ -1,19 +1,34 @@
+//Operating Systems Project (osp) package
 package osp;
 
+//Exceptions
+import java.io.IOException;
+import java.io.FileNotFoundException;
+
+//Files and writing
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.FileNotFoundException;
+
+//Date and timestamping
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+/*******************************
+ * LocalLogger class used to log
+ * to the local file of the client
+ * or controller individually to
+ * avoid performance hits from a
+ * global logger and for better
+ * time accuracy.
+ *******************************/
 public class LocalLogger {
     private PrintWriter logger = null;
     private File file = null;
     private String timeStamp = null;
 
+    //LocalLogger Constructor sets up the logger
     public LocalLogger(File file) {
         try {
             this.file = file;
@@ -34,11 +49,13 @@ public class LocalLogger {
         }
     }
 
+    //Log something
     public void log(String log) {
         this.logger.println("[" + timeStamp + "] " + log);
         return;
     }
 
+    //Saves and closes the log
     public void close() {
         this.logger.close();
         return;
