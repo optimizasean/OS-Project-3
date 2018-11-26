@@ -1,4 +1,5 @@
-# Don't track content of these folders
+# Don't track content of these folders #
+########################################
 img/
 image/
 images/
@@ -44,6 +45,7 @@ temp/
 #############
 *.log
 log.txt
+target.txt
 
 # Keystore Files #
 ##################
@@ -67,3 +69,9 @@ boot.ini
 # Other #
 #########
 .vscode
+
+# Specific Files #
+##################
+code.java
+temp.java
+test.java
