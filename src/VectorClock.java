@@ -1,3 +1,5 @@
+package osp;
+
 import java.util.Vector;
 
 public class VectorClock {
@@ -12,6 +14,7 @@ public class VectorClock {
 	 */
 	public static void inc(int ID, Vector<Integer> TS) {
 		TS.set(ID-1,TS.get(ID-1)+1);
+		return;
 	}
 	
 	
@@ -33,6 +36,7 @@ public class VectorClock {
 				receiverTS.set(i, Math.max(receiverTS.get(i), senderTS.get(i)));
 			}
 		}
+		return;
 	}
 	
 	
@@ -66,5 +70,4 @@ public class VectorClock {
 		
 		return ret;
 	}
-	
 }
