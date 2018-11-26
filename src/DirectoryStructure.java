@@ -7,59 +7,49 @@ import java.io.IOException;
 public class DirectoryStructure {
     private File file = null;
 
-    private final String path = "data/";
-    private final String con = "CONTROLLER/";
-    private final String pc1 = "PC1/";
-    private final String pc2 = "PC2/";
-    private final String pc3 = "PC3/";
-    private final String pc4 = "PC4/";
-    private final String pc5 = "PC5/";
-    private final String name = "log.txt";
-    private final String target = "target.txt";
-
     //Blank Constructor
     public DirectoryStructure() {}
 
     //Create the directories and files
-    public void run() {
+    public static void run() {
         try {
             //CONTROLLER
-            file = new File(path + con);
+            file = new File(Constants.DIRECTORY_PATH_CONTROLLER);
             file.mkdirs();
-            file = new File(path + con + name);
+            file = new File(Constants.LOG_PATH_CONTROLLER);
             file.createNewFile();
 
             //PC1 
-            file = new File(path + pc1);
+            file = new File(Constants.DIRECTORY_PATH_PC1);
             file.mkdirs();
-            file = new File(path + pc1 + name);
+            file = new File(Constants.LOG_PATH_PC1);
             file.createNewFile();
             //Target File
-            file = new File(path + pc1 + target);
+            file = new File(Constants.TARGET_PATH);
             file.createNewFile();
 
             //PC2 
-            file = new File(path + pc2);
+            file = new File(Constants.DIRECTORY_PATH_PC2);
             file.mkdirs();
-            file = new File(path + pc2 + name);
+            file = new File(Constants.LOG_PATH_PC2);
             file.createNewFile();
 
             //PC3 
-            file = new File(path + pc3);
+            file = new File(Constants.DIRECTORY_PATH_PC3);
             file.mkdirs();
-            file = new File(path + pc3 + name);
+            file = new File(Constants.LOG_PATH_PC3);
             file.createNewFile();
 
             //PC4 
-            file = new File(path + pc4);
+            file = new File(Constants.DIRECTORY_PATH_PC4);
             file.mkdirs();
-            file = new File(path + pc4 + name);
+            file = new File(Constants.LOG_PATH_PC4);
             file.createNewFile();
 
             //PC5 
-            file = new File(path + pc5);
+            file = new File(Constants.DIRECTORY_PATH_PC5);
             file.mkdirs();
-            file = new File(path + pc5 + name);
+            file = new File(Constants.LOG_PATH_PC5);
             file.createNewFile();
         } catch (IOException iex) {
             System.out.println("Failure at Directory Structure");
