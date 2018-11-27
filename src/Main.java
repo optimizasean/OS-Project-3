@@ -17,17 +17,6 @@ import java.awt.Color;
 
 
 
-//WHAT ARE THOSE vvvvvvvvvvvvvv
-/*import javafx.scene.effect.GaussianBlur;
-import javafx.scene.shape.Box;
-import com.sun.javafx.scene.paint.GradientUtils;*/
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
-
-
-
-
 public class Main {
     /**************************
      * Define Swing variables
