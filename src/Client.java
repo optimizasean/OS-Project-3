@@ -13,9 +13,6 @@ import javax.swing.BoxLayout;
 //Labels and Text
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
-import osp.LocalLogger;
-
 import javax.swing.JTextArea;
 
 //Buttons
@@ -23,6 +20,10 @@ import javax.swing.JButton;
 
 //Color
 import java.awt.Color;
+
+//Events
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 
@@ -61,8 +62,23 @@ public class Client extends JPanel {
     //Logger
     LocalLogger logger = null;
 
+    //Client
+    private int clientNumber = 0;
+
     //Client constructor to setup basic client
     public Client(int clientNumber) {
+        this.clientNumber = clientNumber;
+        this.GUI();
+    }
+
+    private void GUI() {
+        this.GUIVisual();
+        this.GUIFunctional();
+
+        return;
+    }
+
+    private void GUIVisual() {
         //Set base panel background
         this.setBackground(Color.GRAY);
 
@@ -71,7 +87,7 @@ public class Client extends JPanel {
         this.setLayout(base);
 
         //Add base panel label north(top)
-        windowLabel = new JLabel("PC " + clientNumber);
+        windowLabel = new JLabel("PC " + this.clientNumber);
         this.add(windowLabel, BorderLayout.NORTH);
 
         //Prepare and add west(left) panel for +/- of setting read
@@ -120,5 +136,34 @@ public class Client extends JPanel {
         writeNumber = new JTextField("??");
         viewPanel.add(writeNumber);
         this.add(viewPanel, BorderLayout.SOUTH);
+
+        return;
+    }
+    private void GUIFunctional() {
+        this.readPlus.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("READPLUS BUTTON PUSHED");
+            }
+        });
+
+        this.readMinus.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("READMINUS BUTTON PUSHED");
+            }
+        });
+
+        this.writePlus.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("WRITEPLUS BUTTON PUSHED");
+            }
+        });
+
+        this.writeMinus.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("WRITEMINUS BUTTON PUSHED");
+            }
+        });
+
+        return;
     }
 }

@@ -8,9 +8,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.file.Files;
 
-//import com.sun.corba.se.impl.orbutil.closure.Constant;
 
-//import jdk.nashorn.internal.runtime.regexp.joni.ast.ConsAltNode;
 
 public class Write {
 	

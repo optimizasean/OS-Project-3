@@ -18,6 +18,15 @@ import javax.swing.JButton;
 //Color
 import java.awt.Color;
 
+//Events
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+//Server
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.io.IOException;
+
 
 /********************************
  * Server class is used to start
@@ -43,12 +52,48 @@ public class Server extends JPanel {
     //Logger
     LocalLogger logger = null;
 
+    //Server
+    private ServerSocket server = null;
+	private Socket client = null;
+    private int port = 0;
+    
+    //Message passing
+    
+
     public Server() {
         this.GUI();
     }
 
+    public void getPort() {
+        this.port = Integer.parseInt(this.portField.getText());
+        if (this.port < 0 || this.port > 65535) {
+            this.port = 9001;
+            this.portField.setText("9001");
+        }
+        return;
+    }
+    
+    public void run() {
+        try {
+            server = new ServerSocket(port);
+        } catch (IOException iex) {
+            System.out.println("Failed to start server");
+        }
+        
+        try {
+            while(true) {
+                client = server.accept();
+                Thread t = new ServerThread(client);
+                t.start();
+            }
+        } catch (IOException iex) {}
+    }
+
     private void GUI() {
-        this.createVisual();
+        this.GUIVisual();
+        this.GUIFunctional();
+
+        return;
     }
     private void GUIVisual() {
         //Set base panel background
@@ -167,8 +212,29 @@ public class Server extends JPanel {
         this.baseConstraints.anchor = GridBagConstraints.CENTER;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(quitButton, baseConstraints);
+
+        return;
     }
     private void GUIFunctional() {
-        //Do actionlistener stuff here
+        this.startButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("START BUTTON PUSHED");
+            }
+        });
+
+        this.stopButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("STOP BUTTON PUSHED");
+            }
+        });
+
+        this.quitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("QUIT BUTTON PUSHED");
+                System.exit(0);
+            }
+        });
+
+        return;
     }
 }

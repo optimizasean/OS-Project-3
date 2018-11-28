@@ -5,8 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
-import java.io.FileChannel;
-import java.io.FileLock;
+import java.nio.channels.FileLock;
+import java.nio.channels.FileChannel;
+
+
 
 public class GlobalLogger {
 	

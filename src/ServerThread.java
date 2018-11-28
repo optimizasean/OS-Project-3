@@ -13,7 +13,12 @@ public class ServerThread extends Thread {
     
     public void run() {}
     
-    public void stop() {
-        this.socket.close();
+    public void end() {
+        try {
+            this.socket.close();
+        } catch (IOException iex) {
+            System.err.println("Failure to end server");
+        }
+        
     }
 }
