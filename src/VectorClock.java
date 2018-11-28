@@ -48,7 +48,7 @@ public class VectorClock {
 		
 		if(countFirst == countSecond) ret = "PC"+first.ID+"<->PC"+second.ID;
 		else if(countFirst == first.TS.size())ret = "PC"+first.ID+"->PC"+second.ID;
-		else if(countSecond == second.TS.size()) ret = "PC"+second.ID+"<->PC"+first.ID;
+		else if(countSecond == second.TS.size()) ret = "PC"+second.ID+"->PC"+first.ID;
 		
 		return ret;
 	}
