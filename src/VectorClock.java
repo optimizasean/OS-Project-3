@@ -25,7 +25,7 @@ public class VectorClock {
 	public void merge(VectorClock sender){
 		for(int i=0; i<this.TS.size(); i++) {
 			if(i == this.ID - 1){
-				sender.inc();
+				//sender.inc();
 			}
 			else {
 				this.TS.set(i, Math.max(this.TS.get(i), sender.TS.get(i)));
@@ -46,10 +46,15 @@ public class VectorClock {
 			if(second.TS.get(i) <= first.TS.get(i))countSecond++;
 		}
 		
-		if(countFirst == countSecond) ret = "first<->second";
-		else if(countFirst == first.TS.size())ret = "first->second";
-		else if(countSecond == second.TS.size()) ret = "second->first";
+		if(countFirst == countSecond) ret = "PC"+first.ID+"<->PC"+second.ID;
+		else if(countFirst == first.TS.size())ret = "PC"+first.ID+"->PC"+second.ID;
+		else if(countSecond == second.TS.size()) ret = "PC"+second.ID+"<->PC"+first.ID;
 		
 		return ret;
+	}
+	
+	
+	public void print(){
+		System.out.print("PC"+this.ID+this.TS+"\t");
 	}
 }
