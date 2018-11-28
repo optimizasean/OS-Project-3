@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile;
+import java.io.FileChannel;
+import java.io.FileLock;
 
 public class GlobalLogger {
 	

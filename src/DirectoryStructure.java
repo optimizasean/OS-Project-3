@@ -11,7 +11,7 @@ public class DirectoryStructure {
     public DirectoryStructure() {}
 
     //Create the directories and files
-    public static void run() {
+    public void run() {
         try {
             //CONTROLLER
             file = new File(Constants.DIRECTORY_PATH_CONTROLLER);

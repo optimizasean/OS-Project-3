@@ -1,7 +1,8 @@
 //Operating Systems Project (osp) package
 package osp;
 
-import java.io.Socket;
+import java.net.Socket;
+import java.io.IOException;
 
 public class ServerThread extends Thread {
     private Socket socket;

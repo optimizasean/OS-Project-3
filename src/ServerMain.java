@@ -1,8 +1,8 @@
 //Operating Systems Project (osp) package
 package osp;
 
-import java.io.ServerSocket;
-import java.io.Socket;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.io.IOException;
 
 public class ServerMain implements Runnable {
