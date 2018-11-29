@@ -4,6 +4,7 @@ package osp;
 //Frames, Panes, and Panels
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JComponent;
 
 //Layouts and Constraints
 import java.awt.GridBagLayout;
@@ -17,6 +18,9 @@ import javax.swing.JButton;
 
 //Color
 import java.awt.Color;
+
+//Fonts
+import java.awt.Font;
 
 //Events
 import java.awt.event.ActionEvent;
@@ -122,7 +126,7 @@ public class Server extends JPanel {
         this.add(windowLabel, baseConstraints);
 
         //Log for server on center of panel
-        this.serverLog = new JTextArea();
+        this.serverLog = new JTextArea(32, 30);
         this.serverLogPane = new JScrollPane(serverLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.serverLogPane.setBackground(Color.WHITE);
         this.baseConstraints.gridx = 0;
@@ -235,6 +239,15 @@ public class Server extends JPanel {
             }
         });
 
+        return;
+    }
+    private void changeFont(JComponent base, int size) {
+        Font origin, prime;
+
+        origin = base.getFont();
+        prime = new Font(origin.getFontName(), origin.getStyle(), origin.getSize()-1);
+
+        base.setFont(prime);
         return;
     }
 }
