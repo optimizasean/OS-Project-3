@@ -127,7 +127,7 @@ public class Server extends JPanel {
 
         //Log for server on center of panel
         this.serverLog = new JTextArea(32, 30);
-        this.serverLogPane = new JScrollPane(serverLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.serverLogPane = new JScrollPane(serverLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.serverLogPane.setBackground(Color.WHITE);
         this.baseConstraints.gridx = 0;
         this.baseConstraints.gridy = 1;

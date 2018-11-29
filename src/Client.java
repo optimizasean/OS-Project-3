@@ -109,7 +109,7 @@ public class Client extends JPanel {
 
         //Prepare and add pclog to the center
         pcLog = new JTextArea(4, 30);
-        pcLogPane = new JScrollPane(pcLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        pcLogPane = new JScrollPane(pcLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         pcLogPane.setBackground(Color.WHITE);
         this.add(pcLogPane, BorderLayout.CENTER);
 
