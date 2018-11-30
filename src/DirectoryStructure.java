@@ -4,6 +4,13 @@ package osp;
 import java.io.File;
 import java.io.IOException;
 
+/****************************
+ * DirectoryStructure class
+ * ensures the directories and
+ * files utilized by the program
+ * all exist before atttempting to
+ * read or write from them
+ ****************************/
 public class DirectoryStructure {
     private File file = null;
 
