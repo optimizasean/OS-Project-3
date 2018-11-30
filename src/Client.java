@@ -239,8 +239,7 @@ public class Client extends JPanel {
 						}
 						
 						if (msg.equals("write_reply")) {
-							System.out.println("hey");
-							counterLock.acquire();
+							System.err.println("hey");
 							VectorClock replier = (VectorClock) ois.readObject();
 							System.err.println("man");
 							clock.inc();
@@ -248,7 +247,7 @@ public class Client extends JPanel {
 							GlobalLogger.write(clock, "PC"+replier.ID+" replied OK to write request");
 							
 							//to ensure multiple clients don't access this variable at same time
-							
+							counterLock.acquire();
 							counter++;
 							counterLock.release();
 							
