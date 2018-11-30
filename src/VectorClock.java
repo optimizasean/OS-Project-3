@@ -1,11 +1,13 @@
 //Operating Systems Project (osp) package
 package osp;
 
+import java.io.Serializable;
 import java.util.Vector;
 
-public class VectorClock {
+public class VectorClock implements Serializable {
 
-	private int ID;
+	private static final long serialVersionUID = 1L;
+	public int ID;
 	private Vector<Integer> TS;
 
 	public VectorClock(int ID){
@@ -46,15 +48,16 @@ public class VectorClock {
 			if(second.TS.get(i) <= first.TS.get(i))countSecond++;
 		}
 		
-		if(countFirst == countSecond) ret = "PC"+first.ID+"<->PC"+second.ID;
-		else if(countFirst == first.TS.size())ret = "PC"+first.ID+"->PC"+second.ID;
-		else if(countSecond == second.TS.size()) ret = "PC"+second.ID+"->PC"+first.ID;
+		if(countFirst == countSecond) ret = "first<->second";
+		else if(countFirst == first.TS.size())ret = "first->second";
+		else if(countSecond == second.TS.size()) ret = "second->first";
 		
 		return ret;
 	}
 	
 	
-	public void print(){
-		System.out.print("PC"+this.ID+this.TS+"\t");
+	public String print(){
+		//System.out.println("PC"+this.ID+this.TS+"\t");
+		return "PC"+this.ID+this.TS;
 	}
 }
