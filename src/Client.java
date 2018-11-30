@@ -82,6 +82,7 @@ public class Client extends JPanel {
 
     //Client
     private int clientNumber = 0;
+    private int port = 0;
     private static String status = "idle";
 	private static Queue<VectorClock> memory = new LinkedList<VectorClock>();
 	private static int counter = 0;//keep track of how many PCs responded
@@ -93,7 +94,6 @@ public class Client extends JPanel {
     public Client(int clientNumber) {
         this.clientNumber = clientNumber;
         this.GUI();
-        //this.launch();
     }
 
     private void GUI() {
@@ -102,9 +102,10 @@ public class Client extends JPanel {
         return;
     }
 
-    private void launch() {
+    public void launch() {
         try {
-            this.socket = new Socket("127.0.0.1", 9001);
+            this.port = Server.port;
+            this.socket = new Socket("127.0.0.1", this.port);
             Scanner k = new Scanner(System.in);
             
             ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
@@ -287,7 +288,12 @@ public class Client extends JPanel {
         } catch (Exception ex) {
 
         }
-        
+
+        return;
+    }
+
+    private void visualLog(String log) {
+        this.pcLog.append(log);
         return;
     }
 

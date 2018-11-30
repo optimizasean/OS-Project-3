@@ -16,8 +16,12 @@ public class ServerThread extends Thread {
     private DataInputStream dis = null;
     private VectorClock clock = null;
     private int id = 0;
+
+    //Server link
+    private Server server = null;
     
-    ServerThread(Socket socket, int id, ObjectOutputStream oos, ObjectInputStream ois, DataOutputStream dos, DataInputStream dis) {
+    ServerThread(Server server, Socket socket, int id, ObjectOutputStream oos, ObjectInputStream ois, DataOutputStream dos, DataInputStream dis) {
+        this.server = server;
         this.socket = socket;
         this.id = id;
         this.oos = oos;
@@ -39,7 +43,7 @@ public class ServerThread extends Thread {
 				if(msg.equals("read_request")) {
 					//send read request to PC1
 					VectorClock temp = (VectorClock) ois.readObject();
-					for(ServerThread st : Server.stv) {
+					for(ServerThread st : Main.stv) {
 						if(st.clock.ID == 1) {
 							st.dos.writeUTF("read_request");
 							st.oos.writeObject(temp);
@@ -51,7 +55,7 @@ public class ServerThread extends Thread {
 					//send read reply to the PC that requested it
 					VectorClock temp = (VectorClock) ois.readObject();
 					VectorClock target = (VectorClock) ois.readObject();
-					for(ServerThread st : Server.stv) {
+					for(ServerThread st : Main.stv) {
 						if(st.clock.ID == target.ID) {
 							st.dos.writeUTF("read_reply");
 							st.oos.writeObject(temp);
@@ -67,7 +71,7 @@ public class ServerThread extends Thread {
 				if(msg.equals("write_request")) {
 					//send write request to all other PCs
 					VectorClock temp = (VectorClock) ois.readObject();
-					for(ServerThread st : Server.stv) {
+					for(ServerThread st : Main.stv) {
 						if(st.clock.ID != temp.ID) {
 							st.dos.writeUTF("write_request");
 							st.oos.writeObject(temp);
@@ -79,7 +83,7 @@ public class ServerThread extends Thread {
 					//send read reply to the PC that requested it
 					VectorClock temp = (VectorClock) ois.readObject();
 					VectorClock target = (VectorClock) ois.readObject();
-					for(ServerThread st : Server.stv) {
+					for(ServerThread st : Main.stv) {
 						if(st.clock.ID == target.ID) {
 							st.dos.writeUTF("write_reply");
 							st.oos.writeObject(temp);

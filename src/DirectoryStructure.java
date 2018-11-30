@@ -11,18 +11,22 @@ public class DirectoryStructure {
     public DirectoryStructure() {}
 
     //Create the directories and files
-    public void run() {
+    public void ensureStructure() {
         try {
             //CONTROLLER
             file = new File(Constants.DIRECTORY_PATH_CONTROLLER);
             file.mkdirs();
-            file = new File(Constants.LOG_PATH_CONTROLLER);
+            file = new File(Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_GLOBAL_LOG);
+            file.createNewFile();
+            file = new File(Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_LOCAL_LOG);
             file.createNewFile();
 
             //PC1 
             file = new File(Constants.DIRECTORY_PATH_PC1);
             file.mkdirs();
-            file = new File(Constants.LOG_PATH_PC1);
+            file = new File(Constants.DIRECTORY_PATH_PC1 + Constants.FILE_GLOBAL_LOG);
+            file.createNewFile();
+            file = new File(Constants.DIRECTORY_PATH_PC1 + Constants.FILE_LOCAL_LOG);
             file.createNewFile();
             //Target File
             file = new File(Constants.TARGET_PATH);
@@ -31,25 +35,33 @@ public class DirectoryStructure {
             //PC2 
             file = new File(Constants.DIRECTORY_PATH_PC2);
             file.mkdirs();
-            file = new File(Constants.LOG_PATH_PC2);
+            file = new File(Constants.DIRECTORY_PATH_PC2 + Constants.FILE_GLOBAL_LOG);
+            file.createNewFile();
+            file = new File(Constants.DIRECTORY_PATH_PC2 + Constants.FILE_LOCAL_LOG);
             file.createNewFile();
 
             //PC3 
             file = new File(Constants.DIRECTORY_PATH_PC3);
             file.mkdirs();
-            file = new File(Constants.LOG_PATH_PC3);
+            file = new File(Constants.DIRECTORY_PATH_PC3 + Constants.FILE_GLOBAL_LOG);
+            file.createNewFile();
+            file = new File(Constants.DIRECTORY_PATH_PC3 + Constants.FILE_LOCAL_LOG);
             file.createNewFile();
 
             //PC4 
             file = new File(Constants.DIRECTORY_PATH_PC4);
             file.mkdirs();
-            file = new File(Constants.LOG_PATH_PC4);
+            file = new File(Constants.DIRECTORY_PATH_PC4 + Constants.FILE_GLOBAL_LOG);
+            file.createNewFile();
+            file = new File(Constants.DIRECTORY_PATH_PC4 + Constants.FILE_LOCAL_LOG);
             file.createNewFile();
 
             //PC5 
             file = new File(Constants.DIRECTORY_PATH_PC5);
             file.mkdirs();
-            file = new File(Constants.LOG_PATH_PC5);
+            file = new File(Constants.DIRECTORY_PATH_PC5 + Constants.FILE_GLOBAL_LOG);
+            file.createNewFile();
+            file = new File(Constants.DIRECTORY_PATH_PC5 + Constants.FILE_LOCAL_LOG);
             file.createNewFile();
         } catch (IOException iex) {
             System.out.println("Failure at Directory Structure");

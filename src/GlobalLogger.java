@@ -12,8 +12,8 @@ public class GlobalLogger {
 	
 	public static void write(VectorClock clock, String message) throws IOException {
 		String dir;
-		if (clock.ID == 0) dir = Constants.DIRECTORY_PATH_CONTROLLER;
-		else dir = "./data/PC" + clock.ID + "/" + Constants.FILE_LOG;
+		if (clock.ID == 0) dir = Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_GLOBAL_LOG;
+		else dir = "./data/PC" + clock.ID + "/" + Constants.FILE_GLOBAL_LOG;
 
 		//RandomAccessFile used to write to certain area of file
 		RandomAccessFile raf = new RandomAccessFile(dir, "rw");
@@ -42,7 +42,7 @@ public class GlobalLogger {
 		PrintWriter cntrl = new PrintWriter("./data/CONTROLLER/log.txt");
 		cntrl.close();
 		for(int i = 1; i < 6; i++) {
-			PrintWriter pw = new PrintWriter("./data/PC" + i + "/" + Constants.FILE_LOG);
+			PrintWriter pw = new PrintWriter("./data/PC" + i + "/" + Constants.FILE_GLOBAL_LOG);
 		}
 	}
 }

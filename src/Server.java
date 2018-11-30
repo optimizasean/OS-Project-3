@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //Server
+import java.lang.InterruptedException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -34,6 +35,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
+//Files
+import java.io.File;
 
 //Utilities
 import java.util.Vector;
@@ -62,31 +66,40 @@ public class Server extends JPanel {
 
     //Logger
     LocalLogger logger = null;
+    File localLog = null;
 
     //Server
     private ServerSocket server = null;
 	private Socket client = null;
-    private int port = 0;
+    public static int port = 0;
     private int id = 1;
-    
-    //Message passing
-    public static Vector<ServerThread> stv = new Vector<>();
-	//static int i = 1;
 
     public Server() {
+        this.startLogger();
         this.GUI();
     }
 
-    private void launch() {
-        this.getPort();
+    private void startLogger() {
+        this.localLog = new File(Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_LOCAL_LOG);
+        this.logger = new LocalLogger(this.localLog);
+    }
+    
+    public void log(String log) {
+        this.serverLog.append(log);
+        this.logger.log(log);
+        return;
+    }
+
+    private void launchServer() {
         try {
-            this.server = new ServerSocket(this.port);
+            this.refreshPort();
+            this.server = new ServerSocket(port);
             System.out.println("Server started");
             System.out.println("Waiting for client");
-        
-            while(stv.size() < 6) {
+            
+            int clientID = 1;
+            while(clientID < 6) {
                 this.client = null;
-                
                 try {
                     this.client = this.server.accept();
                     System.out.println("PC" + this.id + " Accepted");
@@ -96,11 +109,10 @@ public class Server extends JPanel {
                     DataOutputStream dos = new DataOutputStream(this.client.getOutputStream());
                     DataInputStream dis = new DataInputStream(this.client.getInputStream());
                     
-                    ServerThread st = new ServerThread(this.client, this.id, oos, ois, dos, dis);
+                    ServerThread st = new ServerThread(this, this.client, this.id, oos, ois, dos, dis);
+                    Main.stv.add(st);
                     Thread t = new Thread(st);
-                    stv.add(st);
                     t.start();
-                    
                     this.id++;
                 } catch (IOException iex) {
                     System.err.println("ERROR????????");
@@ -115,10 +127,19 @@ public class Server extends JPanel {
         return;
     }
 
-    public void getPort() {
-        this.port = Integer.parseInt(this.portField.getText());
-        if (this.port < 0 || this.port > 65535) {
-            this.port = 9001;
+    private void launchClient() {
+        Client client = null;
+        for (int i = 0; i < Main.NUMBER_OF_CLIENTS; i++) {
+            client = Main.cv.get(i);
+            client.launch();
+        }
+        return;  
+    }
+
+    public void refreshPort() {
+        port = Integer.parseInt(this.portField.getText());
+        if (port < 0 || port > 65535) {
+            port = 9001;
             this.portField.setText("9001");
         }
         return;
@@ -253,7 +274,23 @@ public class Server extends JPanel {
         this.startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("START BUTTON PUSHED");
-                launch();
+                Thread s = new Thread(new Runnable() {
+                    public void run() {
+                        launchServer();
+                    }
+                });
+                Thread c = new Thread(new Runnable() {
+                    public void run() {
+                        launchClient();
+                    }
+                });
+                s.start();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException iex) {
+
+                }
+                c.start();
             }
         });
 
