@@ -67,45 +67,52 @@ public class Server extends JPanel {
     private ServerSocket server = null;
 	private Socket client = null;
     private int port = 0;
+    private int id = 1;
     
     //Message passing
-    static Vector<ServerThread> stv = new Vector<>();
-	static int i = 1;
+    public static Vector<ServerThread> stv = new Vector<>();
+	//static int i = 1;
 
     public Server() {
         this.GUI();
-        this.launch();
     }
 
     private void launch() {
-        ServerSocket server = new ServerSocket(9001);
-        System.out.println("Server started");
-        System.out.println("Waiting for client");
+        this.getPort();
+        try {
+            this.server = new ServerSocket(this.port);
+            System.out.println("Server started");
+            System.out.println("Waiting for client");
         
-        while(true) {
-            Socket s = null;
-            
-            try {
-                s = server.accept();
-                System.out.println("PC"+i+" Accepted");
+            while(stv.size() < 6) {
+                this.client = null;
                 
-                ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-                ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-                DataOutputStream dos = new DataOutputStream(s.getOutputStream());
-                DataInputStream dis = new DataInputStream(s.getInputStream());
-                
-                ServerThread st = new ServerThread(s, i, oos, ois, dos, dis);
-                Thread t = new Thread(st);
-                stv.add(st);
-                t.start();
-                
-                i++;
+                try {
+                    this.client = this.server.accept();
+                    System.out.println("PC" + this.id + " Accepted");
+                    
+                    ObjectOutputStream oos = new ObjectOutputStream(this.client.getOutputStream());
+                    ObjectInputStream ois = new ObjectInputStream(this.client.getInputStream());
+                    DataOutputStream dos = new DataOutputStream(this.client.getOutputStream());
+                    DataInputStream dis = new DataInputStream(this.client.getInputStream());
+                    
+                    ServerThread st = new ServerThread(this.client, this.id, oos, ois, dos, dis);
+                    Thread t = new Thread(st);
+                    stv.add(st);
+                    t.start();
+                    
+                    this.id++;
+                } catch (IOException iex) {
+                    System.err.println("ERROR????????");
+                } catch(Exception ex) {
+                    this.server.close();
+                    ex.printStackTrace();
+                }
             }
-            catch(Exception e) {
-                server.close();
-                e.printStackTrace();
-            }
+        } catch(IOException iex) {
+            System.err.println("ERRORRRRRRRRRRRR");
         }
+        return;
     }
 
     public void getPort() {
@@ -115,22 +122,6 @@ public class Server extends JPanel {
             this.portField.setText("9001");
         }
         return;
-    }
-    
-    public void run() {
-        try {
-            server = new ServerSocket(port);
-        } catch (IOException iex) {
-            System.out.println("Failed to start server");
-        }
-        
-        try {
-            while(true) {
-                client = server.accept();
-                Thread t = new ServerThread(client);
-                t.start();
-            }
-        } catch (IOException iex) {}
     }
 
     private void GUI() {
@@ -262,6 +253,7 @@ public class Server extends JPanel {
         this.startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("START BUTTON PUSHED");
+                launch();
             }
         });
 
