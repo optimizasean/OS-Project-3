@@ -31,8 +31,6 @@ import java.lang.InterruptedException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -106,10 +104,8 @@ public class Server extends JPanel {
                     
                     ObjectOutputStream oos = new ObjectOutputStream(this.client.getOutputStream());
                     ObjectInputStream ois = new ObjectInputStream(this.client.getInputStream());
-                    DataOutputStream dos = new DataOutputStream(this.client.getOutputStream());
-                    DataInputStream dis = new DataInputStream(this.client.getInputStream());
                     
-                    ServerThread st = new ServerThread(this, this.client, this.id, oos, ois, dos, dis);
+                    ServerThread st = new ServerThread(this, this.client, this.id, oos, ois);
                     Main.stv.add(st);
                     Thread t = new Thread(st);
                     t.start();

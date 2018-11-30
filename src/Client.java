@@ -33,8 +33,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.net.Socket;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
@@ -87,7 +85,6 @@ public class Client extends JPanel {
 	private static Queue<VectorClock> memory = new LinkedList<VectorClock>();
 	private static int counter = 0;//keep track of how many PCs responded
 	private static Semaphore counterLock = new Semaphore(1);//lock for the counter
-    private static Semaphore fileLock = new Semaphore(1);//handle file critical section
     private Socket socket = null;
 
     //Client constructor to setup basic client
@@ -110,8 +107,6 @@ public class Client extends JPanel {
             
             ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(this.socket.getInputStream());
-            DataOutputStream dos = new DataOutputStream(this.socket.getOutputStream());
-            DataInputStream dis = new DataInputStream(this.socket.getInputStream());
             
             VectorClock clock = (VectorClock) ois.readObject();//set clock associated with the PC
             
@@ -129,7 +124,7 @@ public class Client extends JPanel {
                                 status = "reading";
                                 clock.inc();
                                 GlobalLogger.write(clock, "request to read");
-                                dos.writeUTF("read_request");
+                                oos.writeUTF("read_request");
                                 oos.writeObject(clock);
                             }
                             
@@ -137,12 +132,12 @@ public class Client extends JPanel {
                                 status = "writing";
                                 clock.inc();
                                 GlobalLogger.write(clock, "request to write");
-                                dos.writeUTF("write_request");
+                                oos.writeUTF("write_request");
                                 oos.writeObject(clock);
                             }
                             
                             if(command.equals("quit")) {
-                                dos.writeUTF("quit");
+                                oos.writeUTF("quit");
                             }
                         }
                     }
@@ -156,7 +151,7 @@ public class Client extends JPanel {
                 public void run() {
                     try {
                         while(true) {
-                            String msg = dis.readUTF();
+                            String msg = ois.readUTF();
                             
                             if(msg.equals("read_request")) {
                                 VectorClock requester = (VectorClock) ois.readObject();
@@ -167,7 +162,7 @@ public class Client extends JPanel {
                                 
                                 clock.inc();
                                 GlobalLogger.write(clock, "replied OK to PC"+requester.ID+" read request");
-                                dos.writeUTF("read_reply");
+                                oos.writeUTF("read_reply");
                                 oos.writeObject(clock);
                                 oos.writeObject(requester);
                             }//end read_request
@@ -200,7 +195,7 @@ public class Client extends JPanel {
                                 if(status.equals("idle")) {
                                     clock.inc();
                                     GlobalLogger.write(clock, "replied OK to PC"+requester.ID+" write request");
-                                    dos.writeUTF("write_reply");
+                                    oos.writeUTF("write_reply");
                                     oos.writeObject(clock);
                                     oos.writeObject(requester);
                                 }
@@ -213,7 +208,7 @@ public class Client extends JPanel {
                                     if(cmp.equals("second->first")) {
                                         clock.inc();
                                         GlobalLogger.write(clock, "replied OK to PC"+requester.ID+" write request");
-                                        dos.writeUTF("write_reply");
+                                        oos.writeUTF("write_reply");
                                         oos.writeObject(clock);
                                         oos.writeObject(requester);
                                     }
@@ -235,7 +230,7 @@ public class Client extends JPanel {
                                 
                                 clock.inc();
                                 GlobalLogger.write(clock, "replied OK to PC"+requester.ID+" write request");
-                                dos.writeUTF("write_reply");
+                                oos.writeUTF("write_reply");
                                 oos.writeObject(clock);
                                 oos.writeObject(requester);
                             }
