@@ -9,6 +9,7 @@ import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 /**********************
  * Write class is used by the
@@ -20,13 +21,12 @@ public class Write {
 		File source = new File("./data/PC1/target.txt");
 		File destination = new File("./data/PC" + clock.ID + "/target.txt");
 		Files.copy(source.toPath(), destination.toPath());
-		source.delete();
 	}
 	
 	public static void returnFile (VectorClock clock) throws IOException {
 		File source = new File("./data/PC" + clock.ID + "/target.txt");
 		File destination = new File("./data/PC1/target.txt");
-		Files.copy(source.toPath(), destination.toPath());
+		Files.copy(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
 		source.delete();
 	}
 	
