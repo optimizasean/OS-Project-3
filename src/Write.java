@@ -27,7 +27,9 @@ public class Write {
 		File source = new File("./data/PC" + clock.ID + "/target.txt");
 		File destination = new File("./data/PC1/target.txt");
 		Files.copy(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		source.delete();
+		if(!source.equals(destination)) {
+			source.delete();
+		}
 	}
 	
 	public static void deleteFile(VectorClock clock) throws IOException {
