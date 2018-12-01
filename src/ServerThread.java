@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.concurrent.Semaphore;
 
 public class ServerThread extends Thread {
     private Socket socket = null;
@@ -15,6 +16,9 @@ public class ServerThread extends Thread {
 
     //Server link
     private Server server = null;
+
+	//Semaphore
+	private static final Semaphore lock = new Semaphore(1);
     
     ServerThread(Server server, Socket socket, int id, ObjectOutputStream oos, ObjectInputStream ois) {
         this.server = server;
@@ -26,33 +30,37 @@ public class ServerThread extends Thread {
     }
     
     public void run() {
-        try {
+		
+		try {
 			oos.writeObject(this.clock);
-			
-			while(true) {
-				String msg = ois.readUTF();
+			String msg;
+			while((msg = ois.readUTF()) != null) {
+				lock.acquire();
 				
 				/////////////////////////////READ/////////////////////////////
 				
 				if(msg.equals("read_request")) {
 					//send read request to PC1
-					VectorClock temp = (VectorClock) ois.readObject();
+					this.clock = (VectorClock) ois.readObject();
 					for(ServerThread st : Main.stv) {
 						if(st.clock.ID == 1) {
 							st.oos.writeUTF("read_request");
-							st.oos.writeObject(temp);
+							st.oos.writeObject(this.clock);
+							st.oos.flush();
 							break;
 						}
 					}
 				}
 				if(msg.equals("read_reply")) {
+					
 					//send read reply to the PC that requested it
-					VectorClock temp = (VectorClock) ois.readObject();
-					VectorClock target = (VectorClock) ois.readObject();
+					this.clock = (VectorClock) ois.readObject();
+					int target = ois.readInt();
 					for(ServerThread st : Main.stv) {
-						if(st.clock.ID == target.ID) {
+						if(st.clock.ID == target) {
 							st.oos.writeUTF("read_reply");
-							st.oos.writeObject(temp);
+							st.oos.writeObject(this.clock);
+							st.oos.flush();
 							break;
 						}
 					}
@@ -64,23 +72,24 @@ public class ServerThread extends Thread {
 				
 				if(msg.equals("write_request")) {
 					//send write request to all other PCs
-					VectorClock temp = (VectorClock) ois.readObject();
+					this.clock = (VectorClock) ois.readObject();
 					for(ServerThread st : Main.stv) {
-						if(st.clock.ID != temp.ID) {
+						if(st.clock.ID != this.clock.ID) {
 							st.oos.writeUTF("write_request");
-							st.oos.writeObject(temp);
+							st.oos.writeObject(this.clock);
+							st.oos.flush();
 						}
 					}
 				}
 				
 				if(msg.equals("write_reply")) {
 					//send read reply to the PC that requested it
-					VectorClock temp = (VectorClock) ois.readObject();
-					VectorClock target = (VectorClock) ois.readObject();
+					this.clock = (VectorClock) ois.readObject();
+					int target = ois.readInt();
 					for(ServerThread st : Main.stv) {
-						if(st.clock.ID == target.ID) {
+						if(st.clock.ID == target) {
 							st.oos.writeUTF("write_reply");
-							st.oos.writeObject(temp);
+							st.oos.writeObject(this.clock);
 							break;
 						}
 					}
@@ -93,15 +102,17 @@ public class ServerThread extends Thread {
 					break;
 				}
 				
-			}
+				lock.release();
+				
+			}//end while
 			
 			oos.close();
 			ois.close();
 			
-		} catch (IOException | ClassNotFoundException e) {
+		} catch (IOException | ClassNotFoundException | InterruptedException e) {
 			e.printStackTrace();
 		}
-    }
+	}
     
     public void end() {
         try {
