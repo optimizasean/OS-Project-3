@@ -183,6 +183,7 @@ public class Client extends JPanel {
 								clock.inc();
 								Read.makeCopy();
 								GlobalLogger.write(clock, "reads file");
+                                Thread.sleep(3000);//simulate time taken to read file
 								Read.deleteCopy();
 								status = "idle";
 								System.out.println("done reading");
@@ -261,6 +262,7 @@ public class Client extends JPanel {
 									clock.inc();
 									Write.writeFile(clock);
 									GlobalLogger.write(clock, "writes to file");
+                                    Thread.sleep(3000);//simulate time taken to write to file
 									Write.returnFile(clock);
 									
 									counter = 0;//reset if we get another writing command
