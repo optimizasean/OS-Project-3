@@ -34,6 +34,7 @@ public class ServerThread extends Thread {
 		try {
 			oos.writeObject(this.clock);
 			String msg;
+			
 			while((msg = ois.readUTF()) != null) {
 				lock.acquire();
 				

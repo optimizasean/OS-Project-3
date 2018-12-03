@@ -156,10 +156,7 @@ public class Client extends JPanel {
 					try {
 						while(true) {
 							String msg = ois.readUTF();
-							//System.err.println("Hey");
 							VectorClock temp = (VectorClock) ois.readObject();
-							//System.err.println("Man");
-							
 							
 							if(msg.equals("read_request")) {
 								clock.inc();
@@ -168,7 +165,9 @@ public class Client extends JPanel {
 								
 								clock.inc();
 								GlobalLogger.write(clock, "replied OK to PC"+temp.ID+" read request");
+
 								oos.writeUTF("read_reply");
+                                oos.reset();
 								oos.writeObject(clock);
 								oos.writeInt(temp.ID);
 								oos.flush();
@@ -200,7 +199,9 @@ public class Client extends JPanel {
 								if(status.equals("idle")) {
 									clock.inc();
 									GlobalLogger.write(clock, "replied OK to PC"+temp.ID+" write request");
+
 									oos.writeUTF("write_reply");
+                                    oos.reset();
 									oos.writeObject(clock);
 									oos.writeInt(temp.ID);
 									oos.flush();
@@ -214,7 +215,9 @@ public class Client extends JPanel {
 									if(cmp.equals("second->first")) {
 										clock.inc();
 										GlobalLogger.write(clock, "replied OK to PC"+temp.ID+" write request");
+
 										oos.writeUTF("write_reply");
+                                        oos.reset();
 										oos.writeObject(clock);
 										oos.writeInt(temp.ID);
 										oos.flush();
@@ -237,7 +240,9 @@ public class Client extends JPanel {
 								
 								clock.inc();
 								GlobalLogger.write(clock, "replied OK to PC"+temp.ID+" write request");
+
 								oos.writeUTF("write_reply");
+                                oos.reset();
 								oos.writeObject(clock);
 								oos.writeInt(temp.ID);
 								oos.flush();
