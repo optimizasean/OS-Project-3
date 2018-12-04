@@ -15,6 +15,7 @@ public class Constants {
     public static final String FILE_GLOBAL_LOG = "global_log.txt";
     public static final String FILE_LOCAL_LOG = "local_log.txt";
     public static final String FILE_TARGET = "target.txt";
+    public static final String FILE_BACKGROUND_LOG = "background_log.txt";
 
     //Directory Paths
     public static final String DIRECTORY_PATH_CONTROLLER = "data/CONTROLLER/";
@@ -26,4 +27,7 @@ public class Constants {
 
     //Target File Path
     public static final String TARGET_PATH = "data/PC1/target.txt";
+
+    //Background Log Path
+    public static final String BACKGROUND_LOG_PATH = "data/";
 }
