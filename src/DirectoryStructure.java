@@ -9,20 +9,43 @@ import java.io.RandomAccessFile;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
-/****************************
- * DirectoryStructure class
- * ensures the directories and
- * files utilized by the program
- * all exist before atttempting to
- * read or write from them
- ****************************/
+/*****************************************************************\
+ * DirectoryStructure class ensures the directories and files
+ * utilized by the program all exist before atttempting to
+ * read or write from them.
+ * 
+ * @author Shadowbomb
+\*****************************************************************/
 public class DirectoryStructure {
     private File file = null;
 
-    //Blank Constructor
+    /*****************************************************************\
+     * DirectoryStructure {@link #DirectoryStructure() Constructor}
+     * is a blank constructor meant for creating the object that will
+     * ensure the directories and files necessary for the program to
+     * ensure their existence before attempting to read, write, or open
+     * to save from exceptions.
+     * 
+     * @return DirectoryStructure Object
+    \*****************************************************************/
     public DirectoryStructure() {}
 
-    //Create the directories and files
+    /*****************************************************************\
+     * DirectoryStructure {@link #ensureStructure() ensureStructure} is
+     * a blank constructor meant for creating the directories and files
+     * necessary for the program to ensure their existence before
+     * attempting to read, write, or open to save from exceptions
+     * utilizing the {@link osp.Constants Constants} paths and filenames
+     * and Implements {@link #wipeFile(File) wipeFile} to guarantee
+     * the files are empty before running so logs are only descriptive
+     * of the current session.
+     * 
+     * @exception FileNotFoundException
+     * @exception IOException
+     * @return void
+     * @see {@link osp.Constants Constants}
+     * @see {@link #wipeFile(File)}
+    \*****************************************************************/
     public void ensureStructure() {
         Main.log("[DirectoryStructure] Ensuring Directory Structure");
         try {
@@ -198,6 +221,20 @@ public class DirectoryStructure {
         return;
     }
 
+    /*****************************************************************\
+     * DirectoryStructure {@link #makeBackgroundLog() makeBackgroundLog}
+     * is a method which creates the main log used in the Program.  It
+     * utilizes the {@link Constants Constants} class for file names and
+     * paths and utilized {@link #wipeFile(File) wipeFile} for
+     * clearing the files so the log is only representative of the
+     * current session.
+     * 
+     * @exception FileNotFoundException
+     * @exception IOException
+     * @return void
+     * @see {@link Constants Constants}
+     * @see {@link #wipeFile(File) wipeFile}
+    \*****************************************************************/
     public static void makeBackgroundLog() {
         try {
             //Background Log
@@ -215,6 +252,14 @@ public class DirectoryStructure {
         }
     }
 
+    /*****************************************************************\
+     * DirectoryStructure {@link #wipeFile(String) wipeFile} is used to
+     * wipe files according to the path by truncating their size to 0.
+     * 
+     * @exception FileNotFoundException
+     * @exception IOException
+     * @return void
+    \*****************************************************************/
     public static void wipeFile(String path) {
         try {
             //RandomAccessFile to wipe file
@@ -229,6 +274,15 @@ public class DirectoryStructure {
         } catch (IOException iex) {}
         return;
     }
+    /*****************************************************************\
+     * DirectoryStructure {@link #wipeFile(File) wipeFile} is used
+     * to wipe files according to the File Object by truncating their
+     * size to 0.
+     * 
+     * @exception FileNotFoundException
+     * @exception IOException
+     * @return void
+    \*****************************************************************/
     public static void wipeFile(File file) {
         try {
             //RandomAccessFile to wipe file
