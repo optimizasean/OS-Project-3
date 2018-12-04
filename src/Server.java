@@ -174,6 +174,7 @@ public class Server extends JPanel {
 
         //Log for server on center of panel
         this.serverLog = new JTextArea(32, 30);
+        this.serverLog.setEditable(false);
         this.serverLogPane = new JScrollPane(serverLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.serverLogPane.setBackground(Color.WHITE);
         this.baseConstraints.gridx = 0;
@@ -206,6 +207,7 @@ public class Server extends JPanel {
 
         //Field for taking port abot start button
         this.portField = new JTextField("9001");
+        this.portField.setEditable(true);
         this.baseConstraints.gridx = 2;
         this.baseConstraints.gridy = 5;
         this.baseConstraints.gridwidth = 1;
