@@ -384,16 +384,16 @@ public class Server extends JPanel {
                     Main.log("[Server] Get PC: " + i);
                     Client client = Main.cv.get(i);
                     try {
-                        Main.log("[Server] Interrupting client command PC: " + i);
-                        client.command.interrupt();
-                        Main.log("[Server] Joining client command PC: " + i);
-                        client.command.join();
+                        Main.log("[Server] Interrupting client instruction PC: " + i);
+                        client.instruction.interrupt();
+                        Main.log("[Server] Joining client instruction PC: " + i);
+                        client.instruction.join();
                     } catch (InterruptedException iex) {}
                     try {
-                        Main.log("[Server] Interrupting client response PC: " + i);
-                        client.response.interrupt();
-                        Main.log("[Server] Joining client response PC: " + i);
-                        client.response.join();
+                        Main.log("[Server] Interrupting client task PC: " + i);
+                        client.task.interrupt();
+                        Main.log("[Server] Joining client task PC: " + i);
+                        client.task.join();
                         Main.log("[Server] Stopped client PC: " + i);
                     } catch (InterruptedException iex) {}
                 }

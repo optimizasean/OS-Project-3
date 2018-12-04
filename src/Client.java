@@ -88,10 +88,11 @@ public class Client extends JPanel {
     private int clientNumber = 0;
     private int port = 0;
     private static String status = "idle";
-	private static Vector<VectorClock> memory = new Vector<VectorClock>();
+	private static Vector<VectorClock> queue = new Vector<VectorClock>();
 	private static int counter = 0;//keep track of how many PCs responded
-	private static final Semaphore fileLock = new Semaphore(1);
-	private static final Semaphore streamLock = new Semaphore(1);
+	private static volatile Semaphore fileLock = new Semaphore(1);
+    private static volatile Semaphore streamLock = new Semaphore(1);
+    private static volatile Semaphore commandLock = new Semaphore(1);
 	private static double readP = 0.5;
 	private static double writeP = 0.5;
 	private static String command = null;
@@ -132,8 +133,6 @@ public class Client extends JPanel {
             
             //DELETE THIS AFTER IMPPLEMENT RATIO
             //Scanner k = new Scanner(System.in);
-
-            Semaphore commandLock = new Semaphore(1);
             
             Main.log("[Client: " + this.clientNumber + "] Starting Object Streams");
             ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
@@ -166,10 +165,12 @@ public class Client extends JPanel {
                                 //LOG
                                 log(clock, "request to read");
 
+                                streamLock.acquire();
 								oos.writeUTF("read_request");
 							    oos.writeObject(clock);
 							    oos.flush();
-							    oos.reset();
+                                oos.reset();
+                                streamLock.release();
 							}
 							
 							if(command.equals("write")) {
@@ -180,20 +181,26 @@ public class Client extends JPanel {
                                 //LOG
                                 log(clock, "request to write");
 
+                                streamLock.acquire();
 								oos.writeUTF("write_request");
 							    oos.writeObject(clock);
 							    oos.flush();
-							    oos.reset();
+                                oos.reset();
+                                streamLock.release();
 							}
 							
 							if(command.equals("quit")) {
+                                streamLock.acquire();
 								oos.writeObject("quit");
-								oos.flush();
+                                oos.flush();
+                                streamLock.release();
 							}
                         }
                         //Main.log("[Client: " + clientNumber + "] Instruction Thread Ended");
-					} catch(IOException e) {
-						e.printStackTrace();
+					} catch (InterruptedException iex) {
+
+                    } catch(IOException ex) {
+						ex.printStackTrace();
 					}
 				}
 			});
@@ -319,8 +326,6 @@ public class Client extends JPanel {
                                 //LOG
                                 log(clock, "PC" + temp.ID + " replied OK to write request");
 								
-								//to ensure multiple clients don't access this variable at same time
-								lock.acquire();
 								counter++;
 								
 								//if the other 4 PCs respond, perform write action
@@ -344,7 +349,6 @@ public class Client extends JPanel {
 									status = "idle";
 									System.out.println("done writing");
 								}
-								lock.release();
 							}//end write_reply
 
 
@@ -355,7 +359,7 @@ public class Client extends JPanel {
                                     System.err.println("execute PC"+temp.ID);
                                     
                                     clock.inc();
-                                    GlobalLogger.write(clock, "replied OK to PC"+temp.ID+" write request");
+                                    GlobalLogger.writePC(clock, "replied OK to PC"+temp.ID+" write request");
                                     
                                     streamLock.acquire();
                                     oos.writeUTF("write_reply");
@@ -370,9 +374,10 @@ public class Client extends JPanel {
 
 						}//while loop
 						//Main.log("[Client: " + clientNumber + "] Task Thread Ended");
-					}
-					catch(Exception e) {
-						e.printStackTrace();
+					} catch (InterruptedException iex) {
+
+                    } catch(Exception ex) {
+						ex.printStackTrace();
 					}
 				}
 			});
@@ -386,7 +391,7 @@ public class Client extends JPanel {
             Main.log("[Client: " + this.clientNumber + "] Task Thread started");
         } catch (UnknownHostException uhex) {
 
-        } catch (IOException iex) {
+        } catch (IOException ioex) {
 
         } catch (Exception ex) {
 

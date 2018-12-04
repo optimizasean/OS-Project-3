@@ -1,13 +1,17 @@
 //Operating Systems Project (osp) package
 package osp;
 
+//Exceptions
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
 //Date and timestamping
 import java.util.Date;
 import java.text.SimpleDateFormat;
+
+//File Reading and Writing
+import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 
 /*****************************************************************\
  * GlobalLogger Class is used to log events on any file and works
