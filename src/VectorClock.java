@@ -5,16 +5,16 @@ import java.io.Serializable;
 import java.util.Vector;
 
 public class VectorClock implements Serializable {
-
 	private static final long serialVersionUID = 1L;
 	public int ID;
-	private Vector<Integer> TS;
+	public Vector<Integer> TS = new Vector<Integer>();
+	public Vector<Integer> writeTS = new Vector<Integer>();
 
 	public VectorClock(int ID){
 		this.ID = ID;
-		Vector<Integer> temp = new Vector<Integer>();
-		for(int i=0;i<5;i++)temp.add(0);
-		this.TS = temp;
+		for(int i=0; i<5; i++) this.TS.add(0);
+		for(int i=0; i<5; i++) this.writeTS.add(0);
+		
 	}
 	
 	
@@ -37,31 +37,36 @@ public class VectorClock implements Serializable {
 	}
 	
 	
+	public void setWriteTime(VectorClock clock) {
+		for(int i=0; i<5; i++) {
+			this.writeTS.set(i, clock.TS.get(i));
+		}
+	}
+	
+	
 	public static String compare(VectorClock first, VectorClock second) {
 		String ret = "Error";
 		
 		int countFirst = 0;
 		int countSecond = 0;
 		
-		for(int i=0;i<first.TS.size(); i++) {
-			if(first.TS.get(i) <= second.TS.get(i))countFirst++;
-			if(second.TS.get(i) <= first.TS.get(i))countSecond++;
+		for(int i=0;i<5; i++) {
+			if(first.writeTS.get(i) <= second.writeTS.get(i))countFirst++;
+			if(second.writeTS.get(i) <= first.writeTS.get(i))countSecond++;
 		}
 		
 		if(countFirst == countSecond) ret = "first<->second";
-		else if(countFirst == first.TS.size())ret = "first->second";
-		else if(countSecond == second.TS.size()) ret = "second->first";
+		else if(countFirst == 5)ret = "first->second";
+		else if(countSecond == 5) ret = "second->first";
 		
 		return ret;
 	}
 	
-	//Outdated
+	
 	public String print(){
 		//System.out.println("PC"+this.ID+this.TS+"\t");
 		return "PC"+this.ID+this.TS;
 	}
-
-	public String toString() {
-		return "{PC" + this.ID + " " + this.TS + "}";
-	}
+	
+	
 }
