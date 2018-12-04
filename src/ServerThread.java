@@ -132,6 +132,6 @@ public class ServerThread extends Thread {
 	}
 	
 	private void log(String log) {
-		Main.server.visuaLog(log);
+		Main.server.visualLog(log);
 	}
 }
