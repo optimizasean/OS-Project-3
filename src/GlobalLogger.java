@@ -26,11 +26,11 @@ public class GlobalLogger {
 		raf.close();
 	}
 
-	public static synchronized void writeController(VectorClock clock, String message) throws IOException {
+	public static void writeController(VectorClock clock, String message) throws IOException {
 		String dir = Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_GLOBAL_LOG;
 
 		//RandomAccessFile used to write to certain area of file
-		RandomAccessFile raf = new RandomAccessFile(dir, "rw");
+		RandomAccessFile raf = new RandomAccessFile(dir, "rwd"); //rwd guarantees data written to file synchronously on device storage
 		
 		raf.seek(raf.length());//move cursor to end of file
 		timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
@@ -38,11 +38,11 @@ public class GlobalLogger {
 		raf.close();
 	}
 
-	public static synchronized void writeBackground(String message) throws IOException {
+	public static void writeBackground(String message) throws IOException {
 		String dir = Constants.BACKGROUND_LOG_PATH + Constants.FILE_BACKGROUND_LOG;
 
 		//RandomAccessFile used to write to certain area of file
-		RandomAccessFile raf = new RandomAccessFile(dir, "rw");
+		RandomAccessFile raf = new RandomAccessFile(dir, "rwd"); //rwd guarantees data written to file synchronously on device storage
 		
 		raf.seek(raf.length());//move cursor to end of file
 		timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
