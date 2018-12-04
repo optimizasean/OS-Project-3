@@ -13,6 +13,10 @@ import java.awt.GridBagConstraints;
 //Labels and Text
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import jdk.nashorn.internal.objects.Global;
+import osp.GlobalLogger;
+
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 
@@ -83,6 +87,9 @@ public class Server extends JPanel {
     }
     
     public void log(String log) {
+        try {
+            GlobalLogger.writeController(null, message);
+        } catch (IOException iex) {}
         this.serverLog.append(log);
         this.logger.log(log);
         return;
