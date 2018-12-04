@@ -33,7 +33,6 @@ public class LocalLogger {
         try {
             this.file = file;
             this.logger = new PrintWriter(new BufferedWriter(new FileWriter(this.file, true)));
-            timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         } catch (FileNotFoundException fnfx) {
             fnfx.printStackTrace();
             System.err.println("Logger Failure: File not Found");
@@ -51,6 +50,7 @@ public class LocalLogger {
 
     //Log something
     public void log(String log) {
+        this.timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         this.logger.println("[" + timeStamp + "] " + log);
         return;
     }

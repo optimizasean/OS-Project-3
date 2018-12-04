@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 
 public class GlobalLogger {
 	//TimeStamp
-	private static String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+	private static String timeStamp = null;
 
 	public static synchronized void write(VectorClock clock, String message) throws IOException {
 		String dir = "./data/PC" + clock.ID + "/" + Constants.FILE_GLOBAL_LOG;
@@ -23,6 +23,7 @@ public class GlobalLogger {
 		RandomAccessFile raf = new RandomAccessFile(dir, "rw");
 		
 		raf.seek(raf.length());//move cursor to end of file
+		timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 		raf.writeBytes("[" + timeStamp + "] "+clock.print()+"\t"+message+"\n");//write message at end of file
 		raf.close();
 
@@ -30,6 +31,7 @@ public class GlobalLogger {
 		RandomAccessFile raf2 = new RandomAccessFile(dir2, "rw");
 	
 		raf2.seek(raf2.length());//move cursor to end of file
+		timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 		raf2.writeBytes("[" + timeStamp + "] "+clock.print()+"\t"+message+"\n");//write message at end of file
 		raf2.close();
 	}
