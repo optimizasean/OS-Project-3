@@ -159,6 +159,7 @@ public class Server extends JPanel {
 
         //Label for top of base panel
         this.windowLabel = new JLabel("SERVER");
+        this.changeFont(this.windowLabel, 5);
         this.baseConstraints.gridx = 1;
         this.baseConstraints.gridy = 0;
         this.baseConstraints.gridwidth = 2;
@@ -173,7 +174,8 @@ public class Server extends JPanel {
         this.add(windowLabel, baseConstraints);
 
         //Log for server on center of panel
-        this.serverLog = new JTextArea(32, 30);
+        this.serverLog = new JTextArea(38, 40);
+        this.changeFont(this.serverLog, -3);
         this.serverLog.setEditable(false);
         this.serverLogPane = new JScrollPane(serverLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.serverLogPane.setBackground(Color.WHITE);
@@ -192,6 +194,7 @@ public class Server extends JPanel {
 
         //Label for port under server log
         this.portLabel = new JLabel("Port:");
+        this.changeFont(this.portLabel, 2);
         this.baseConstraints.gridx = 1;
         this.baseConstraints.gridy = 5;
         this.baseConstraints.gridwidth = 1;
@@ -207,6 +210,7 @@ public class Server extends JPanel {
 
         //Field for taking port abot start button
         this.portField = new JTextField("9001");
+        this.changeFont(this.portField, 2);
         this.portField.setEditable(true);
         this.baseConstraints.gridx = 2;
         this.baseConstraints.gridy = 5;
@@ -223,6 +227,7 @@ public class Server extends JPanel {
 
         //Button to start server
         this.startButton = new JButton("START");
+        this.changeFont(this.startButton, 1);
         this.baseConstraints.gridx = 1;
         this.baseConstraints.gridy = 6;
         this.baseConstraints.gridwidth = 2;
@@ -238,6 +243,7 @@ public class Server extends JPanel {
 
         //Button to stop server under start button
         this.stopButton = new JButton("STOP");
+        this.changeFont(this.stopButton, 1);
         this.baseConstraints.gridx = 1;
         this.baseConstraints.gridy = 7;
         this.baseConstraints.gridwidth = 2;
@@ -253,6 +259,7 @@ public class Server extends JPanel {
 
         //Button to force quit on bottom
         this.quitButton = new JButton("QUIT");
+        this.changeFont(this.quitButton, 1);
         this.baseConstraints.gridx = 0;
         this.baseConstraints.gridy = 8;
         this.baseConstraints.gridwidth = 4;
@@ -311,7 +318,7 @@ public class Server extends JPanel {
         Font origin, prime;
 
         origin = base.getFont();
-        prime = new Font(origin.getFontName(), origin.getStyle(), origin.getSize()-1);
+        prime = new Font(origin.getFontName(), origin.getStyle(), origin.getSize() + size);
 
         base.setFont(prime);
         return;

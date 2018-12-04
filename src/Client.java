@@ -19,6 +19,9 @@ import javax.swing.JTextArea;
 //Buttons
 import javax.swing.JButton;
 
+//Dimensions
+import java.awt.Dimension;
+
 //Color
 import java.awt.Color;
 
@@ -75,8 +78,12 @@ public class Client extends JPanel {
     private JButton writePlus = null;
     private JButton writeMinus = null;
 
+    //Display Text
+    private String plus = "+";
+    private String minus = "-";
+
     //Logger
-    LocalLogger logger = null;
+    private LocalLogger logger = null;
 
     //Client
     private int clientNumber = 0;
@@ -309,60 +316,74 @@ public class Client extends JPanel {
         this.setBackground(Color.GRAY);
 
         //Set base panel layout
-        base = new BorderLayout();
-        this.setLayout(base);
+        this.base = new BorderLayout();
+        this.setLayout(this.base);
 
         //Add base panel label north(top)
-        windowLabel = new JLabel("PC " + this.clientNumber);
-        this.add(windowLabel, BorderLayout.NORTH);
+        this.windowLabel = new JLabel("PC " + this.clientNumber);
+        this.changeFont(this.windowLabel, 5);
+        this.add(this.windowLabel, BorderLayout.NORTH);
 
         //Prepare and add west(left) panel for +/- of setting read
         this.readPanel = new JPanel();
         this.readPanel.setBackground(Color.LIGHT_GRAY);
-        this.readLayout = new BoxLayout(readPanel, BoxLayout.Y_AXIS);
-        this.readPanel.setLayout(readLayout);
+        this.readLayout = new BoxLayout(this.readPanel, BoxLayout.Y_AXIS);
+        this.readPanel.setLayout(this.readLayout);
         this.readLabel = new JLabel("READ");
-        this.readPanel.add(readLabel);
-        this.readPlus = new JButton("+");
-        this.readPanel.add(readPlus);
-        this.readMinus = new JButton("-");
-        this.readPanel.add(readMinus);
-        this.add(readPanel, BorderLayout.WEST);
+        this.changeFont(this.readLabel, -1);
+        this.readPanel.add(this.readLabel);
+        this.readPlus = new JButton(this.plus);
+        this.changeFont(this.readPlus, -5);
+        this.readPanel.add(this.readPlus);
+        this.readMinus = new JButton(this.minus);
+        this.changeFont(this.readMinus, -5);
+        this.readPanel.add(this.readMinus);
+        this.add(this.readPanel, BorderLayout.WEST);
 
         //Prepare and add pclog to the center
-        this.pcLog = new JTextArea(4, 30);
+        this.pcLog = new JTextArea(5, 30);
+        this.changeFont(this.pcLog, -3);
         this.pcLog.setEditable(false);
-        this.pcLogPane = new JScrollPane(pcLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        this.pcLogPane = new JScrollPane(this.pcLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.pcLogPane.setBackground(Color.WHITE);
-        this.add(pcLogPane, BorderLayout.CENTER);
+        this.add(this.pcLogPane, BorderLayout.CENTER);
 
         //Prepare and add the write panel for +/- to east(right)
         this.writePanel = new JPanel();
         this.writePanel.setBackground(Color.LIGHT_GRAY);
-        this.writeLayout = new BoxLayout(writePanel, BoxLayout.Y_AXIS);
-        this.writePanel.setLayout(writeLayout);
+        this.writeLayout = new BoxLayout(this.writePanel, BoxLayout.Y_AXIS);
+        this.writePanel.setLayout(this.writeLayout);
         this.writeLabel = new JLabel("WRITE");
-        this.writePanel.add(writeLabel);
-        this.writePlus = new JButton("+");
-        this.writePanel.add(writePlus);
-        this.writeMinus = new JButton("-");
-        this.writePanel.add(writeMinus);
-        this.add(writePanel, BorderLayout.EAST);
+        this.changeFont(this.writeLabel, -1);
+        this.writePanel.add(this.writeLabel);
+        this.writePlus = new JButton(this.plus);
+        this.changeFont(this.writePlus, -5);
+        this.writePanel.add(this.writePlus);
+        this.writeMinus = new JButton(this.minus);
+        this.changeFont(this.writeMinus, -5);
+        this.writePanel.add(this.writeMinus);
+        this.add(this.writePanel, BorderLayout.EAST);
 
         //Prepare the text view panel for read and write percentages to go south(bottom)
         this.viewPanel = new JPanel();
         this.viewPanel.setBackground(Color.LIGHT_GRAY);
         this.viewLayout = new GridLayout(2, 2);
-        this.viewPanel.setLayout(viewLayout);
+        this.viewPanel.setLayout(this.viewLayout);
         this.readViewLabel = new JLabel("Read: %");
-        this.viewPanel.add(readViewLabel);
+        this.changeFont(this.readViewLabel, -2);
+        this.viewPanel.add(this.readViewLabel);
         this.readNumber = new JTextField("??");
-        this.viewPanel.add(readNumber);
+        this.changeFont(this.readNumber, -2);
+        this.readNumber.setEditable(false);
+        this.viewPanel.add(this.readNumber);
         this.writeViewLabel = new JLabel("Write: %");
-        this.viewPanel.add(writeViewLabel);
+        this.changeFont(this.writeViewLabel, -2);
+        this.viewPanel.add(this.writeViewLabel);
         this.writeNumber = new JTextField("??");
-        this.viewPanel.add(writeNumber);
-        this.add(viewPanel, BorderLayout.SOUTH);
+        this.changeFont(this.writeNumber, -2);
+        this.writeNumber.setEditable(false);
+        this.viewPanel.add(this.writeNumber);
+        this.add(this.viewPanel, BorderLayout.SOUTH);
 
         return;
     }
@@ -397,7 +418,7 @@ public class Client extends JPanel {
         Font origin, prime;
 
         origin = base.getFont();
-        prime = new Font(origin.getFontName(), origin.getStyle(), origin.getSize()-1);
+        prime = new Font(origin.getFontName(), origin.getStyle(), origin.getSize() + size);
 
         base.setFont(prime);
         return;
