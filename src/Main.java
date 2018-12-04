@@ -45,6 +45,15 @@ public class Main {
     public static Vector<Client> cv = null;
 
     public static void main(String[] args) {
+        //Make Background Log
+        try {
+            //Background Log
+            file = new File(Constants.BACKGROUND_LOG_PATH);
+            file.mkdirs();
+            file = new File(Constants.BACKGROUND_LOG_PATH + Constants.FILE_BACKGROUND_LOG);
+            file.createNewFile();
+        } catch (IOException iex) {}
+
         Main main = new Main();
         //main.start();
         main.run();
@@ -133,7 +142,7 @@ public class Main {
 
     private void log(String log) {
         try {
-            GlobalLogger.writeController(null, log);
+            GlobalLogger.writeBackground(log);
         } catch (IOException iex) {}
     }
 }
