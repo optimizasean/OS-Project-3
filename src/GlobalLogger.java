@@ -39,6 +39,18 @@ public class GlobalLogger {
 		raf.writeBytes("[" + timeStamp + "] " + clock + "\t" + message + "\n");//write message at end of file
 		raf.close();
 	}
+
+	public static synchronized void writeBackground(String message) throws IOException {
+		String dir = Constants.BACKGROUND_LOG_PATH + Constants.FILE_BACKGROUND_LOG;
+
+		//RandomAccessFile used to write to certain area of file
+		RandomAccessFile raf = new RandomAccessFile(dir, "rw");
+		
+		raf.seek(raf.length());//move cursor to end of file
+		timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+		raf.writeBytes("[" + timeStamp + "] " + clock + "\t" + message + "\n");//write message at end of file
+		raf.close();
+	}
 	
 	public static void cleanup() throws FileNotFoundException {
 		PrintWriter cntrl = new PrintWriter("./data/CONTROLLER/log.txt");
