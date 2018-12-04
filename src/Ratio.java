@@ -21,7 +21,7 @@ public class Ratio{
      * @param idle: probability of reading, double.
      * @return String: read, write, idle
     \*****************************************************************/
-    public String request(double r_p, double w_p) {
+    public static String command(double r_p, double w_p) {
         double r = Math.random();
         if((0<=r) && (r<r_p)) {
             //System.out.println("read: " + r_p);
