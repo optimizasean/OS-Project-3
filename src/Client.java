@@ -302,6 +302,7 @@ public class Client extends JPanel {
 									else if(cmp.equals("first->second")) {
 											//Add to queue to be processed later
 											queue.add(temp);
+                                            done = false;
 									}
 									else {
 										System.err.println("write_request error");
