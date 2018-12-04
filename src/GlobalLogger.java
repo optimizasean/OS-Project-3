@@ -15,9 +15,21 @@ public class GlobalLogger {
 	//TimeStamp
 	private static String timeStamp = null;
 
-	public static synchronized void write(VectorClock clock, String message) throws IOException {
+	//Outdated
+	public static synchronized void writePC(VectorClock clock, String message) throws IOException {
 		String dir = "./data/PC" + clock.ID + "/" + Constants.FILE_GLOBAL_LOG;
 		String dir2 = Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_GLOBAL_LOG;
+
+		//RandomAccessFile used to write to certain area of file
+		RandomAccessFile raf = new RandomAccessFile(dir, "rw");
+		
+		raf.seek(raf.length());//move cursor to end of file
+		raf.writeBytes(clock + "\t" + message + "\n");//write message at end of file
+		raf.close();
+	}
+
+	public static synchronized void writeController(VectorClock clock, String message) throws IOException {
+		String dir = Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_GLOBAL_LOG;
 
 		//RandomAccessFile used to write to certain area of file
 		RandomAccessFile raf = new RandomAccessFile(dir, "rw");
@@ -26,14 +38,6 @@ public class GlobalLogger {
 		timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 		raf.writeBytes("[" + timeStamp + "] " + clock + "\t" + message + "\n");//write message at end of file
 		raf.close();
-
-		//RandomAccessFile used to write to certain area of file
-		RandomAccessFile raf2 = new RandomAccessFile(dir2, "rw");
-	
-		raf2.seek(raf2.length());//move cursor to end of file
-		timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-		raf2.writeBytes("[" + timeStamp + "] " + clock + "\t" + message + "\n");//write message at end of file
-		raf2.close();
 	}
 	
 	public static void cleanup() throws FileNotFoundException {

@@ -337,10 +337,15 @@ public class Client extends JPanel {
 
     private void log(VectorClock clock, String log) {
         try {
-            GlobalLogger.write(clock, log);
+            //PC clock based log
+            GlobalLogger.writePC(clock, log);
+            //Controller clock and timestamp based log
+            GlobalLogger.writeController(clock, log);
         } catch (IOException iex) {}
+        //Viual
         this.pcLog.append(clock + log);
-        this.logger.log(clock + log);
+        //PC timestamp based log
+        this.logger.log(log);
 
         return;
     }
