@@ -129,8 +129,13 @@ public class Client extends JPanel {
 							
 							if(command.equals("read")) {
 								status = "reading";
-								clock.inc();
-								GlobalLogger.write(clock, "request to read");
+                                clock.inc();
+                                
+                                //LOG
+                                GlobalLogger.write(clock, "request to read");
+                                visualLog(clock + "request to read");
+                                logger.log(clock + "request to read");
+
 								oos.writeUTF("read_request");
 								oos.writeObject(clock);
 								oos.flush();
@@ -138,8 +143,13 @@ public class Client extends JPanel {
 							
 							if(command.equals("write")) {
 								status = "writing";
-								clock.inc();
-								GlobalLogger.write(clock, "request to write");
+                                clock.inc();
+                                
+                                //LOG
+                                GlobalLogger.write(clock, "request to write");
+                                visualLog(clock + "request to write");
+                                logger.log(clock + "request to write");
+
 								oos.writeUTF("write_request");
 								oos.writeObject(clock);
 								oos.flush();
@@ -167,11 +177,19 @@ public class Client extends JPanel {
 							
 							if(msg.equals("read_request")) {
 								clock.inc();
-								clock.merge(temp);
-								GlobalLogger.write(clock, "received read request from PC"+temp.ID);
+                                clock.merge(temp);
+                                
+                                //LOG
+                                GlobalLogger.write(clock, "received read request from PC" + temp.ID);
+                                visualLog(clock + "received read request from PC" + temp.ID);
+                                logger.log("received read request from PC" + temp.ID);
 								
-								clock.inc();
-								GlobalLogger.write(clock, "replied OK to PC"+temp.ID+" read request");
+                                clock.inc();
+                                
+                                //LOG
+                                GlobalLogger.write(clock, "replied OK to PC" + temp.ID + " read request");
+                                visualLog(clock + "replied OK to PC" + temp.ID + " read request");
+                                logger.log(clock + "replied OK to PC" + temp.ID + " read request");
 
 								oos.writeUTF("read_reply");
                                 oos.reset();
@@ -182,13 +200,22 @@ public class Client extends JPanel {
 							
 							if(msg.equals("read_reply")) {
 								clock.inc();
-								clock.merge(temp);
-								GlobalLogger.write(clock, "PC"+temp.ID+" replied OK to read request");
+                                clock.merge(temp);
+                                
+                                //LOG
+                                GlobalLogger.write(clock, "PC"+temp.ID+" replied OK to read request");
+                                visualLog(clock + "PC" + temp.ID + " replied OK to read request");
+                                logger.log(clock + "PC" + temp.ID + " replied OK to read request");
 								
 								//if PC1 responded OK, perform read action
 								clock.inc();
-								Read.makeCopy();
-								GlobalLogger.write(clock, "reads file");
+                                Read.makeCopy();
+                                
+                                //LOG
+                                GlobalLogger.write(clock, "reads file");
+                                visualLog(clock + "reads file");
+                                logger.log(clock + "reads file");
+
                                 Thread.sleep(3000);//simulate time taken to read file
 								Read.deleteCopy();
 								status = "idle";
@@ -199,13 +226,21 @@ public class Client extends JPanel {
 							if(msg.equals("write_request")) {
 								
 								clock.inc();
-								clock.merge(temp);
-								GlobalLogger.write(clock, "received write request from PC"+temp.ID);
+                                clock.merge(temp);
+                                
+                                //LOG
+                                GlobalLogger.write(clock, "received write request from PC" + temp.ID);
+                                visualLog(clock + "received write request from PC" + temp.ID);
+                                logger.log(clock + "received write request from PC" + temp.ID);
 								
 								//if this PC is idle respond OK
 								if(status.equals("idle")) {
-									clock.inc();
-									GlobalLogger.write(clock, "replied OK to PC"+temp.ID+" write request");
+                                    clock.inc();
+                                    
+                                    //LOG
+                                    GlobalLogger.write(clock, "replied OK to PC" + temp.ID + " write request");
+                                    visualLog(clock + "replied OK to PC" + temp.ID + " write request");
+                                    logger.log(clock + "replied OK to PC" + temp.ID + " write request");
 
 									oos.writeUTF("write_reply");
                                     oos.reset();
@@ -220,8 +255,12 @@ public class Client extends JPanel {
 									
 									//if this PC requested after, respond OK
 									if(cmp.equals("second->first")) {
-										clock.inc();
-										GlobalLogger.write(clock, "replied OK to PC"+temp.ID+" write request");
+                                        clock.inc();
+                                        
+                                        //LOG
+										GlobalLogger.write(clock, "replied OK to PC" + temp.ID + " write request");
+                                        visualLog(clock + "replied OK to PC" + temp.ID + " write request");
+                                        logger.log(clock + "replied OK to PC" + temp.ID + " write request");
 
 										oos.writeUTF("write_reply");
                                         oos.reset();
@@ -231,10 +270,8 @@ public class Client extends JPanel {
 									}
 									//if this PC requested earlier, finish critical section first
 									else if(cmp.equals("first->second")) {
-										{
 											//Add to queue to be processed later
 											memory.add(temp);
-										}
 									}
 									else {
 										System.out.println("write_request error");
@@ -245,8 +282,13 @@ public class Client extends JPanel {
 							if(memory.peek() != null && !status.equals("writing")) {
 								temp = memory.remove();
 								
-								clock.inc();
-								GlobalLogger.write(clock, "replied OK to PC"+temp.ID+" write request");
+                                clock.inc();
+                                
+                                //LOG
+								GlobalLogger.write(clock, "replied OK to PC" + temp.ID + " write request");
+                                visualLog(clock + "replied OK to PC" + temp.ID + " write request");
+                                logger.log(clock + "replied OK to PC" + temp.ID + " write request");
+
 
 								oos.writeUTF("write_reply");
                                 oos.reset();
@@ -258,8 +300,12 @@ public class Client extends JPanel {
 							if (msg.equals("write_reply")) {
 									
 								clock.inc();
-								clock.merge(temp);
-								GlobalLogger.write(clock, "PC"+temp.ID+" replied OK to write request");
+                                clock.merge(temp);
+                                
+                                //LOG
+                                GlobalLogger.write(clock, "PC" + temp.ID + " replied OK to write request");
+                                visualLog(clock + "PC" + temp.ID + " replied OK to write request");
+                                logger.log(clock + "PC" + temp.ID + " replied OK to write request");
 								
 								//to ensure multiple clients don't access this variable at same time
 								lock.acquire();
@@ -268,12 +314,21 @@ public class Client extends JPanel {
 								//if the other 4 PCs respond, perform write action
 								if(counter > 3) {
 									clock.inc();
-									Write.downloadFile(clock);
-									GlobalLogger.write(clock, "downloaded file from PC1");
+                                    Write.downloadFile(clock);
+                                    
+                                    //LOG
+                                    GlobalLogger.write(clock, "downloaded file from PC1");
+                                    visualLog(clock + "downloaded file from PC1");
+                                    logger.log(clock + "downloaded file from PC1");
 									
 									clock.inc();
-									Write.writeFile(clock);
-									GlobalLogger.write(clock, "writes to file");
+                                    Write.writeFile(clock);
+                                    
+                                    //LOG
+                                    GlobalLogger.write(clock, "writes to file");
+                                    visualLog(clock + "writes to file");
+                                    logger.log(clock + "writes to file");
+                                    
                                     Thread.sleep(3000);//simulate time taken to write to file
 									Write.returnFile(clock);
 									
