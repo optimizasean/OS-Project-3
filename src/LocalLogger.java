@@ -15,20 +15,25 @@ import java.io.FileWriter;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-/*******************************
- * LocalLogger class used to log
- * to the local file of the client
- * or controller individually to
- * avoid performance hits from a
- * global logger and for better
- * time accuracy.
- *******************************/
+/*****************************************************************\
+ * LocalLogger class is used to log things locally without worry of
+ * synchonicity and logs based on timeStamp
+ * 
+ * @author Shadowbomb
+\*****************************************************************/
 public class LocalLogger {
     private PrintWriter logger = null;
     private File file = null;
     private String timeStamp = null;
 
-    //LocalLogger Constructor sets up the logger
+    /*****************************************************************\
+     * LocalLogger {@link #LocalLogger(File) LocalLogger} sets up the logger based on the File
+     * passed in.
+     * 
+     * @exception FileNotFoundException
+     * @exception IOException
+     * @return LocalLogger
+    \*****************************************************************/
     public LocalLogger(File file) {
         try {
             this.file = file;
@@ -48,14 +53,24 @@ public class LocalLogger {
         }
     }
 
-    //Log something
+    /*****************************************************************\
+     * LocalLogger {@link #log(String) log} method takes a String
+     * and logs it to the file with the current timestamp.
+     * 
+     * @return void
+    \*****************************************************************/
     public void log(String log) {
         this.timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         this.logger.println("[" + timeStamp + "] " + log);
         return;
     }
 
-    //Saves and closes the log
+    /*****************************************************************\
+     * LocalLogger {@link #close() close} method closes the logger and
+     * saves the file.
+     * 
+     * @return void
+    \*****************************************************************/
     public void close() {
         this.logger.close();
         return;
