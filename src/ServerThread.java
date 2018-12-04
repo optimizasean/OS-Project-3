@@ -39,8 +39,11 @@ public class ServerThread extends Thread {
 			String msg;
 			
 			while((msg = ois.readUTF()) != null) {
+				//Check for stop and interrupt
+				if (Main.stopThreads) Thread.currentThread().interrupt();
 				lock.acquire();
-				
+				//Check for stop and interrupt
+				if (Main.stopThreads) Thread.currentThread().interrupt();
 				/////////////////////////////READ/////////////////////////////
 				
 				if(msg.equals("read_request")) {

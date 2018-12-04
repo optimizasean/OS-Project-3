@@ -42,6 +42,9 @@ public class Main {
     //Client
     public static Vector<Client> cv = null;
 
+    //Thread Stop
+    public static volatile boolean stopThreads = false;
+
     public static void main(String[] args) {
         //Make Background Log
         DirectoryStructure.makeBackgroundLog();

@@ -337,23 +337,37 @@ public class Server extends JPanel {
         this.startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("START BUTTON PUSHED");
+                Main.log("[Server] Start Button Pushed");
+                Main.stopThreads = true;
+                Main.log("[Server] Creating Server Launch Thread");
                 Thread s = new Thread(new Runnable() {
                     public void run() {
+                        Main.log("[Server] START BUTTON PUSHED - Launching Server");
                         launchServer();
+                        Main.log("[Server] START BUTTON - Server Launched");
                     }
                 });
+                Main.log("[Server] Creating Client Launch Thread");
                 Thread c = new Thread(new Runnable() {
                     public void run() {
+                        Main.log("[Server] START BUTTON PUSHED - Launching Clients");
                         launchClient();
+                        Main.log("[Server] START BUTTON PUSHED - Clients Launched");
                     }
                 });
+                Main.log("[Server] Starting Server Launch Thread");
                 s.start();
+                Main.log("[Server] Server Launch Thread Started");
                 try {
+                    Main.log("[Server] Wait");
                     Thread.sleep(1000);
+                    Main.log("[Server] Wait over");
                 } catch (InterruptedException iex) {
 
                 }
+                Main.log("[Server] Start Client Launch Thread");
                 c.start();
+                Main.log("[Server] Client Launch Thread Started");
             }
         });
         Main.log("[Server] Start button functional");
@@ -361,7 +375,50 @@ public class Server extends JPanel {
         Main.log("[Server] Adding stop button Functionality");
         this.stopButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                Main.log("[Server] Stop Button Pushed");
                 System.out.println("STOP BUTTON PUSHED");
+                //Interrupt Clients
+                Main.log("[Server] Ending Clients");
+                Main.stopThreads = true;
+                for (int i = 0; i < Main.cv.size(); i++) {
+                    Main.log("[Server] Get PC: " + i);
+                    Client client = Main.cv.get(i);
+                    try {
+                        Main.log("[Server] Interrupting client command PC: " + i);
+                        client.command.interrupt();
+                        Main.log("[Server] Joining client command PC: " + i);
+                        client.command.join();
+                    } catch (InterruptedException iex) {}
+                    try {
+                        Main.log("[Server] Interrupting client response PC: " + i);
+                        client.response.interrupt();
+                        Main.log("[Server] Joining client response PC: " + i);
+                        client.response.join();
+                        Main.log("[Server] Stopped client PC: " + i);
+                    } catch (InterruptedException iex) {}
+                }
+                Main.log("[Server] All Clients stopped?");
+                //Interrupt ServerThreads
+                Main.log("[Server] Ending Server Threads");
+                for (int i = 0; i < Main.stv.size(); i++) {
+                    Main.log("[Server] Get ServerThread: " + i);
+                    ServerThread serverThread = Main.stv.get(i);
+                    try {
+                        Main.log("[Server] Interrupting server thread PC: " + i);
+                        serverThread.interrupt();
+                        Main.log("[Server] Joining server thread PC: " + i);
+                        serverThread.join();
+                        Main.log("[Server] Stopped serverthread PC: " + i);
+                    } catch (InterruptedException iex) {}
+                }
+                //Interrupt Client c and Server s
+                //No need because they are already stopped
+                /*s.interrupt();
+                s.join();
+                c.interrupt();
+                c.join();*/
+                Main.stopThreads = false;
+                Main.log("[Server] Stopped all ServerThreads?");
             }
         });
         Main.log("[Server] Stop button functional");
@@ -369,7 +426,9 @@ public class Server extends JPanel {
         Main.log("[Server] Adding quit button functionality");
         this.quitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                Main.log("[Server] Quit Button Pushed");
                 System.out.println("QUIT BUTTON PUSHED");
+                Main.log("[Server] Ending Program");
                 System.exit(0);
             }
         });

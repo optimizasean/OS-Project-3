@@ -94,6 +94,10 @@ public class Client extends JPanel {
 	private static final Semaphore lock = new Semaphore(1);//lock for writing critical section
     private Socket socket = null;
 
+    //Threads
+    public Thread command = null;
+    public Thread response = null;
+
     //Client constructor to setup basic client
     public Client(int clientNumber) {
         Main.log("[Client] Creating Client: " + clientNumber);
@@ -133,13 +137,14 @@ public class Client extends JPanel {
             VectorClock clock = (VectorClock) ois.readObject();//set clock associated with the PC
             
             Main.log("[Client: " + this.clientNumber + "] Creating Command Thread");
-            Thread command = new Thread(new Runnable() {
+            this.command = new Thread(new Runnable() {
 				public void run() {
 					try {
 						Main.log("[Client: " + clientNumber + "] Command thread started successfully");
 						System.out.println("PC"+clock.ID);
 						while(true) {
-							
+                            //Check for stop and interrupt
+							if (Main.stopThreads) Thread.currentThread().interrupt();
 							String command = k.nextLine();//user input (read, write)
 							
 							if(command.equals("read")) {
@@ -179,11 +184,13 @@ public class Client extends JPanel {
 			});
             
             Main.log("[Client: " + this.clientNumber + "] Creating Response Thread");
-            Thread response = new Thread(new Runnable() {
+            this.response = new Thread(new Runnable() {
 				public void run() {
 					Main.log("[Client: " + clientNumber + "] Response thread started sucessfully");
 					try {
 						while(true) {
+                            //Check for stop and interrupt
+							if (Main.stopThreads) Thread.currentThread().interrupt();
 							String msg = ois.readUTF();
 							VectorClock temp = (VectorClock) ois.readObject();
 							
@@ -339,11 +346,11 @@ public class Client extends JPanel {
 			});
             
             Main.log("[Client: " + this.clientNumber + "] Start Command Thread");
-            command.start();
+            this.command.start();
             Main.log("[Client: " + this.clientNumber + "] Command thread started");
 
             Main.log("[Client: " + this.clientNumber + "] Start Response thread");
-            response.start();
+            this.response.start();
             Main.log("[Client: " + this.clientNumber + "] Response Thread started");
         } catch (UnknownHostException uhex) {
 
