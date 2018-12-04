@@ -141,7 +141,7 @@ public class Main {
         Main.stv = new Vector<ServerThread>();
     }
 
-    public static void Main.log(String log) {
+    public static void log(String log) {
         try {
             GlobalLogger.writeBackground(log);
         } catch (IOException iex) {}
