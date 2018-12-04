@@ -132,9 +132,7 @@ public class Client extends JPanel {
                                 clock.inc();
                                 
                                 //LOG
-                                GlobalLogger.write(clock, "request to read");
-                                visualLog(clock + "request to read");
-                                logger.log(clock + "request to read");
+                                log(clock, "request to read");
 
 								oos.writeUTF("read_request");
 								oos.writeObject(clock);
@@ -146,9 +144,7 @@ public class Client extends JPanel {
                                 clock.inc();
                                 
                                 //LOG
-                                GlobalLogger.write(clock, "request to write");
-                                visualLog(clock + "request to write");
-                                logger.log(clock + "request to write");
+                                log(clock, "request to write");
 
 								oos.writeUTF("write_request");
 								oos.writeObject(clock);
@@ -180,16 +176,12 @@ public class Client extends JPanel {
                                 clock.merge(temp);
                                 
                                 //LOG
-                                GlobalLogger.write(clock, "received read request from PC" + temp.ID);
-                                visualLog(clock + "received read request from PC" + temp.ID);
-                                logger.log("received read request from PC" + temp.ID);
+                                log(clock, "received read request from PC" + temp.ID);
 								
                                 clock.inc();
                                 
                                 //LOG
-                                GlobalLogger.write(clock, "replied OK to PC" + temp.ID + " read request");
-                                visualLog(clock + "replied OK to PC" + temp.ID + " read request");
-                                logger.log(clock + "replied OK to PC" + temp.ID + " read request");
+                                log(clock, "replied OK to PC" + temp.ID + " read request");
 
 								oos.writeUTF("read_reply");
                                 oos.reset();
@@ -203,18 +195,14 @@ public class Client extends JPanel {
                                 clock.merge(temp);
                                 
                                 //LOG
-                                GlobalLogger.write(clock, "PC"+temp.ID+" replied OK to read request");
-                                visualLog(clock + "PC" + temp.ID + " replied OK to read request");
-                                logger.log(clock + "PC" + temp.ID + " replied OK to read request");
-								
+                                log(clock, "PC"+temp.ID+" replied OK to read request");
+                                
 								//if PC1 responded OK, perform read action
 								clock.inc();
                                 Read.makeCopy();
                                 
                                 //LOG
-                                GlobalLogger.write(clock, "reads file");
-                                visualLog(clock + "reads file");
-                                logger.log(clock + "reads file");
+                                log(clock, "reads file");
 
                                 Thread.sleep(3000);//simulate time taken to read file
 								Read.deleteCopy();
@@ -229,18 +217,14 @@ public class Client extends JPanel {
                                 clock.merge(temp);
                                 
                                 //LOG
-                                GlobalLogger.write(clock, "received write request from PC" + temp.ID);
-                                visualLog(clock + "received write request from PC" + temp.ID);
-                                logger.log(clock + "received write request from PC" + temp.ID);
+                                log(clock, "received write request from PC" + temp.ID);
 								
 								//if this PC is idle respond OK
 								if(status.equals("idle")) {
                                     clock.inc();
                                     
                                     //LOG
-                                    GlobalLogger.write(clock, "replied OK to PC" + temp.ID + " write request");
-                                    visualLog(clock + "replied OK to PC" + temp.ID + " write request");
-                                    logger.log(clock + "replied OK to PC" + temp.ID + " write request");
+                                    log(clock, "replied OK to PC" + temp.ID + " write request");
 
 									oos.writeUTF("write_reply");
                                     oos.reset();
@@ -258,9 +242,7 @@ public class Client extends JPanel {
                                         clock.inc();
                                         
                                         //LOG
-										GlobalLogger.write(clock, "replied OK to PC" + temp.ID + " write request");
-                                        visualLog(clock + "replied OK to PC" + temp.ID + " write request");
-                                        logger.log(clock + "replied OK to PC" + temp.ID + " write request");
+										log(clock, "replied OK to PC" + temp.ID + " write request");
 
 										oos.writeUTF("write_reply");
                                         oos.reset();
@@ -285,9 +267,7 @@ public class Client extends JPanel {
                                 clock.inc();
                                 
                                 //LOG
-								GlobalLogger.write(clock, "replied OK to PC" + temp.ID + " write request");
-                                visualLog(clock + "replied OK to PC" + temp.ID + " write request");
-                                logger.log(clock + "replied OK to PC" + temp.ID + " write request");
+								log(clock, "replied OK to PC" + temp.ID + " write request");
 
 
 								oos.writeUTF("write_reply");
@@ -303,9 +283,7 @@ public class Client extends JPanel {
                                 clock.merge(temp);
                                 
                                 //LOG
-                                GlobalLogger.write(clock, "PC" + temp.ID + " replied OK to write request");
-                                visualLog(clock + "PC" + temp.ID + " replied OK to write request");
-                                logger.log(clock + "PC" + temp.ID + " replied OK to write request");
+                                log(clock, "PC" + temp.ID + " replied OK to write request");
 								
 								//to ensure multiple clients don't access this variable at same time
 								lock.acquire();
@@ -317,17 +295,13 @@ public class Client extends JPanel {
                                     Write.downloadFile(clock);
                                     
                                     //LOG
-                                    GlobalLogger.write(clock, "downloaded file from PC1");
-                                    visualLog(clock + "downloaded file from PC1");
-                                    logger.log(clock + "downloaded file from PC1");
+                                    log(clock, "downloaded file from PC1");
 									
 									clock.inc();
                                     Write.writeFile(clock);
                                     
                                     //LOG
-                                    GlobalLogger.write(clock, "writes to file");
-                                    visualLog(clock + "writes to file");
-                                    logger.log(clock + "writes to file");
+                                    log(clock, "writes to file");
                                     
                                     Thread.sleep(3000);//simulate time taken to write to file
 									Write.returnFile(clock);
@@ -361,8 +335,13 @@ public class Client extends JPanel {
         return;
     }
 
-    private void visualLog(String log) {
-        this.pcLog.append(log);
+    private void log(VectorClock clock, String log) {
+        try {
+            GlobalLogger.write(clock, log);
+        } catch (IOException iex) {}
+        this.pcLog.append(clock + log);
+        this.logger.log(clock + log);
+
         return;
     }
 
