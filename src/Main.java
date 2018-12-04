@@ -139,11 +139,16 @@ public class Main {
         //Prepare ServerThread Vector
         Main.log("[Main] Preparing ServerThread Vector");
         Main.stv = new Vector<ServerThread>();
+        Main.log("[Main] ServerThread Vector Created");
+
+        Main.log("[Main] Main Complete");
+        return;
     }
 
     public static void log(String log) {
         try {
             GlobalLogger.writeBackground(log);
         } catch (IOException iex) {}
+        return;
     }
 }
