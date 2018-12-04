@@ -1,34 +1,118 @@
-<project name="OSP3" basedir="." default="main">
-    <property name="src.dir"     value="src"/>
-    <property name="build.dir"   value="build"/>
-    <property name="classes.dir" value="${build.dir}/classes"/>
-    <property name="jar.dir"     value="${build.dir}/jar"/>
-    <property name="main-class"  value="osp.Main"/>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ->
+ <-     ______       ________     _________      ________     ->
+ <-    /      \     /        \    |        \    /        \    ->
+ <-   /  ┌~~┐  \    |             |  ▓▓▓▓  |    |        |    ->
+ <-   |  |▓▓|  |    \________     |________/        _____/    ->
+ <-   |  |▓▓|  |             \    |                      \    ->
+ <-   \  └~~┘  /             |    |             |        |    ->
+ <-    \______/     \________/    |             \________/    ->
+ <-                                                           ->
+< - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+<!-- OSP3 Project Buildfile -->
+<project name = "OSP3" basedir = "." default = "main">
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - ->
+     <-                                                   ->
+     <-           Variables for Ant Buildfile             ->
+     <-                                                   ->
+    < - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!--Source Code Directory -->
+    <property name = "src.dir"      value = "src"/>
+    <!--Build Directory -->
+    <property name = "build.dir"    value = "build"/>
+    <!--Class Directory -->
+    <property name = "classes.dir"  value = "${build.dir}/classes"/>
+    <!--Jar Directory -->
+    <property name = "jar.dir"      value = "${build.dir}/jar"/>
+    <!--Main Class Name -->
+    <property name = "main-class"   value = "osp.Main"/>
+    <!--Data Diretory -->
+    <property name = "data.dir"     value = "data/"/>
 
-    <target name="clean">
-        <delete dir="${build.dir}"/>
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - ->
+     <-                                                   ->
+     <-            Targets for Ant Buildfile              ->
+     <-                                                   ->
+    < - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - ->
+     <-                                                 ->
+     <-               Clean Ant Targets                 ->
+     <-                                                 ->
+    < - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Clean Build Generated Files -->
+    <target name = "clean_build">
+        <delete dir = "${build.dir}"/>
     </target>
 
-    <target name="compile">
-        <mkdir dir="${classes.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+    <!-- Clean Program Generated Data Files -->
+    <target name = "clean_data">
+        <delete dir="${data.dir}"/>
     </target>
 
-    <target name="jar" depends="compile">
-        <mkdir dir="${jar.dir}"/>
-        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+    <!-- Clean All Generated Files -->
+    <target name = "clean" depends = "clean_build, clean_data"/>
+
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - ->
+     <-                                                 ->
+     <-               Build Ant Targets                 ->
+     <-                                                 ->
+    < - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Compile Program -->
+    <target name = "compile">
+        <mkdir dir = "${classes.dir}"/>
+        <javac srcdir = "${src.dir}" destdir = "${classes.dir}"/>
+    </target>
+
+    <!-- Create Executable Jar from Compiled Files -->
+    <target name = "jar">
+        <mkdir dir = "${jar.dir}"/>
+        <jar destfile = "${jar.dir}/${ant.project.name}.jar" basedir = "${classes.dir}">
             <manifest>
-                <attribute name="Main-Class" value="${main-class}"/>
+                <attribute name = "Main-Class" value = "${main-class}"/>
             </manifest>
         </jar>
     </target>
 
-    <target name="run" depends="jar">
-        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - ->
+     <-                                                 ->
+     <-                Run Ant Targets                  ->
+     <-                                                 ->
+    < - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Run Jar File -->
+    <target name = "run">
+        <java jar = "${jar.dir}/${ant.project.name}.jar" fork = "true"/>
     </target>
 
-    <target name="cb" depends="clean, jar"/>
 
-    <target name="main" depends="clean, run"/>
 
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - ->
+     <-                                                 ->
+     <-               Alias Ant Targets                 ->
+     <-                                                 ->
+    < - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Compile -->
+    <target name = "build" depends = "compile"/>
+    <!-- Clean and Compile -->
+    <target name = "cb" depends = "clean, compile"/>
+    <!-- Clean, Compile, and Jar -->
+    <target name = "cbj" depends = "clean, compile, jar"/>
+    <!-- Clean, Compile, Jar, and Run -->
+    <target name = "cbjr" depends = "clean, compile, jar, run"/>
+    <!-- Compile, Jar, and Run -->
+    <target name = "br" depends = "compile, jar, run"/>
+
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - ->
+     <-                                                 ->
+     <-               Primary Ant Target                ->
+     <-                                                 ->
+    < - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Main Ant Task -->
+    <target name = "main" depends = "clean, compile, jar, run"/>
 </project>
