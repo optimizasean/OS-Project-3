@@ -76,5 +76,10 @@ public class DirectoryStructure {
         }
 
         System.out.println("Directory Structure is good");
+        return;
+    }
+
+    public void wipeFiles() {
+        return;
     }
 }
