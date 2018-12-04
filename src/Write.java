@@ -20,7 +20,7 @@ public class Write {
 	public static void downloadFile(VectorClock clock) throws IOException {
 		File source = new File("./data/PC1/target.txt");
 		File destination = new File("./data/PC" + clock.ID + "/target.txt");
-		Files.copy(source.toPath(), destination.toPath());
+		Files.copy(source.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
 	}
 	
 	public static void returnFile (VectorClock clock) throws IOException {
