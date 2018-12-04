@@ -9,9 +9,11 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 
 public class GlobalLogger {
-	
-	public static void write(VectorClock clock, String message) throws IOException {
-		String dir;
+	private static String dir = null;
+	//TimeStamp
+	private static String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+
+	public static synchronized void write(VectorClock clock, String message) throws IOException {
 		if (clock.ID == 0) dir = Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_GLOBAL_LOG;
 		else dir = "./data/PC" + clock.ID + "/" + Constants.FILE_GLOBAL_LOG;
 

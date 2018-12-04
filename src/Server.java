@@ -165,8 +165,8 @@ public class Server extends JPanel {
         this.baseConstraints.gridheight = 1;
         this.baseConstraints.ipadx = 0;
         this.baseConstraints.ipady = 0;
-        this.baseConstraints.weightx = 0.5;
-        this.baseConstraints.weighty = 0.5;
+        this.baseConstraints.weightx = 1.0;
+        this.baseConstraints.weighty = 1.0;
         //this.baseConstraints.insets = null;
         this.baseConstraints.anchor = GridBagConstraints.CENTER;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
@@ -183,8 +183,8 @@ public class Server extends JPanel {
         this.baseConstraints.gridheight = 4;
         this.baseConstraints.ipadx = 0;
         this.baseConstraints.ipady = 0;
-        this.baseConstraints.weightx = 0.5;
-        this.baseConstraints.weighty = 0.5;
+        this.baseConstraints.weightx = 1.0;
+        this.baseConstraints.weighty = 1.0;
         //this.baseConstraints.insets = null;
         this.baseConstraints.anchor = GridBagConstraints.CENTER;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
@@ -198,8 +198,8 @@ public class Server extends JPanel {
         this.baseConstraints.gridheight = 1;
         this.baseConstraints.ipadx = 0;
         this.baseConstraints.ipady = 0;
-        this.baseConstraints.weightx = 0.5;
-        this.baseConstraints.weighty = 0.5;
+        this.baseConstraints.weightx = 1.0;
+        this.baseConstraints.weighty = 1.0;
         //this.baseConstraints.insets = null;
         this.baseConstraints.anchor = GridBagConstraints.LINE_END;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
@@ -214,8 +214,8 @@ public class Server extends JPanel {
         this.baseConstraints.gridheight = 1;
         this.baseConstraints.ipadx = 0;
         this.baseConstraints.ipady = 0;
-        this.baseConstraints.weightx = 0.5;
-        this.baseConstraints.weighty = 0.5;
+        this.baseConstraints.weightx = 1.0;
+        this.baseConstraints.weighty = 1.0;
         //this.baseConstraints.insets = null;
         this.baseConstraints.anchor = GridBagConstraints.LINE_START;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
@@ -229,8 +229,8 @@ public class Server extends JPanel {
         this.baseConstraints.gridheight = 1;
         this.baseConstraints.ipadx = 0;
         this.baseConstraints.ipady = 0;
-        this.baseConstraints.weightx = 0.5;
-        this.baseConstraints.weighty = 0.5;
+        this.baseConstraints.weightx = 1.0;
+        this.baseConstraints.weighty = 1.0;
         //this.baseConstraints.insets = null;
         this.baseConstraints.anchor = GridBagConstraints.CENTER;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
@@ -244,8 +244,8 @@ public class Server extends JPanel {
         this.baseConstraints.gridheight = 1;
         this.baseConstraints.ipadx = 0;
         this.baseConstraints.ipady = 0;
-        this.baseConstraints.weightx = 0.5;
-        this.baseConstraints.weighty = 0.5;
+        this.baseConstraints.weightx = 1.0;
+        this.baseConstraints.weighty = 1.0;
         //this.baseConstraints.insets = null;
         this.baseConstraints.anchor = GridBagConstraints.CENTER;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
@@ -259,8 +259,8 @@ public class Server extends JPanel {
         this.baseConstraints.gridheight = 1;
         this.baseConstraints.ipadx = 0;
         this.baseConstraints.ipady = 0;
-        this.baseConstraints.weightx = 0.5;
-        this.baseConstraints.weighty = 0.5;
+        this.baseConstraints.weightx = 1.0;
+        this.baseConstraints.weighty = 1.0;
         //this.baseConstraints.insets = null;
         this.baseConstraints.anchor = GridBagConstraints.CENTER;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
