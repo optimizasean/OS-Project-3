@@ -77,12 +77,14 @@ public class Server extends JPanel {
     private int id = 1;
 
     public Server() {
-        Main.log("[Server.java] Starting Logger");
+        Main.log("[Server] Starting Logger");
         this.startLogger();
+        Main.log("[Server] Starting GUI");
         this.GUI();
     }
 
     private void startLogger() {
+        Main.log("[Server] Starting Loggers");
         this.localLog = new File(Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_LOCAL_LOG);
         this.logger = new LocalLogger(this.localLog);
     }
@@ -103,64 +105,93 @@ public class Server extends JPanel {
     }
 
     private void launchServer() {
+        Main.log("[Server] Server Launching");
         try {
+            Main.log("[Server] Getting new port");
             this.refreshPort();
+            Main.log("[Server] Setting new port");
             this.server = new ServerSocket(port);
             System.out.println("Server started");
             System.out.println("Waiting for client");
+            Main.log("[Server] Server started, waiting for clients");
             
             int clientID = 1;
+            Main.log("[Server] Begin listening for requests");
             while(clientID < 6) {
                 this.client = null;
                 try {
+                    Main.log("[Server] Listening for connection request");
                     this.client = this.server.accept();
                     System.out.println("PC" + this.id + " Accepted");
+                    Main.log("[Server] Accepted PC: " + this.id);
                     
+                    Main.log("[Server] Initializing Streams: " + this.id);
                     ObjectOutputStream oos = new ObjectOutputStream(this.client.getOutputStream());
                     ObjectInputStream ois = new ObjectInputStream(this.client.getInputStream());
+                    Main.log("[Server] Streams Initialized:" + this.id);
                     
+                    Main.log("[Server] Creating ServerThread: " + this.id);
                     ServerThread st = new ServerThread(this, this.client, this.id, oos, ois);
+                    Main.log("[Server] Adding ServerThread to vector: " + this.id);
                     Main.stv.add(st);
+                    Main.log("[Server] Creating Thread: ServerThread: " + this.id);
                     Thread t = new Thread(st);
+                    Main.log("[Server] Starting Thread ServerThread: " + this.id);
                     t.start();
+                    Main.log("[Server] Started Thread: ServerThread: " + this.id);
                     this.id++;
+                    Main.log("[Server] Readying for new ID: " + this.id);
                 } catch (IOException iex) {
+                    Main.log("[Server] Error: ServerThread: " + this.id + "ERROR????????");
                     System.err.println("ERROR????????");
                 } catch(Exception ex) {
+                    Main.log("[Server] Error: ServerThread: " + this.id + "CLOSING SERVER");
                     this.server.close();
                     ex.printStackTrace();
                 }
             }
         } catch(IOException iex) {
+            Main.log("[Server] Error: ServerThread: " + this.id + "ERRORRRRRRRRRRRR");
             System.err.println("ERRORRRRRRRRRRRR");
         }
         return;
     }
 
     private void launchClient() {
+        Main.log("[Server] Launching Clients");
         Client client = null;
         for (int i = 0; i < Constants.NUMBER_OF_CLIENTS; i++) {
             client = Main.cv.get(i);
+            Main.log("[Server] Launching Client: " + i);
             client.launch();
+            Main.log("[Server] Client Launched: " + i);
         }
-        return;  
+        Main.log("[Server] Clients Launched");
+        return;
     }
 
     public void refreshPort() {
+        Main.log("[Server] Refreshing Port");
         port = Integer.parseInt(this.portField.getText());
         if (port < 0 || port > 65535) {
-            port = 9001;
+            Main.log("[Server] Invalid port, defaulting to: " + Constants.PORT_DEFAULT);
+            port = Constants.PORT_DEFAULT;
             this.portField.setText("9001");
         }
+        Main.log("[Server] Port Refresh Successful");
         return;
     }
 
     private void GUI() {
+        Main.log("[Server] Preparing Visual of GUI");
         this.GUIVisual();
+        Main.log("[Server] Connecting Functional of GUI");
         this.GUIFunctional();
+        Main.log("[Server] GUI Complete");
         return;
     }
     private void GUIVisual() {
+        Main.log("[Server] Doing GUI Visual");
         //Set base panel background
         this.setBackground(Color.GRAY);
 
@@ -172,6 +203,7 @@ public class Server extends JPanel {
         this.baseConstraints = new GridBagConstraints();
 
         //Label for top of base panel
+        Main.log("[Server] Creating Window Label for base panel");
         this.windowLabel = new JLabel("SERVER");
         this.changeFont(this.windowLabel, 5);
         this.baseConstraints.gridx = 1;
@@ -186,8 +218,10 @@ public class Server extends JPanel {
         this.baseConstraints.anchor = GridBagConstraints.CENTER;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(windowLabel, baseConstraints);
+        Main.log("[Server] Base Panel Label added Successfully");
 
         //Log for server on center of panel
+        Main.log("[Server] Creating server log box");
         this.serverLog = new JTextArea(38, 40);
         this.changeFont(this.serverLog, -3);
         this.serverLog.setEditable(false);
@@ -205,8 +239,10 @@ public class Server extends JPanel {
         this.baseConstraints.anchor = GridBagConstraints.CENTER;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(serverLogPane, baseConstraints);
+        Main.log("[Server] Server log box successfully added");
 
         //Label for port under server log
+        Main.log("[Server] Creating Port Label");
         this.portLabel = new JLabel("Port:");
         this.changeFont(this.portLabel, 2);
         this.baseConstraints.gridx = 1;
@@ -221,8 +257,10 @@ public class Server extends JPanel {
         this.baseConstraints.anchor = GridBagConstraints.LINE_END;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(portLabel, baseConstraints);
+        Main.log("[Server] Port label created successfully");
 
         //Field for taking port abot start button
+        Main.log("[Server] Creating port button");
         this.portField = new JTextField("9001");
         this.changeFont(this.portField, 2);
         this.portField.setEditable(true);
@@ -238,8 +276,10 @@ public class Server extends JPanel {
         this.baseConstraints.anchor = GridBagConstraints.LINE_START;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(portField, baseConstraints);
+        Main.log("[Server] Port Button Created");
 
         //Button to start server
+        Main.log("[Server] Creating Start button");
         this.startButton = new JButton("START");
         this.changeFont(this.startButton, 1);
         this.baseConstraints.gridx = 1;
@@ -254,8 +294,10 @@ public class Server extends JPanel {
         this.baseConstraints.anchor = GridBagConstraints.CENTER;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(startButton, baseConstraints);
+        Main.log("[Server] Start Button Created");
 
         //Button to stop server under start button
+        Main.log("[Server] Creating Stop Button");
         this.stopButton = new JButton("STOP");
         this.changeFont(this.stopButton, 1);
         this.baseConstraints.gridx = 1;
@@ -270,8 +312,10 @@ public class Server extends JPanel {
         this.baseConstraints.anchor = GridBagConstraints.CENTER;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(stopButton, baseConstraints);
+        Main.log("[Server] Stop Button Created");
 
         //Button to force quit on bottom
+        Main.log("[Server] Creating QUIT button");
         this.quitButton = new JButton("QUIT");
         this.changeFont(this.quitButton, 1);
         this.baseConstraints.gridx = 0;
@@ -286,10 +330,14 @@ public class Server extends JPanel {
         this.baseConstraints.anchor = GridBagConstraints.CENTER;
         this.baseConstraints.fill = GridBagConstraints.BOTH;
         this.add(quitButton, baseConstraints);
+        Main.log("[Server] Quit button Added");
 
+        Main.log("[Server] GUI Visual completed for Server panel");
         return;
     }
     private void GUIFunctional() {
+        Main.log("[Server] Beginning GUI Function");
+        Main.log("[Server] Adding Start Button Fucntionality");
         this.startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("START BUTTON PUSHED");
@@ -312,22 +360,29 @@ public class Server extends JPanel {
                 c.start();
             }
         });
+        Main.log("[Server] Start button functional");
 
+        Main.log("[Server] Adding stop button Functionality");
         this.stopButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("STOP BUTTON PUSHED");
             }
         });
+        Main.log("[Server] Stop button functional");
 
+        Main.log("[Server] Adding quit button functionality");
         this.quitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("QUIT BUTTON PUSHED");
                 System.exit(0);
             }
         });
+        Main.log("[Server] Quit button functional");
 
+        Main.log("[Server] Server panel completely functional");
         return;
     }
+
     private void changeFont(JComponent base, int size) {
         Font origin, prime;
 
