@@ -125,7 +125,7 @@ public class Server extends JPanel {
 
     private void launchClient() {
         Client client = null;
-        for (int i = 0; i < Main.NUMBER_OF_CLIENTS; i++) {
+        for (int i = 0; i < Constants.NUMBER_OF_CLIENTS; i++) {
             client = Main.cv.get(i);
             client.launch();
         }

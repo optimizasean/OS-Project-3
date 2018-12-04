@@ -39,9 +39,6 @@ public class Main {
     //Client
     public static Vector<Client> cv = null;
 
-    //FINAL
-    public static final int NUMBER_OF_CLIENTS = 5;
-
     public static void main(String[] args) {
         Main main = new Main();
         //main.start();
@@ -82,8 +79,8 @@ public class Main {
         clientsLayout = new BoxLayout(clientsPanel, BoxLayout.Y_AXIS);
         clientsPanel.setLayout(clientsLayout);
         Main.cv = new Vector<Client>();
-        for (int i = 0; i < NUMBER_OF_CLIENTS; i++) {
-            Client client = new Client(i);
+        for (int i = 0; i < Constants.NUMBER_OF_CLIENTS; i++) {
+            Client client = new Client(i + 1);
             cv.add(client);
             clientsPanel.add(client);
         }

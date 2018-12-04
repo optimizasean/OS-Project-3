@@ -8,6 +8,9 @@ package osp;
  * program data, names, and other
  *******************************/
 public class Constants {
+    //Client Number
+    public static final int NUMBER_OF_CLIENTS = 5;
+    
     //File Names
     public static final String FILE_GLOBAL_LOG = "global_log.txt";
     public static final String FILE_LOCAL_LOG = "local_log.txt";
