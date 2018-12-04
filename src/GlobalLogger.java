@@ -16,7 +16,7 @@ public class GlobalLogger {
 	private static String timeStamp = null;
 
 	//Outdated
-	public static synchronized void writePC(VectorClock clock, String message) throws IOException {
+	public static void writePC(VectorClock clock, String message) throws IOException {
 		String dir = "./data/PC" + clock.ID + "/" + Constants.FILE_GLOBAL_LOG;
 		String dir2 = Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_GLOBAL_LOG;
 
