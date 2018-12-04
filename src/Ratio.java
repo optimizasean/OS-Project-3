@@ -28,13 +28,13 @@ public class Ratio{
   public String request(double r_p, double w_p) {
     double r = Math.random();
     if((0<=r) && (r<r_p)) {
-      System.out.println("read: " + r_p);
-      System.out.println("random: " + r);
+      //System.out.println("read: " + r_p);
+      //System.out.println("random: " + r);
       return "read";
     }
     else if((r_p <= r) && (r<r_p + w_p)) {
-      System.out.println("Write: " + w_p);
-      System.out.println("Random: " + r);
+      //System.out.println("Write: " + w_p);
+      //System.out.println("Random: " + r);
       return "write";
     }
     else return "idle";
