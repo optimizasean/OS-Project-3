@@ -125,6 +125,12 @@ public class ServerThread extends Thread {
         } catch (IOException iex) {
             System.err.println("Failure to end server");
         }
-        Main.log("[ServerThread" + this.id + "] Ended");
-    }
+		Main.log("[ServerThread" + this.id + "] Ended");
+		
+		return;
+	}
+	
+	private void log(String log) {
+		Server.visuaLog(log);
+	}
 }
