@@ -4,9 +4,6 @@ package osp;
 //Special
 import javax.swing.SwingUtilities;
 
-import jdk.nashorn.internal.objects.Global;
-import osp.GlobalLogger;
-
 //Frames, Panes, and Panels
 import javax.swing.JFrame;
 import javax.swing.JPanel;
