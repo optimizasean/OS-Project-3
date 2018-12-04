@@ -4,6 +4,9 @@ package osp;
 //Special
 import javax.swing.SwingUtilities;
 
+import jdk.nashorn.internal.objects.Global;
+import osp.GlobalLogger;
+
 //Frames, Panes, and Panels
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -18,6 +21,8 @@ import java.awt.Color;
 //Utilities
 import java.util.Vector;
 
+//Exceptions
+import java.io.IOException;
 
 
 public class Main {
@@ -58,46 +63,77 @@ public class Main {
     }*/
 
     private void run() {
+        //Ensuring Directory Structure
+        log("Ensuring Directory Structure");
         DirectoryStructure ds = new DirectoryStructure();
         ds.ensureStructure();
         ds = null;
+
+        //Starting GUI
+        log("Starting GUI");
         this.GUI();
+
         return;
     }
 
 
     private void GUI() {
+        //Building GUI
+        log("Building GUI");
+        log("Creating Frame");
         frame = new JFrame("OSP3");
+        log("Beginning to build Main panel");
         mainPanel = new JPanel();
         mainPanel.setBackground(Color.BLACK);
         mainLayout = new FlowLayout();
         mainPanel.setLayout(mainLayout);
+        log("Main panel created");
         
         //Creating Clients panel and clients
+        log("Creating Clients Panel and clients");
         clientsPanel = new JPanel();
         clientsPanel.setBackground(Color.DARK_GRAY);
         clientsLayout = new BoxLayout(clientsPanel, BoxLayout.Y_AXIS);
         clientsPanel.setLayout(clientsLayout);
+        log("Creating Client Vector");
         Main.cv = new Vector<Client>();
         for (int i = 0; i < Constants.NUMBER_OF_CLIENTS; i++) {
+            //Creating client number i
+            log("Created client: " + i);
             Client client = new Client(i + 1);
             cv.add(client);
             clientsPanel.add(client);
         }
         mainPanel.add(clientsPanel);
+        log("Clients panel complete");
 
         //Creating Server panel
+        log("Creating Server panel");
         server = new Server();
         mainPanel.add(server);
+        log("Server panel complete");
 
+        //Building frame
+        log("Assembling frame");
         frame.add(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
 
+        //Display
+        log("Packing Frame");
         frame.pack();
+        log("Displaying Frame");
         frame.setVisible(true);
 
+        //Prepare ServerThread Vector
+        log("Preparing ServerThread Vector");
         Main.stv = new Vector<ServerThread>();
+    }
+
+    private void log(String log) {
+        try {
+            GlobalLogger.writeController(null, log);
+        } catch (IOException iex) {}
     }
 }
