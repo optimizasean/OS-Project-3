@@ -1,13 +1,14 @@
 //Operating Systems Project (osp) package
 package osp;
 
-/*******************************
- * Constants class for constant
- * reference points for easy change
- * with regards to conventions and
- * program data, names, and other
- *******************************/
-public class Constants {
+/*****************************************************************\
+ * Constants interface for constant reference points for easy
+ * change with regards to conventions and program data, names,
+ * and other things.
+ * 
+ * @author Shadowbomb
+\*****************************************************************/
+public interface Constants {
     //Client Number
     public static final int NUMBER_OF_CLIENTS = 5;
 
