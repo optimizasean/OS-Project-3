@@ -44,13 +44,7 @@ public class Main {
 
     public static void main(String[] args) {
         //Make Background Log
-        try {
-            //Background Log
-            File file = new File(Constants.BACKGROUND_LOG_PATH);
-            file.mkdirs();
-            file = new File(Constants.BACKGROUND_LOG_PATH + Constants.FILE_BACKGROUND_LOG);
-            file.createNewFile();
-        } catch (IOException iex) {}
+        DirectoryStructure.makeBackgroundLog();
         Main.log("[Main] Main logger created");
         Main main = new Main();
         //main.start();
