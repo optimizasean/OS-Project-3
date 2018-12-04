@@ -13,10 +13,6 @@ import java.awt.GridBagConstraints;
 //Labels and Text
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
-import jdk.nashorn.internal.objects.Global;
-import osp.GlobalLogger;
-
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 
