@@ -21,16 +21,18 @@ public class ServerThread extends Thread {
 	private static final Semaphore lock = new Semaphore(1);
     
     ServerThread(Server server, Socket socket, int id, ObjectOutputStream oos, ObjectInputStream ois) {
+		Main.log("[ServerThread] Creating ServerThread: " + id); 
         this.server = server;
         this.socket = socket;
         this.id = id;
         this.oos = oos;
         this.ois = ois;
-        this.clock = new VectorClock(this.id);
+		this.clock = new VectorClock(this.id);
+		Main.log("[ServerThread" + this.id + "] Created ServerThread");
     }
     
     public void run() {
-		
+		Main.log("[ServerThread" + this.id + "] Running");
 		try {
 			oos.writeObject(this.clock);
 			String msg;
@@ -113,14 +115,16 @@ public class ServerThread extends Thread {
 		} catch (IOException | ClassNotFoundException | InterruptedException e) {
 			e.printStackTrace();
 		}
+		Main.log("[ServerThread" + this.id + "] Run Complete");
 	}
     
     public void end() {
+		Main.log("[ServerThread" + this.id + "] Ending");
         try {
             this.socket.close();
         } catch (IOException iex) {
             System.err.println("Failure to end server");
         }
-        
+        Main.log("[ServerThread" + this.id + "] Ended");
     }
 }
