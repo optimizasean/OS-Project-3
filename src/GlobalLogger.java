@@ -24,7 +24,7 @@ public class GlobalLogger {
 		
 		raf.seek(raf.length());//move cursor to end of file
 		timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-		raf.writeBytes("[" + timeStamp + "] "+clock.print()+"\t"+message+"\n");//write message at end of file
+		raf.writeBytes("[" + timeStamp + "] " + clock + "\t" + message + "\n");//write message at end of file
 		raf.close();
 
 		//RandomAccessFile used to write to certain area of file
@@ -32,7 +32,7 @@ public class GlobalLogger {
 	
 		raf2.seek(raf2.length());//move cursor to end of file
 		timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-		raf2.writeBytes("[" + timeStamp + "] "+clock.print()+"\t"+message+"\n");//write message at end of file
+		raf2.writeBytes("[" + timeStamp + "] " + clock + "\t" + message + "\n");//write message at end of file
 		raf2.close();
 	}
 	
