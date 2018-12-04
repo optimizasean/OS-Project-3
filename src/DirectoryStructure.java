@@ -24,86 +24,171 @@ public class DirectoryStructure {
 
     //Create the directories and files
     public void ensureStructure() {
+        Main.log("[DirectoryStructure] Ensuring Directory Structure");
         try {
             //CONTROLLER
             //Ensure Controller Directory Existence
+            Main.log("[DirectoryStructure] Ensuring Controller");
+            Main.log("[DirectoryStructure] Ensuring directories for Controller");
             file = new File(Constants.DIRECTORY_PATH_CONTROLLER);
             file.mkdirs();
+            Main.log("[DirectoryStructure] Ensured Directories created or exists");
             //Ensure Controller Global Log File Existence
+            Main.log("[DirectoryStructure] Ensuring controller global log");
             file = new File(Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_GLOBAL_LOG);
             file.createNewFile();
+            Main.log("[DirectoryStructure] Controller global log created or exists");
             //Ensure File Empty
+            Main.log("[DirectoryStructure] Wiping controller global log");
             DirectoryStructure.wipeFile(file);
+            Main.log("[DirectoryStructure] Controller global log wiped");
             //Ensure Controller Local Log File Existence
+            Main.log("[DirectoryStructure] Ensuring controller local log");
             file = new File(Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_LOCAL_LOG);
             file.createNewFile();
+            Main.log("[DirectoryStructure] Controller local log created or existed");
             //Ensure File Empty
+            Main.log("[DirectoryStructure] Wiping controller local log");
             DirectoryStructure.wipeFile(file);
+            Main.log("[DirectoryStructure] Controller local log wiped");
 
-            //PC1 
+            //PC1
+            Main.log("[DirectoryStructure] Ensuring PC1");
+            //Directory Structure
+            Main.log("[DirectoryStructure] Ensuring directories for PC1");
             file = new File(Constants.DIRECTORY_PATH_PC1);
             file.mkdirs();
+            Main.log("[DirectoryStructure] Directories created or exists");
+            //Global log
+            Main.log("[DirectoryStructure] Ensuring PC1 global log");
             file = new File(Constants.DIRECTORY_PATH_PC1 + Constants.FILE_GLOBAL_LOG);
             file.createNewFile();
+            Main.log("[DirectoryStructure] PC1 global log created or existed");
             //Ensure File Empty
+            Main.log("[DirectoryStructure] Wiping PC1 global log");
             DirectoryStructure.wipeFile(file);
+            Main.log("[DirectoryStructure] PC1 global log wiped");
+            //Local log
+            Main.log("[DirectoryStructure] Ensuring PC1 local log");
             file = new File(Constants.DIRECTORY_PATH_PC1 + Constants.FILE_LOCAL_LOG);
             file.createNewFile();
+            Main.log("[DirectoryStructure] PC1 local log created or existed");
             //Ensure File Empty
+            Main.log("[DirectoryStructure] Wiping PC1 local log");
             DirectoryStructure.wipeFile(file);
+            Main.log("[DirectoryStructure] PC1 local log wiped");
             //Target File
+            Main.log("[DirectoryStructure] Ensuring target file");
             file = new File(Constants.TARGET_PATH);
             file.createNewFile();
+            Main.log("[DirectoryStructure] Target file created or existed");
             //Ensure File Empty
+            Main.log("[DirectoryStructure] Wiping target file");
             DirectoryStructure.wipeFile(file);
+            Main.log("[DirectoryStructure] Target file wiped");
 
-            //PC2 
+            //PC2
+            Main.log("[DirectoryStructure] Ensuring PC2");
+            //Directory structure
+            Main.log("[DirectoryStructure] Ensuring directories for PC2");
             file = new File(Constants.DIRECTORY_PATH_PC2);
             file.mkdirs();
+            Main.log("[DirectoryStructure] Directories created or exists");
+            //Global log
+            Main.log("[DirectoryStructure] Ensuring PC2 global log");
             file = new File(Constants.DIRECTORY_PATH_PC2 + Constants.FILE_GLOBAL_LOG);
             file.createNewFile();
+            Main.log("[DirectoryStructure] PC2 global log created or existed");
             //Ensure File Empty
+            Main.log("[DirectoryStructure] Wiping PC2 global log");
             DirectoryStructure.wipeFile(file);
+            Main.log("[DirectoryStructure] PC2 global log wiped");
+            //local log
+            Main.log("[DirectoryStructure] Ensuring PC2 local log");
             file = new File(Constants.DIRECTORY_PATH_PC2 + Constants.FILE_LOCAL_LOG);
             file.createNewFile();
+            Main.log("[DirectoryStructure] PC2 local log created or existed");
             //Ensure File Empty
+            Main.log("[DirectoryStructure] Wiping PC2 local log");
             DirectoryStructure.wipeFile(file);
+            Main.log("[DirectoryStructure] PC2 local log wiped");
 
-            //PC3 
+            //PC3
+            Main.log("[DirectoryStructure] Ensuring PC3");
+            //Directory structure
+            Main.log("[DirectoryStructure] Ensuring directories for PC3");
             file = new File(Constants.DIRECTORY_PATH_PC3);
             file.mkdirs();
+            Main.log("[DirectoryStructure] Directories created or exists");
+            //Global log
+            Main.log("[DirectoryStructure] Ensuring PC3 global log");
             file = new File(Constants.DIRECTORY_PATH_PC3 + Constants.FILE_GLOBAL_LOG);
             file.createNewFile();
             //Ensure File Empty
+            Main.log("[DirectoryStructure] Wiping PC3 global log");
             DirectoryStructure.wipeFile(file);
+            Main.log("[DirectoryStructure] PC3 global log wiped");
+            //local log
+            Main.log("[DirectoryStructure] Ensuring PC3 local log");
             file = new File(Constants.DIRECTORY_PATH_PC3 + Constants.FILE_LOCAL_LOG);
             file.createNewFile();
             //Ensure File Empty
+            Main.log("[DirectoryStructure] Wiping PC3 local log");
             DirectoryStructure.wipeFile(file);
+            Main.log("[DirectoryStructure] PC3 local log wiped");
 
-            //PC4 
+            //PC4
+            Main.log("[DirectoryStructure] Ensuring PC4");
+            //Directory structure
+            Main.log("[DirectoryStructure] Ensuring directories for PC4");
             file = new File(Constants.DIRECTORY_PATH_PC4);
             file.mkdirs();
+            Main.log("[DirectoryStructure] Directories created or exists");
+            //Global log
+            Main.log("[DirectoryStructure] Ensuring PC4 global log");
             file = new File(Constants.DIRECTORY_PATH_PC4 + Constants.FILE_GLOBAL_LOG);
             file.createNewFile();
+            Main.log("[DirectoryStructure] PC4 global log created or existed");
             //Ensure File Empty
+            Main.log("[DirectoryStructure] Wiping PC4 global log");
             DirectoryStructure.wipeFile(file);
+            Main.log("[DirectoryStructure] PC4 global log wiped");
+            //local log
+            Main.log("[DirectoryStructure] Ensuring PC4 local log");
             file = new File(Constants.DIRECTORY_PATH_PC4 + Constants.FILE_LOCAL_LOG);
             file.createNewFile();
             //Ensure File Empty
+            Main.log("[DirectoryStructure] PC4 local log created or existed");
+            //Ensure File Empty
+            Main.log("[DirectoryStructure] Wiping PC4 local log");
             DirectoryStructure.wipeFile(file);
+            Main.log("[DirectoryStructure] PC4 local log wiped");
 
-            //PC5 
+            //PC5
+            Main.log("[DirectoryStructure] Ensuring PC5");
+            //Directory structure
+            Main.log("[DirectoryStructure] Ensuring directories for PC5");
             file = new File(Constants.DIRECTORY_PATH_PC5);
             file.mkdirs();
+            Main.log("[DirectoryStructure] Directories created or exists");
+            //Global log
+            Main.log("[DirectoryStructure] Ensuring PC5 global log");
             file = new File(Constants.DIRECTORY_PATH_PC5 + Constants.FILE_GLOBAL_LOG);
             file.createNewFile();
+            Main.log("[DirectoryStructure] PC5 global log created or existed");
             //Ensure File Empty
+            Main.log("[DirectoryStructure] Wiping PC5 global log");
             DirectoryStructure.wipeFile(file);
+            Main.log("[DirectoryStructure] PC5 global log wiped");
+            //local log
+            Main.log("[DirectoryStructure] Ensuring PC5 local log");
             file = new File(Constants.DIRECTORY_PATH_PC5 + Constants.FILE_LOCAL_LOG);
             file.createNewFile();
+            Main.log("[DirectoryStructure] PC5 local log created or existed");
             //Ensure File Empty
+            Main.log("[DirectoryStructure] Wiping PC5 local log");
             DirectoryStructure.wipeFile(file);
+            Main.log("[DirectoryStructure] PC5 local log wiped");
         } catch (IOException iex) {
             System.out.println("Failure at Directory Structure");
             System.exit(1);
