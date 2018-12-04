@@ -48,10 +48,11 @@ public class GlobalLogger {
 		
 		raf.seek(raf.length());//move cursor to end of file
 		timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-		raf.writeBytes("[" + timeStamp + "] " + clock + "\t" + message + "\n");//write message at end of file
+		raf.writeBytes("[" + timeStamp + "]\t" + message + "\n");//write message at end of file
 		raf.close();
 	}
 	
+	//NEEDS UPDATING ------------------------- OUTDATED
 	public static void cleanup() throws FileNotFoundException {
 		PrintWriter cntrl = new PrintWriter("./data/CONTROLLER/log.txt");
 		cntrl.close();
