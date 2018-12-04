@@ -17,7 +17,6 @@ public class GlobalLogger {
 	//Outdated
 	public static void writePC(VectorClock clock, String message) throws IOException {
 		String dir = "./data/PC" + clock.ID + "/" + Constants.FILE_GLOBAL_LOG;
-		String dir2 = Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_GLOBAL_LOG;
 
 		//RandomAccessFile used to write to certain area of file
 		RandomAccessFile raf = new RandomAccessFile(dir, "rw");
