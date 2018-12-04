@@ -98,45 +98,45 @@ public class Client extends JPanel {
     public Client(int clientNumber) {
         Main.log("[Client] Creating Client: " + clientNumber);
         this.clientNumber = clientNumber;
-        Main.log("[Client" + this.clientNumber + "] Client Number Set: " + clientNumber);
-        Main.log("[Client" + this.clientNumber + "] Starting GUI");
+        Main.log("[Client: " + this.clientNumber + "] Client Number Set: " + clientNumber);
+        Main.log("[Client: " + this.clientNumber + "] Starting GUI");
         this.GUI();
-        Main.log("[Client" + this.clientNumber + "] Client Complete");
+        Main.log("[Client: " + this.clientNumber + "] Client Complete");
     }
 
     private void GUI() {
-        Main.log("[Client" + this.clientNumber + "] Creating Visual");
+        Main.log("[Client: " + this.clientNumber + "] Creating Visual");
         this.GUIVisual();
-        Main.log("[Client" + this.clientNumber + "] Linking Functional");
+        Main.log("[Client: " + this.clientNumber + "] Linking Functional");
         this.GUIFunctional();
-        Main.log("[Client" + this.clientNumber + "] GUI Complete");
+        Main.log("[Client: " + this.clientNumber + "] GUI Complete");
         return;
     }
 
     public void launch() {
-        Main.log("[Client" + this.clientNumber + "] Launching Client");
+        Main.log("[Client: " + this.clientNumber + "] Launching Client");
         try {
-            Main.log("[Client" + this.clientNumber + "] Getting Port from Server");
+            Main.log("[Client: " + this.clientNumber + "] Getting Port from Server");
             this.port = Server.port;
-            Main.log("[Client" + this.clientNumber + "] Getting Socket Connection");
+            Main.log("[Client: " + this.clientNumber + "] Getting Socket Connection");
             this.socket = new Socket("127.0.0.1", this.port);
             
             //DELETE THIS AFTER IMPPLEMENT RATIO
             Scanner k = new Scanner(System.in);
             
-            Main.log("[Client" + this.clientNumber + "] Starting Object Streams");
+            Main.log("[Client: " + this.clientNumber + "] Starting Object Streams");
             ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(this.socket.getInputStream());
             
             //Reading Vector Clock
-            Main.log("[Client" + this.clientNumber + "] Setting Vector Clock");
+            Main.log("[Client: " + this.clientNumber + "] Setting Vector Clock");
             VectorClock clock = (VectorClock) ois.readObject();//set clock associated with the PC
             
-            Main.log("[Client" + this.clientNumber + "] Creating Command Thread");
+            Main.log("[Client: " + this.clientNumber + "] Creating Command Thread");
             Thread command = new Thread(new Runnable() {
 				public void run() {
 					try {
-						Main.log("[Client" + clientNumber + "] Command thread started successfully");
+						Main.log("[Client: " + clientNumber + "] Command thread started successfully");
 						System.out.println("PC"+clock.ID);
 						while(true) {
 							
@@ -171,17 +171,17 @@ public class Client extends JPanel {
 								oos.flush();
 							}
                         }
-                        //Main.log("[Client" + clientNumber + "] Command Thread Ended");
+                        //Main.log("[Client: " + clientNumber + "] Command Thread Ended");
 					} catch(IOException e) {
 						e.printStackTrace();
 					}
 				}
 			});
             
-            Main.log("[Client" + this.clientNumber + "] Creating Response Thread");
+            Main.log("[Client: " + this.clientNumber + "] Creating Response Thread");
             Thread response = new Thread(new Runnable() {
 				public void run() {
-					Main.log("[Client" + clientNumber + "] Response thread started sucessfully");
+					Main.log("[Client: " + clientNumber + "] Response thread started sucessfully");
 					try {
 						while(true) {
 							String msg = ois.readUTF();
@@ -330,7 +330,7 @@ public class Client extends JPanel {
 							}//end write_reply
 
 						}//while loop
-						//Main.log("[Client" + clientNumber + "] Response Thread Ended");
+						//Main.log("[Client: " + clientNumber + "] Response Thread Ended");
 					}
 					catch(Exception e) {
 						e.printStackTrace();
@@ -338,13 +338,13 @@ public class Client extends JPanel {
 				}
 			});
             
-            Main.log("[Client" + this.clientNumber + "] Start Command Thread");
+            Main.log("[Client: " + this.clientNumber + "] Start Command Thread");
             command.start();
-            Main.log("[Client" + this.clientNumber + "] Command thread started");
+            Main.log("[Client: " + this.clientNumber + "] Command thread started");
 
-            Main.log("[Client" + this.clientNumber + "] Start Response thread");
+            Main.log("[Client: " + this.clientNumber + "] Start Response thread");
             response.start();
-            Main.log("[Client" + this.clientNumber + "] Response Thread started");
+            Main.log("[Client: " + this.clientNumber + "] Response Thread started");
         } catch (UnknownHostException uhex) {
 
         } catch (IOException iex) {
@@ -352,7 +352,7 @@ public class Client extends JPanel {
         } catch (Exception ex) {
 
         }
-        Main.log("[Client" + this.clientNumber + "] Client Launch Complete");
+        Main.log("[Client: " + this.clientNumber + "] Client Launch Complete");
         return;
     }
 
@@ -374,77 +374,77 @@ public class Client extends JPanel {
     }
 
     private void GUIVisual() {
-        Main.log("[Client" + this.clientNumber + "] Preparing Visual of GUI");
+        Main.log("[Client: " + this.clientNumber + "] Preparing Visual of GUI");
         //Set base panel background
         this.setBackground(Color.GRAY);
 
         //Set base panel layout
-        Main.log("[Client" + this.clientNumber + "] Setting base Layout");
+        Main.log("[Client: " + this.clientNumber + "] Setting base Layout");
         this.base = new BorderLayout();
         this.setLayout(this.base);
-        Main.log("[Client" + this.clientNumber + "] base Layout Set");
+        Main.log("[Client: " + this.clientNumber + "] base Layout Set");
 
         //Add base panel label north(top)
-        Main.log("[Client" + this.clientNumber + "] Creating Window label");
+        Main.log("[Client: " + this.clientNumber + "] Creating Window label");
         this.windowLabel = new JLabel("PC " + this.clientNumber);
         this.changeFont(this.windowLabel, 5);
         this.add(this.windowLabel, BorderLayout.NORTH);
-        Main.log("[Client" + this.clientNumber + "] Window label created and added");
+        Main.log("[Client: " + this.clientNumber + "] Window label created and added");
 
         //Prepare and add west(left) panel for +/- of setting read
-        Main.log("[Client" + this.clientNumber + "] Creating Read panel for changing read percentage");
+        Main.log("[Client: " + this.clientNumber + "] Creating Read panel for changing read percentage");
         this.readPanel = new JPanel();
         this.readPanel.setBackground(Color.LIGHT_GRAY);
         this.readLayout = new BoxLayout(this.readPanel, BoxLayout.Y_AXIS);
         this.readPanel.setLayout(this.readLayout);
-        Main.log("[Client" + this.clientNumber + "] Setting read panel label");
+        Main.log("[Client: " + this.clientNumber + "] Setting read panel label");
         this.readLabel = new JLabel("READ");
         this.changeFont(this.readLabel, -1);
         this.readPanel.add(this.readLabel);
-        Main.log("[Client" + this.clientNumber + "] Adding read panel + button");
+        Main.log("[Client: " + this.clientNumber + "] Adding read panel + button");
         this.readPlus = new JButton(this.plus);
         this.changeFont(this.readPlus, -5);
         this.readPanel.add(this.readPlus);
-        Main.log("[Client" + this.clientNumber + "] Adding read panel - button");
+        Main.log("[Client: " + this.clientNumber + "] Adding read panel - button");
         this.readMinus = new JButton(this.minus);
         this.changeFont(this.readMinus, -5);
         this.readPanel.add(this.readMinus);
         this.add(this.readPanel, BorderLayout.WEST);
-        Main.log("[Client" + this.clientNumber + "] Read panel complete");
+        Main.log("[Client: " + this.clientNumber + "] Read panel complete");
 
         //Prepare and add pclog to the center
-        Main.log("[Client" + this.clientNumber + "] Creating PC Log box");
+        Main.log("[Client: " + this.clientNumber + "] Creating PC Log box");
         this.pcLog = new JTextArea(5, 30);
         this.changeFont(this.pcLog, -3);
         this.pcLog.setEditable(false);
         this.pcLogPane = new JScrollPane(this.pcLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.pcLogPane.setBackground(Color.WHITE);
         this.add(this.pcLogPane, BorderLayout.CENTER);
-        Main.log("[Client" + this.clientNumber + "] PC Log Box complete");
+        Main.log("[Client: " + this.clientNumber + "] PC Log Box complete");
 
         //Prepare and add the write panel for +/- to east(right)
-        Main.log("[Client" + this.clientNumber + "] Creating Write Panel");
+        Main.log("[Client: " + this.clientNumber + "] Creating Write Panel");
         this.writePanel = new JPanel();
         this.writePanel.setBackground(Color.LIGHT_GRAY);
         this.writeLayout = new BoxLayout(this.writePanel, BoxLayout.Y_AXIS);
         this.writePanel.setLayout(this.writeLayout);
-        Main.log("[Client" + this.clientNumber + "] Adding WRITE label to write panel");
+        Main.log("[Client: " + this.clientNumber + "] Adding WRITE label to write panel");
         this.writeLabel = new JLabel("WRITE");
         this.changeFont(this.writeLabel, -1);
         this.writePanel.add(this.writeLabel);
-        Main.log("[Client" + this.clientNumber + "] Creating Write + button");
+        Main.log("[Client: " + this.clientNumber + "] Creating Write + button");
         this.writePlus = new JButton(this.plus);
         this.changeFont(this.writePlus, -5);
         this.writePanel.add(this.writePlus);
-        Main.log("[Client" + this.clientNumber + "] Creating Write - button");
+        Main.log("[Client: " + this.clientNumber + "] Creating Write - button");
         this.writeMinus = new JButton(this.minus);
         this.changeFont(this.writeMinus, -5);
         this.writePanel.add(this.writeMinus);
         this.add(this.writePanel, BorderLayout.EAST);
-        Main.log("[Client" + this.clientNumber + "] Complete Write panel");
+        Main.log("[Client: " + this.clientNumber + "] Complete Write panel");
 
         //Prepare the text view panel for read and write percentages to go south(bottom)
-        Main.log("[Client" + this.clientNumber + "] Preparing south percentage panel");
+        Main.log("[Client: " + this.clientNumber + "] Preparing south percentage panel");
         this.viewPanel = new JPanel();
         this.viewPanel.setBackground(Color.LIGHT_GRAY);
         this.viewLayout = new GridLayout(2, 2);
@@ -464,47 +464,47 @@ public class Client extends JPanel {
         this.writeNumber.setEditable(false);
         this.viewPanel.add(this.writeNumber);
         this.add(this.viewPanel, BorderLayout.SOUTH);
-        Main.log("[Client" + this.clientNumber + "] Percentage Panel Complete");
+        Main.log("[Client: " + this.clientNumber + "] Percentage Panel Complete");
 
-        Main.log("[Client" + this.clientNumber + "] GUI Visual Complete");
+        Main.log("[Client: " + this.clientNumber + "] GUI Visual Complete");
         return;
     }
 
     private void GUIFunctional() {
-        Main.log("[Client" + this.clientNumber + "] Beginning GUI Functionality");
-        Main.log("[Client" + this.clientNumber + "] Adding read+ button function");
+        Main.log("[Client: " + this.clientNumber + "] Beginning GUI Functionality");
+        Main.log("[Client: " + this.clientNumber + "] Adding read+ button function");
         this.readPlus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("READPLUS BUTTON PUSHED");
             }
         });
-        Main.log("[Client" + this.clientNumber + "] Read+ button function added");
+        Main.log("[Client: " + this.clientNumber + "] Read+ button function added");
 
-        Main.log("[Client" + this.clientNumber + "] Adding Read- button function");
+        Main.log("[Client: " + this.clientNumber + "] Adding Read- button function");
         this.readMinus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("READMINUS BUTTON PUSHED");
             }
         });
-        Main.log("[Client" + this.clientNumber + "] Read- buttno function added");
+        Main.log("[Client: " + this.clientNumber + "] Read- buttno function added");
 
-        Main.log("[Client" + this.clientNumber + "] Adding write+ button function");
+        Main.log("[Client: " + this.clientNumber + "] Adding write+ button function");
         this.writePlus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("WRITEPLUS BUTTON PUSHED");
             }
         });
-        Main.log("[Client" + this.clientNumber + "] Write+ button function added");
+        Main.log("[Client: " + this.clientNumber + "] Write+ button function added");
 
-        Main.log("[Client" + this.clientNumber + "] Adding Write- button function");
+        Main.log("[Client: " + this.clientNumber + "] Adding Write- button function");
         this.writeMinus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("WRITEMINUS BUTTON PUSHED");
             }
         });
-        Main.log("[Client" + this.clientNumber + "] Write- button function added");
+        Main.log("[Client: " + this.clientNumber + "] Write- button function added");
 
-        Main.log("[Client" + this.clientNumber + "] GUI functionality added - complete");
+        Main.log("[Client: " + this.clientNumber + "] GUI functionality added - complete");
         return;
     }
 

@@ -28,11 +28,11 @@ public class ServerThread extends Thread {
         this.oos = oos;
         this.ois = ois;
 		this.clock = new VectorClock(this.id);
-		Main.log("[ServerThread" + this.id + "] Created ServerThread");
+		Main.log("[ServerThread: " + this.id + "] Created ServerThread");
     }
     
     public void run() {
-		Main.log("[ServerThread" + this.id + "] Running");
+		Main.log("[ServerThread: " + this.id + "] Running");
 		try {
 			//this.log(clock + "Writing clock");
 			oos.writeObject(this.clock);
@@ -116,17 +116,17 @@ public class ServerThread extends Thread {
 		} catch (IOException | ClassNotFoundException | InterruptedException e) {
 			e.printStackTrace();
 		}
-		Main.log("[ServerThread" + this.id + "] Run Complete");
+		Main.log("[ServerThread: " + this.id + "] Run Complete");
 	}
     
     public void end() {
-		Main.log("[ServerThread" + this.id + "] Ending");
+		Main.log("[ServerThread: " + this.id + "] Ending");
         try {
             this.socket.close();
         } catch (IOException iex) {
             System.err.println("Failure to end server");
         }
-		Main.log("[ServerThread" + this.id + "] Ended");
+		Main.log("[ServerThread: " + this.id + "] Ended");
 		
 		return;
 	}
