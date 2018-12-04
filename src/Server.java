@@ -87,6 +87,16 @@ public class Server extends JPanel {
         this.logger = new LocalLogger(this.localLog);
     }
     
+    /* OUTDATED DO NOT USE!!!!!!!!!!!!!
+    public void log(String log) {
+        try {
+            GlobalLogger.writeController(null, message);
+        } catch (IOException iex) {}
+        this.visualLog(log);
+        this.logger.log(log);
+        return;
+    }*/
+
     public void visualLog(String log) {
         this.serverLog.append(log);
         return;
