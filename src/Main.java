@@ -21,7 +21,8 @@ import java.awt.Color;
 //Utilities
 import java.util.Vector;
 
-//Exceptions
+//CREATE MAIN LOGGER
+import java.io.File;
 import java.io.IOException;
 
 
@@ -48,7 +49,7 @@ public class Main {
         //Make Background Log
         try {
             //Background Log
-            file = new File(Constants.BACKGROUND_LOG_PATH);
+            File file = new File(Constants.BACKGROUND_LOG_PATH);
             file.mkdirs();
             file = new File(Constants.BACKGROUND_LOG_PATH + Constants.FILE_BACKGROUND_LOG);
             file.createNewFile();
