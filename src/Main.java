@@ -54,7 +54,7 @@ public class Main {
             file = new File(Constants.BACKGROUND_LOG_PATH + Constants.FILE_BACKGROUND_LOG);
             file.createNewFile();
         } catch (IOException iex) {}
-        Main.Main.log()
+        Main.log("[Main] Main logger created");
         Main main = new Main();
         //main.start();
         main.run();
@@ -74,13 +74,13 @@ public class Main {
 
     private void run() {
         //Ensuring Directory Structure
-        Main.log("Ensuring Directory Structure");
+        Main.log("[Main] Ensuring Directory Structure");
         DirectoryStructure ds = new DirectoryStructure();
         ds.ensureStructure();
         ds = null;
 
         //Starting GUI
-        Main.log("Starting GUI");
+        Main.log("[Main] Starting GUI");
         this.GUI();
 
         return;
@@ -89,55 +89,55 @@ public class Main {
 
     private void GUI() {
         //Building GUI
-        Main.log("Building GUI");
-        Main.log("Creating Frame");
+        Main.log("[Main] Building GUI");
+        Main.log("[Main] Creating Frame");
         frame = new JFrame("OSP3");
-        Main.log("Beginning to build Main panel");
+        Main.log("[Main] Beginning to build Main panel");
         mainPanel = new JPanel();
         mainPanel.setBackground(Color.BLACK);
         mainLayout = new FlowLayout();
         mainPanel.setLayout(mainLayout);
-        Main.log("Main panel created");
+        Main.log("[Main] Main panel created");
         
         //Creating Clients panel and clients
-        Main.log("Creating Clients Panel and clients");
+        Main.log("[Main] Creating Clients Panel and clients");
         clientsPanel = new JPanel();
         clientsPanel.setBackground(Color.DARK_GRAY);
         clientsLayout = new BoxLayout(clientsPanel, BoxLayout.Y_AXIS);
         clientsPanel.setLayout(clientsLayout);
-        Main.log("Creating Client Vector");
+        Main.log("[Main] Creating Client Vector");
         Main.cv = new Vector<Client>();
         for (int i = 0; i < Constants.NUMBER_OF_CLIENTS; i++) {
             //Creating client number i
-            Main.log("Created client: " + i);
+            Main.log("[Main] Created client: " + i);
             Client client = new Client(i + 1);
             cv.add(client);
             clientsPanel.add(client);
         }
         mainPanel.add(clientsPanel);
-        Main.log("Clients panel complete");
+        Main.log("[Main] Clients panel complete");
 
         //Creating Server panel
-        Main.log("Creating Server panel");
+        Main.log("[Main] Creating Server panel");
         server = new Server();
         mainPanel.add(server);
-        Main.log("Server panel complete");
+        Main.log("[Main] Server panel complete");
 
         //Building frame
-        Main.log("Assembling frame");
+        Main.log("[Main] Assembling frame");
         frame.add(mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
 
         //Display
-        Main.log("Packing Frame");
+        Main.log("[Main] Packing Frame");
         frame.pack();
-        Main.log("Displaying Frame");
+        Main.log("[Main] Displaying Frame");
         frame.setVisible(true);
 
         //Prepare ServerThread Vector
-        Main.log("Preparing ServerThread Vector");
+        Main.log("[Main] Preparing ServerThread Vector");
         Main.stv = new Vector<ServerThread>();
     }
 
