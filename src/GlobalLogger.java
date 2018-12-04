@@ -53,11 +53,11 @@ public class GlobalLogger {
 	}
 	
 	//NEEDS UPDATING ------------------------- OUTDATED
-	public static void cleanup() throws FileNotFoundException {
+	/*public static void cleanup() throws FileNotFoundException {
 		PrintWriter cntrl = new PrintWriter("./data/CONTROLLER/log.txt");
 		cntrl.close();
 		for(int i = 1; i < 6; i++) {
 			PrintWriter pw = new PrintWriter("./data/PC" + i + "/" + Constants.FILE_GLOBAL_LOG);
 		}
-	}
+	}*/
 }
