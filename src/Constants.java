@@ -10,6 +10,9 @@ package osp;
 public class Constants {
     //Client Number
     public static final int NUMBER_OF_CLIENTS = 5;
+
+    //Port Default
+    public static final int PORT_DEFAULT = 9001;
     
     //File Names
     public static final String FILE_GLOBAL_LOG = "global_log.txt";
