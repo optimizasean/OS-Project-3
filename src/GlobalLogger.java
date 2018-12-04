@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 
 
 public class GlobalLogger {
-	private static String dir = null;
 	//TimeStamp
 	private static String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 
