@@ -77,6 +77,7 @@ public class Server extends JPanel {
     private int id = 1;
 
     public Server() {
+        Main.log("[Server.java] Starting Logger");
         this.startLogger();
         this.GUI();
     }
@@ -86,12 +87,8 @@ public class Server extends JPanel {
         this.logger = new LocalLogger(this.localLog);
     }
     
-    public void log(String log) {
-        try {
-            GlobalLogger.writeController(null, message);
-        } catch (IOException iex) {}
+    public void visualLog(String log) {
         this.serverLog.append(log);
-        this.logger.log(log);
         return;
     }
 
