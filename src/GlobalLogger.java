@@ -8,6 +8,12 @@ import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 
+//Date and timestamping
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
+
+
 public class GlobalLogger {
 	private static String dir = null;
 	//TimeStamp
