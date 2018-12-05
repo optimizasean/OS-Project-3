@@ -16,12 +16,13 @@ public class Ratio{
      * and writing percetage. It returns the result as read, write, or
      * idle.
      * 
-     * @param w_p: probability of writing, double.
-     * @param r_p: probability of reading. double.
-     * @param idle: probability of reading, double.
+     * @param write_percent: probability of writing, int.
+     * @param read_percent: probability of reading. int.
      * @return String: read, write, idle
     \*****************************************************************/
-    public static String command(double r_p, double w_p) {
+    public static String command(int read_percent, int write_percent) {
+        double r_p = (double)read_percent / 100.0;
+        double w_p = (double)write_percent / 100.0;
         double r = Math.random();
         if((0<=r) && (r<r_p)) {
             //System.out.println("read: " + r_p);

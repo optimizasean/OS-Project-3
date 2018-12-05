@@ -99,16 +99,14 @@ public class Client extends JPanel {
 	private static volatile Semaphore fileLock = new Semaphore(1);
     private volatile Semaphore streamLock = new Semaphore(1);
     private volatile Semaphore commandLock = new Semaphore(1);
-	private double readP = 0.5;
-	private double writeP = 0.5;
 	private String command = null;
 	private VectorClock clock = null;
 	private boolean done = true;
     private Socket socket = null;
 
     //PERCENTS
-    private int readPercentage = Constants.READ_DEFAULT;
-    private int writePercentage = Constants.WRITE_DEFAULT;
+    private volatile int readPercentage = Constants.READ_DEFAULT;
+    private volatile int writePercentage = Constants.WRITE_DEFAULT;
 
     //Threads
     public Thread instruction = null;
@@ -211,7 +209,7 @@ public class Client extends JPanel {
                             commandLock.acquire();
                             while(!done);
                             Thread.sleep(2000);
-                            command = Ratio.command(readP, writeP);
+                            command = Ratio.command(readPercentage, writePercentage);
 							
 							if(command.equals("read")) {
 								status = "reading";
@@ -464,8 +462,13 @@ public class Client extends JPanel {
 
     private void readPercentagePlus() {
         //Change
-        this.readPercentage++;
-        this.writePercentage--;
+        if (this.readPercentage >= 100) {
+            this.readPercentage = 0;
+            this.writePercentage = 100;
+        } else {
+            this.readPercentage++;
+            this.writePercentage--;
+        }
 
         //View
         this.readNumber.setText(String.valueOf(this.readPercentage));
@@ -474,9 +477,13 @@ public class Client extends JPanel {
         return;
     }
     private void readPercentageMinus() {
-        this.readPercentage--;
-        this.writePercentage++;
-
+        if (this.readPercentage <= 0) {
+            this.readPercentage = 100;
+            this.writePercentage = 0;
+        } else {
+            this.readPercentage--;
+            this.writePercentage++;
+        }
         
         //View
         this.readNumber.setText(String.valueOf(this.readPercentage));
@@ -485,9 +492,13 @@ public class Client extends JPanel {
         return;
     }
     private void writePercentagePlus() {
-        this.readPercentage--;
-        this.writePercentage++;
-
+        if (this.writePercentage >= 100) {
+            this.writePercentage = 0;
+            this.readPercentage = 100;
+        } else {
+            this.readPercentage--;
+            this.writePercentage++;
+        }
         
         //View
         this.readNumber.setText(String.valueOf(this.readPercentage));
@@ -496,9 +507,13 @@ public class Client extends JPanel {
         return;
     }
     private void writePercentageMinus() {
-        this.readPercentage++;
-        this.writePercentage--;
-
+        if (this.writePercentage <= 0) {
+            this.writePercentage = 100;
+            this.readPercentage = 0;
+        } else {
+            this.readPercentage++;
+            this.writePercentage--;
+        }
         
         //View
         this.readNumber.setText(String.valueOf(this.readPercentage));
