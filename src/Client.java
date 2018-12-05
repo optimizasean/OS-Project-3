@@ -376,6 +376,7 @@ public class Client extends JPanel {
                                 //LOG
                                 clientLog(clock, "PC" + temp.ID + " replied OK to write request");
 								
+                                fileLock.acquire();
 								counter++;
 								
 								//if the other 4 PCs respond, perform write action
@@ -399,6 +400,7 @@ public class Client extends JPanel {
 									status = "idle";
 									System.out.println("done writing");
 								}
+                                fileLock.release();
 							}//end write_reply
 
 
