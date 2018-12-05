@@ -106,6 +106,10 @@ public class Client extends JPanel {
 	private static boolean done = true;
     private Socket socket = null;
 
+    //PERCENTS
+    private int readPercentage = Constants.READ_DEFAULT;
+    private int writePercentage = Constants.WRITE_DEFAULT;
+
     //Threads
     public Thread instruction = null;
     public Thread task = null;
@@ -452,6 +456,51 @@ public class Client extends JPanel {
         return;
     }
 
+    private void readPercentagePlus() {
+        //Change
+        this.readPercentage++;
+        this.writePercentage--;
+
+        //View
+        this.readNumber.setText(String.valueOf(this.readPercentage));
+        this.writeNumber.setText(String.valueOf(this.writePercentage));
+
+        return;
+    }
+    private void readPercentageMinus() {
+        this.readPercentage--;
+        this.writePercentage++;
+
+        
+        //View
+        this.readNumber.setText(String.valueOf(this.readPercentage));
+        this.writeNumber.setText(String.valueOf(this.writePercentage));
+
+        return;
+    }
+    private void writePercentagePlus() {
+        this.readPercentage--;
+        this.writePercentage++;
+
+        
+        //View
+        this.readNumber.setText(String.valueOf(this.readPercentage));
+        this.writeNumber.setText(String.valueOf(this.writePercentage));
+
+        return;
+    }
+    private void writePercentageMinus() {
+        this.readPercentage++;
+        this.writePercentage--;
+
+        
+        //View
+        this.readNumber.setText(String.valueOf(this.readPercentage));
+        this.writeNumber.setText(String.valueOf(this.writePercentage));
+
+        return;
+    }
+
     private void clientLog(VectorClock clock, String log) {
         System.out.println("CLIENTLOG: " + clock + " : " + log);
         try {
@@ -557,14 +606,14 @@ public class Client extends JPanel {
         this.readViewLabel = new JLabel("Read: %");
         this.changeFont(this.readViewLabel, -2);
         this.viewPanel.add(this.readViewLabel);
-        this.readNumber = new JTextField("??");
+        this.readNumber = new JTextField(String.valueOf(this.readPercentage));
         this.changeFont(this.readNumber, -2);
         this.readNumber.setEditable(false);
         this.viewPanel.add(this.readNumber);
         this.writeViewLabel = new JLabel("Write: %");
         this.changeFont(this.writeViewLabel, -2);
         this.viewPanel.add(this.writeViewLabel);
-        this.writeNumber = new JTextField("??");
+        this.writeNumber = new JTextField(String.valueOf(this.writePercentage));
         this.changeFont(this.writeNumber, -2);
         this.writeNumber.setEditable(false);
         this.viewPanel.add(this.writeNumber);
@@ -582,7 +631,7 @@ public class Client extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("READPLUS BUTTON PUSHED");
                 visualLog("[CLIENT: " + clientNumber + "] READPLUS PUSHED");
-                
+                readPercentagePlus();
             }
         });
         Main.log("[Client: " + this.clientNumber + "] Read+ button function added");
@@ -592,6 +641,7 @@ public class Client extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("READMINUS BUTTON PUSHED");
                 visualLog("[CLIENT: " + clientNumber + "] READMINUS PUSHED");
+                readPercentageMinus();
             }
         });
         Main.log("[Client: " + this.clientNumber + "] Read- button function added");
@@ -601,6 +651,7 @@ public class Client extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("WRITEPLUS BUTTON PUSHED");
                 visualLog("[CLIENT: " + clientNumber + "] WRITEPLUS PUSHED");
+                writePercentagePlus();
             }
         });
         Main.log("[Client: " + this.clientNumber + "] Write+ button function added");
@@ -610,6 +661,7 @@ public class Client extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("WRITEMINUS BUTTON PUSHED");
                 visualLog("[CLIENT: " + clientNumber + "] WRITEMINUS PUSHED");
+                writePercentageMinus();
             }
         });
         Main.log("[Client: " + this.clientNumber + "] Write- button function added");
