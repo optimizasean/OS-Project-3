@@ -151,11 +151,6 @@ public class Server extends JPanel {
                     Main.log("[Server] Error: ServerThread: " + this.id + "ERROR????????");
                     visualLog("[Server] Error: ServerThread: " + this.id + "ERROR????????");
                     System.err.println("ERROR????????");
-                } catch(Exception ex) {
-                    Main.log("[Server] Error: ServerThread: " + this.id + "CLOSING SERVER");
-                    visualLog("[Server] Error: ServerThread: " + this.id + "CLOSING SERVER");
-                    this.server.close();
-                    ex.printStackTrace();
                 }
             }
         } catch(IOException iex) {
