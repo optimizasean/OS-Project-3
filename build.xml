@@ -32,7 +32,9 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - ->
      <-                                                   ->
+     <-                                                   ->
      <-            Targets for Ant Buildfile              ->
+     <-                                                   ->
      <-                                                   ->
     < - - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - ->
@@ -95,8 +97,14 @@
      <-               Alias Ant Targets                 ->
      <-                                                 ->
     < - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Clean -->
+    <target name = "c" depends = "clean"/>
     <!-- Compile -->
     <target name = "build" depends = "compile"/>
+    <!-- Compile -->
+    <target name = "b" depends = "compile"/>
+    <!-- Compile -->
+    <target name = "bj" depends = "compile, jar"/>
     <!-- Clean and Compile -->
     <target name = "cb" depends = "clean, compile"/>
     <!-- Clean, Compile, and Jar -->
@@ -105,6 +113,10 @@
     <target name = "cbjr" depends = "clean, compile, jar, run"/>
     <!-- Compile, Jar, and Run -->
     <target name = "br" depends = "compile, jar, run"/>
+    <!-- Compile, Jar -->
+    <target name = "j" depends = "compile, jar">
+    <!-- Run -->
+    <target name = "r" depends = "run"/>
 
 
 
