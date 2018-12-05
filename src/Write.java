@@ -56,7 +56,7 @@ public class Write {
 		}
 		
 		raf.seek(raf.length());//move cursor to end of file
-		raf.writeBytes("PC"+clock.ID+" write to file");//write message at end of file
+		raf.writeBytes("PC"+clock.ID+" write to file\n");//write message at end of file
 		lock.release();//release exclusive lock
 		raf.close();
 		ch.close();
