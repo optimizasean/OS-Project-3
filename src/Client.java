@@ -93,15 +93,15 @@ public class Client extends JPanel {
     //Client
     private int clientNumber = 0;
     private int port = 0;
-    private String status = "idle";
-	private Vector<VectorClock> queue = new Vector<VectorClock>();
+    private volatile String status = "idle";
+	private volatile Vector<VectorClock> queue = new Vector<VectorClock>();
 	private int counter = 0;//keep track of how many PCs responded
-	private static volatile Semaphore fileLock = new Semaphore(1);
+	private volatile Semaphore fileLock = new Semaphore(1);
     //private volatile Semaphore //streamLock = new Semaphore(1);
-    private volatile Semaphore commandLock = new Semaphore(1);
+    private Semaphore commandLock = new Semaphore(1);
 	private String command = null;
 	private VectorClock clock = null;
-	private boolean done = true;
+	private volatile boolean done = true;
     private Socket socket = null;
 
     //PERCENTS
@@ -211,7 +211,7 @@ public class Client extends JPanel {
                             command = Ratio.command(readPercentage, writePercentage);
 							
 							if(command.equals("read")) {
-                                System.out.println("PC"+clock.ID+" request to read");
+                                System.out.println("PC"+clock.ID+": request to read");
 								status = "reading";
                                 clock.inc();
                                 
@@ -227,7 +227,7 @@ public class Client extends JPanel {
 							}
 							
 							if(command.equals("write")) {
-                                System.out.println("PC"+clock.ID+" request to write");
+                                System.out.println("PC"+clock.ID+": request to write");
 								status = "writing";
                                 clock.inc();
                                 clock.setWriteTime(clock);
@@ -313,7 +313,7 @@ public class Client extends JPanel {
                                 Thread.sleep(2000);//simulate time taken to read file
 								Read.deleteCopy();
 								status = "idle";
-								System.out.println("PC"+clock.ID+" done reading");
+								System.out.println("PC"+clock.ID+": done reading");
                                 commandLock.release();
 							}//end read_reply
 							
@@ -366,7 +366,7 @@ public class Client extends JPanel {
 											//Add to queue to be processed later
 											queue.add(temp);
                                             done = false;
-                                            System.err.println("PC"+clock.ID+" added PC"+temp.ID+" to memory");
+                                            System.err.println("PC"+clock.ID+": added PC"+temp.ID+" to memory");
 									}
 									else {
 										System.err.println("write_request error");
@@ -405,7 +405,7 @@ public class Client extends JPanel {
 									
 									counter = 0;//reset if we get another writing command
 									status = "idle";
-									System.out.println("PC"+clock.ID+" done writing");
+									System.out.println("PC"+clock.ID+": done writing");
 								}
                                 fileLock.release();
 							}//end write_reply
@@ -413,6 +413,7 @@ public class Client extends JPanel {
 
                             //Handles all requests in queue before proceeding
                             if(done == false) {
+                                System.err.println("PC"+clock.ID+": status is "+status);
                                 while(queue.size()>0 && status.equals("idle")) {
                                     temp = queue.remove(0);
                                     System.err.println("PC"+clock.ID+" execute PC"+temp.ID);

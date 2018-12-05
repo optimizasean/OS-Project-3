@@ -16,8 +16,8 @@ public interface Constants {
     public static final int PORT_DEFAULT = 9001;
 
     //Defaults - READ/WRITE
-    public static final int READ_DEFAULT = 80;
-    public static final int WRITE_DEFAULT = 20;
+    public static final int READ_DEFAULT = 50;
+    public static final int WRITE_DEFAULT = 50;
     
     //File Names
     public static final String FILE_GLOBAL_LOG = "global_log.txt";
