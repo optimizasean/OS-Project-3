@@ -93,17 +93,17 @@ public class Client extends JPanel {
     //Client
     private int clientNumber = 0;
     private int port = 0;
-    private static String status = "idle";
-	private static Vector<VectorClock> queue = new Vector<VectorClock>();
-	private static int counter = 0;//keep track of how many PCs responded
+    private String status = "idle";
+	private Vector<VectorClock> queue = new Vector<VectorClock>();
+	private int counter = 0;//keep track of how many PCs responded
 	private static volatile Semaphore fileLock = new Semaphore(1);
-    private static volatile Semaphore streamLock = new Semaphore(1);
-    private static volatile Semaphore commandLock = new Semaphore(1);
-	private static double readP = 0.5;
-	private static double writeP = 0.5;
-	private static String command = null;
-	private static VectorClock clock = null;
-	private static boolean done = true;
+    private volatile Semaphore streamLock = new Semaphore(1);
+    private volatile Semaphore commandLock = new Semaphore(1);
+	private double readP = 0.5;
+	private double writeP = 0.5;
+	private String command = null;
+	private VectorClock clock = null;
+	private boolean done = true;
     private Socket socket = null;
 
     //Threads
@@ -155,6 +155,7 @@ public class Client extends JPanel {
         Main.log("[Client: " + this.clientNumber + "] GUI Started");
 
         Main.log("[Client: " + this.clientNumber + "] Client Complete");
+
     }
 
     private void GUI() {
@@ -187,8 +188,9 @@ public class Client extends JPanel {
             //Reading Vector Clock
             Main.log("[Client: " + this.clientNumber + "] Setting Vector Clock");
             visualLog("[Client: " + this.clientNumber + "] Setting vector clock");
-            clock = (VectorClock) ois.readObject();//set clock associated with the PC
-            if (clock == null) System.err.println("ERROR CLOCK NULL");
+            this.clock = (VectorClock) ois.readObject();//set clock associated with the PC
+            if (this.clock == null) System.err.println("ERROR CLOCK NULL");
+            System.out.println("CLIENT " + this.clientNumber + ": clock:" + this.clock);
             
             Main.log("[Client: " + this.clientNumber + "] Creating Instruction Thread");
             this.instruction = new Thread(new Runnable() {
@@ -227,8 +229,10 @@ public class Client extends JPanel {
                                 clock.inc();
                                 clock.setWriteTime(clock);
                                 
+                                //System.out.println(clientNumber + " clock: " + clock.ID + " " + clock);
                                 //LOG
                                 clientLog(clock, "request to write");
+                                System.out.println("CLIENT: " + clientNumber + ":" + clock + " " + clock.ID);
 
                                 streamLock.acquire();
 								oos.writeUTF("write_request");

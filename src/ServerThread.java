@@ -28,6 +28,7 @@ public class ServerThread extends Thread {
         this.oos = oos;
         this.ois = ois;
 		this.clock = new VectorClock(this.id);
+		System.out.println("THISID: " + this.id);
 		Main.log("[ServerThread: " + this.id + "] Created ServerThread");
     }
     
@@ -37,6 +38,7 @@ public class ServerThread extends Thread {
 		try {
 			//this.log(clock + "Writing clock");
 			oos.writeObject(this.clock);
+			System.out.println("THISCLOCK: " + this.clock);
 			String msg;
 			
 			while((msg = ois.readUTF()) != null) {
