@@ -117,8 +117,12 @@ public class ServerThread extends Thread {
 			oos.close();
 			ois.close();
 			
-		} catch (IOException | ClassNotFoundException | InterruptedException e) {
-			e.printStackTrace();
+		} catch (IOException ioex) {
+			ioex.printStackTrace();
+		} catch (ClassNotFoundException cnfex) {
+			cnfex.printStackTrace();
+		} catch (InterruptedException iex) {
+			iex.printStackTrace();
 		}
 		Main.log("[ServerThread: " + this.id + "] Run Complete");
 	}

@@ -45,6 +45,9 @@ import java.util.Vector;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
 
+//File
+import java.io.File;
+
 
 /***************************
  * Client class is used for the client
@@ -107,11 +110,48 @@ public class Client extends JPanel {
 
     //Client constructor to setup basic client
     public Client(int clientNumber) {
+        //Set Client Number
         Main.log("[Client] Creating Client: " + clientNumber);
         this.clientNumber = clientNumber;
         Main.log("[Client: " + this.clientNumber + "] Client Number Set: " + clientNumber);
+
+        //Set directory for Local Logger
+        Main.log("[Client: " + this.clientNumber + "] Setting directory");
+        String directory = null;
+        switch (this.clientNumber) {
+            //PC1
+            case 1:
+                directory = Constants.DIRECTORY_PATH_PC1;
+                break;
+            //PC2
+            case 2:
+                directory = Constants.DIRECTORY_PATH_PC2;
+                break;
+            //PC3
+            case 3:
+                directory = Constants.DIRECTORY_PATH_PC3;
+                break;
+            //PC 4
+            case 4:
+                directory = Constants.DIRECTORY_PATH_PC4;
+                break;
+            //PC 5
+            case 5:
+                directory = Constants.DIRECTORY_PATH_PC5;
+                break;
+            default:
+                System.err.println("CLIENT:::::::FAILURE TO CREATE LOCAL LOGGER");
+                System.exit(1);
+        }
+        Main.log("[Client: " + this.clientNumber + "] Directory Set");
+        Main.log("[Client: " + this.clientNumber + "] Creating Local Logger");
+        this.logger = new LocalLogger(new File(directory + Constants.FILE_LOCAL_LOG));
+        Main.log("[Client: " + this.clientNumber + "] Local Logger Created");
+
         Main.log("[Client: " + this.clientNumber + "] Starting GUI");
         this.GUI();
+        Main.log("[Client: " + this.clientNumber + "] GUI Started");
+
         Main.log("[Client: " + this.clientNumber + "] Client Complete");
     }
 
@@ -146,6 +186,7 @@ public class Client extends JPanel {
             Main.log("[Client: " + this.clientNumber + "] Setting Vector Clock");
             visualLog("[Client: " + this.clientNumber + "] Setting vector clock");
             clock = (VectorClock) ois.readObject();//set clock associated with the PC
+            if (clock == null) System.err.println("ERROR CLOCK NULL");
             
             Main.log("[Client: " + this.clientNumber + "] Creating Instruction Thread");
             this.instruction = new Thread(new Runnable() {
@@ -205,8 +246,8 @@ public class Client extends JPanel {
                         //Main.log("[Client: " + clientNumber + "] Instruction Thread Ended");
 					} catch (InterruptedException iex) {
                         System.err.println("Interrupted!");
-                    } catch(IOException ex) {
-						ex.printStackTrace();
+                    } catch(IOException ioex) {
+						ioex.printStackTrace();
 					}
 				}
 			});
@@ -383,9 +424,11 @@ public class Client extends JPanel {
 						//Main.log("[Client: " + clientNumber + "] Task Thread Ended");
 					} catch (InterruptedException iex) {
                         System.err.println("Interrupted!");
-                    } catch(Exception ex) {
-						ex.printStackTrace();
-					}
+                    } catch (ClassNotFoundException cnfex) {
+                        System.err.println("Read Object Error: CNFEX");
+                    } catch (IOException ioex) {
+                        System.err.println("IO?");
+                    }
 				}
 			});
             
@@ -408,6 +451,7 @@ public class Client extends JPanel {
     }
 
     private void clientLog(VectorClock clock, String log) {
+        System.out.println("CLIENTLOG: " + clock + " : " + log);
         try {
             //PC clock based log
             GlobalLogger.writePC(clock, log);
