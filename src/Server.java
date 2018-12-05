@@ -14,7 +14,10 @@ import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+
+//Buttons
 import javax.swing.JButton;
+import javax.swing.JScrollBar;
 
 //Color
 import java.awt.Color;
@@ -58,6 +61,7 @@ public class Server extends JPanel {
     private JLabel portLabel = null;
     private JTextField portField = null;
     private JTextArea serverLog = null;
+    private JScrollBar serverLogBar = null;
     private JButton startButton = null;
     private JButton stopButton = null;
     private JButton quitButton = null;
@@ -69,7 +73,7 @@ public class Server extends JPanel {
     //Server
     private ServerSocket server = null;
 	private Socket client = null;
-    public static int port = 0;
+    public int port = 0;
     private int id = 1;
 
     public Server() {
@@ -97,6 +101,8 @@ public class Server extends JPanel {
 
     public void visualLog(String log) {
         this.serverLog.append(log + "\n");
+        serverLogBar.setValue(serverLogBar.getMaximum() - 1);
+
         return;
     }
 
@@ -231,6 +237,7 @@ public class Server extends JPanel {
         this.serverLog.setText("[Server] SERVER VISUAL\n");
         this.serverLogPane = new JScrollPane(serverLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.serverLogPane.setBackground(Color.WHITE);
+        this.serverLogBar = this.serverLogPane.getVerticalScrollBar();
         this.baseConstraints.gridx = 0;
         this.baseConstraints.gridy = 1;
         this.baseConstraints.gridwidth = 4;

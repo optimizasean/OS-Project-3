@@ -18,6 +18,7 @@ import javax.swing.JTextArea;
 
 //Buttons
 import javax.swing.JButton;
+import javax.swing.JScrollBar;
 
 //Dimensions
 import java.awt.Dimension;
@@ -76,6 +77,7 @@ public class Client extends JPanel {
     private JTextField readNumber = null;
     private JTextField writeNumber = null;
     private JTextArea pcLog = null;
+    private JScrollBar pcLogBar = null;
     private JButton readPlus = null;
     private JButton readMinus = null;
     private JButton writePlus = null;
@@ -469,6 +471,7 @@ public class Client extends JPanel {
     }
     public void visualLog(String log) {
         this.pcLog.append(log + "\n");
+        pcLogBar.setValue(pcLogBar.getMaximum() - 1);
 
         return;
     }
@@ -521,6 +524,7 @@ public class Client extends JPanel {
         this.pcLogPane = new JScrollPane(this.pcLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.pcLogPane.setBackground(Color.WHITE);
         this.add(this.pcLogPane, BorderLayout.CENTER);
+        this.pcLogBar = this.pcLogPane.getVerticalScrollBar();
         Main.log("[Client: " + this.clientNumber + "] PC Log Box complete");
 
         //Prepare and add the write panel for +/- to east(right)
