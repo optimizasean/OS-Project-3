@@ -246,8 +246,8 @@ public class Client extends JPanel {
                         //Main.log("[Client: " + clientNumber + "] Instruction Thread Ended");
 					} catch (InterruptedException iex) {
                         System.err.println("Interrupted!");
-                    } catch(IOException ex) {
-						ex.printStackTrace();
+                    } catch(IOException ioex) {
+						ioex.printStackTrace();
 					}
 				}
 			});
@@ -424,6 +424,10 @@ public class Client extends JPanel {
 						//Main.log("[Client: " + clientNumber + "] Task Thread Ended");
 					} catch (InterruptedException iex) {
                         System.err.println("Interrupted!");
+                    } catch (ClassNotFoundException cnfex) {
+                        System.err.println("Read Object Error: CNFEX");
+                    } catch (IOException ioex) {
+                        System.err.println("IO?");
                     }
 				}
 			});
