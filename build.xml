@@ -114,7 +114,7 @@
     <!-- Compile, Jar, and Run -->
     <target name = "br" depends = "compile, jar, run"/>
     <!-- Compile, Jar -->
-    <target name = "j" depends = "compile, jar">
+    <target name = "j" depends = "compile, jar"/>
     <!-- Run -->
     <target name = "r" depends = "run"/>
 
