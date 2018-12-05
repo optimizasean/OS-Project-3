@@ -67,6 +67,12 @@ public class VectorClock implements Serializable {
 		//System.out.println("PC"+this.ID+this.TS+"\t");
 		return "PC"+this.ID+this.TS;
 	}
+
+	public String toString(){
+		if (this == null) return null;
+		if (this.TS == null) return "[]";
+		return "PC"+this.ID+this.TS;
+	}
 	
 	
 }

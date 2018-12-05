@@ -96,7 +96,7 @@ public class Server extends JPanel {
     }*/
 
     public void visualLog(String log) {
-        this.serverLog.append(log);
+        this.serverLog.append(log + "\n");
         return;
     }
 
@@ -117,31 +117,43 @@ public class Server extends JPanel {
                 this.client = null;
                 try {
                     Main.log("[Server] Listening for connection request");
+                    visualLog("[Server] Listening for connection request");
                     this.client = this.server.accept();
                     System.out.println("PC" + this.id + " Accepted");
                     Main.log("[Server] Accepted PC: " + this.id);
+                    visualLog("[Server] Accepted PC: " + this.id);
                     
                     Main.log("[Server] Initializing Streams: " + this.id);
+                    visualLog("[Server] Initializing Streams: " + this.id);
                     ObjectOutputStream oos = new ObjectOutputStream(this.client.getOutputStream());
                     ObjectInputStream ois = new ObjectInputStream(this.client.getInputStream());
                     Main.log("[Server] Streams Initialized:" + this.id);
+                    visualLog("[Server] Streams Initialized:" + this.id);
                     
                     Main.log("[Server] Creating ServerThread: " + this.id);
+                    visualLog("[Server] Creating ServerThread: " + this.id);
                     ServerThread st = new ServerThread(this, this.client, this.id, oos, ois);
                     Main.log("[Server] Adding ServerThread to vector: " + this.id);
+                    visualLog("[Server] Adding ServerThread to vector: " + this.id);
                     Main.stv.add(st);
                     Main.log("[Server] Creating Thread: ServerThread: " + this.id);
+                    visualLog("[Server] Creating Thread: ServerThread: " + this.id);
                     Thread t = new Thread(st);
                     Main.log("[Server] Starting Thread ServerThread: " + this.id);
+                    visualLog("[Server] Starting Thread ServerThread: " + this.id);
                     t.start();
                     Main.log("[Server] Started Thread: ServerThread: " + this.id);
+                    visualLog("[Server] Started Thread: ServerThread: " + this.id);
                     this.id++;
                     Main.log("[Server] Readying for new ID: " + this.id);
+                    visualLog("[Server] Readying for new ID: " + this.id);
                 } catch (IOException iex) {
                     Main.log("[Server] Error: ServerThread: " + this.id + "ERROR????????");
+                    visualLog("[Server] Error: ServerThread: " + this.id + "ERROR????????");
                     System.err.println("ERROR????????");
                 } catch(Exception ex) {
                     Main.log("[Server] Error: ServerThread: " + this.id + "CLOSING SERVER");
+                    visualLog("[Server] Error: ServerThread: " + this.id + "CLOSING SERVER");
                     this.server.close();
                     ex.printStackTrace();
                 }
@@ -221,6 +233,7 @@ public class Server extends JPanel {
         this.serverLog = new JTextArea(38, 40);
         this.changeFont(this.serverLog, -3);
         this.serverLog.setEditable(false);
+        this.serverLog.setText("[Server] SERVER VISUAL\n");
         this.serverLogPane = new JScrollPane(serverLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.serverLogPane.setBackground(Color.WHITE);
         this.baseConstraints.gridx = 0;
@@ -338,7 +351,9 @@ public class Server extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("START BUTTON PUSHED");
                 Main.log("[Server] Start Button Pushed");
-                Main.stopThreads = true;
+                visualLog("[Server] START BUTTON PUSHED");
+                System.out.println("Start button pushed");
+                Main.stopThreads = false;
                 Main.log("[Server] Creating Server Launch Thread");
                 Thread s = new Thread(new Runnable() {
                     public void run() {
@@ -376,6 +391,7 @@ public class Server extends JPanel {
         this.stopButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Main.log("[Server] Stop Button Pushed");
+                visualLog("[Server] STOP BUTTON PUSHED\n");
                 System.out.println("STOP BUTTON PUSHED");
                 //Interrupt Clients
                 Main.log("[Server] Ending Clients");
@@ -427,6 +443,7 @@ public class Server extends JPanel {
         this.quitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Main.log("[Server] Quit Button Pushed");
+                visualLog("[Server] QUIT BUTTON PUSHED\n");
                 System.out.println("QUIT BUTTON PUSHED");
                 Main.log("[Server] Ending Program");
                 System.exit(0);

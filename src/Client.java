@@ -40,6 +40,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 //Utilities
+import javax.swing.SwingUtilities;
 import java.util.Vector;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
@@ -127,26 +128,31 @@ public class Client extends JPanel {
         Main.log("[Client: " + this.clientNumber + "] Launching Client");
         try {
             Main.log("[Client: " + this.clientNumber + "] Getting Port from Server");
-            this.port = Server.port;
+            visualLog("[Client: " + this.clientNumber + "] Getting port from Server");
+            this.port = Main.server.port;
             Main.log("[Client: " + this.clientNumber + "] Getting Socket Connection");
+            visualLog("[Client: " + this.clientNumber + "] Getting socket Connection");
             this.socket = new Socket("127.0.0.1", this.port);
             
             //DELETE THIS AFTER IMPPLEMENT RATIO
             //Scanner k = new Scanner(System.in);
             
             Main.log("[Client: " + this.clientNumber + "] Starting Object Streams");
+            visualLog("[Client: " + this.clientNumber + "] Starting Object Streams");
             ObjectOutputStream oos = new ObjectOutputStream(this.socket.getOutputStream());
             ObjectInputStream ois = new ObjectInputStream(this.socket.getInputStream());
             
             //Reading Vector Clock
             Main.log("[Client: " + this.clientNumber + "] Setting Vector Clock");
+            visualLog("[Client: " + this.clientNumber + "] Setting vector clock");
             clock = (VectorClock) ois.readObject();//set clock associated with the PC
             
             Main.log("[Client: " + this.clientNumber + "] Creating Instruction Thread");
             this.instruction = new Thread(new Runnable() {
 				public void run() {
 					try {
-						Main.log("[Client: " + clientNumber + "] Instruction thread started successfully");
+                        Main.log("[Client: " + clientNumber + "] Instruction thread started successfully");
+                        visualLog("[Client: " + clientNumber + "] Instruction thread started successfully");
 						System.out.println("PC"+clock.ID);
 						while(true) {
                             //Check for stop and interrupt
@@ -163,7 +169,7 @@ public class Client extends JPanel {
                                 clock.inc();
                                 
                                 //LOG
-                                log(clock, "request to read");
+                                clientLog(clock, "request to read");
 
                                 streamLock.acquire();
 								oos.writeUTF("read_request");
@@ -179,7 +185,7 @@ public class Client extends JPanel {
                                 clock.setWriteTime(clock);
                                 
                                 //LOG
-                                log(clock, "request to write");
+                                clientLog(clock, "request to write");
 
                                 streamLock.acquire();
 								oos.writeUTF("write_request");
@@ -198,7 +204,7 @@ public class Client extends JPanel {
                         }
                         //Main.log("[Client: " + clientNumber + "] Instruction Thread Ended");
 					} catch (InterruptedException iex) {
-
+                        System.err.println("Interrupted!");
                     } catch(IOException ex) {
 						ex.printStackTrace();
 					}
@@ -208,7 +214,8 @@ public class Client extends JPanel {
             Main.log("[Client: " + this.clientNumber + "] Creating Task Thread");
             this.task = new Thread(new Runnable() {
 				public void run() {
-					Main.log("[Client: " + clientNumber + "] Task thread started sucessfully");
+                    Main.log("[Client: " + clientNumber + "] Task thread started sucessfully");
+                    visualLog("[Client: " + clientNumber + "] Task thread started successfully");
 					try {
 						while(true) {
                             //Check for stop and interrupt
@@ -224,12 +231,12 @@ public class Client extends JPanel {
                                 clock.merge(temp);
                                 
                                 //LOG
-                                log(clock, "received read request from PC" + temp.ID);
+                                clientLog(clock, "received read request from PC" + temp.ID);
 								
                                 clock.inc();
                                 
                                 //LOG
-                                log(clock, "replied OK to PC" + temp.ID + " read request");
+                                clientLog(clock, "replied OK to PC" + temp.ID + " read request");
 
 								streamLock.acquire();
                                 oos.writeUTF("read_reply");
@@ -245,14 +252,14 @@ public class Client extends JPanel {
                                 clock.merge(temp);
                                 
                                 //LOG
-                                log(clock, "PC" + temp.ID + " replied OK to read request");
+                                clientLog(clock, "PC" + temp.ID + " replied OK to read request");
                                 
 								//if PC1 responded OK, perform read action
 								clock.inc();
                                 Read.makeCopy();
                                 
                                 //LOG
-                                log(clock, "reads file");
+                                clientLog(clock, "reads file");
 
                                 Thread.sleep(2000);//simulate time taken to read file
 								Read.deleteCopy();
@@ -268,14 +275,14 @@ public class Client extends JPanel {
                                 clock.merge(temp);
                                 
                                 //LOG
-                                log(clock, "received write request from PC" + temp.ID);
+                                clientLog(clock, "received write request from PC" + temp.ID);
 								
 								//if this PC is not writing, respond OK
 								if(!status.equals("writing")) {
                                     clock.inc();
                                     
                                     //LOG
-                                    log(clock, "replied OK to PC" + temp.ID + " write request");
+                                    clientLog(clock, "replied OK to PC" + temp.ID + " write request");
 
 									streamLock.acquire();
                                     oos.writeUTF("write_reply");
@@ -295,7 +302,7 @@ public class Client extends JPanel {
                                         clock.inc();
                                         
                                         //LOG
-										log(clock, "replied OK to PC" + temp.ID + " write request");
+										clientLog(clock, "replied OK to PC" + temp.ID + " write request");
 
 										streamLock.acquire();
                                         oos.writeUTF("write_reply");
@@ -324,7 +331,7 @@ public class Client extends JPanel {
                                 clock.merge(temp);
                                 
                                 //LOG
-                                log(clock, "PC" + temp.ID + " replied OK to write request");
+                                clientLog(clock, "PC" + temp.ID + " replied OK to write request");
 								
 								counter++;
 								
@@ -334,13 +341,13 @@ public class Client extends JPanel {
                                     Write.downloadFile(clock);
                                     
                                     //LOG
-                                    log(clock, "downloaded file from PC1");
+                                    clientLog(clock, "downloaded file from PC1");
 									
 									clock.inc();
                                     Write.writeFile(clock);
                                     
                                     //LOG
-                                    log(clock, "writes to file");
+                                    clientLog(clock, "writes to file");
                                     
                                     Thread.sleep(2000);//simulate time taken to write to file
 									Write.returnFile(clock);
@@ -359,7 +366,7 @@ public class Client extends JPanel {
                                     System.err.println("execute PC"+temp.ID);
                                     
                                     clock.inc();
-                                    GlobalLogger.writePC(clock, "replied OK to PC"+temp.ID+" write request");
+                                    clientLog(clock, "replied OK to PC"+temp.ID+" write request");
                                     
                                     streamLock.acquire();
                                     oos.writeUTF("write_reply");
@@ -375,7 +382,7 @@ public class Client extends JPanel {
 						}//while loop
 						//Main.log("[Client: " + clientNumber + "] Task Thread Ended");
 					} catch (InterruptedException iex) {
-
+                        System.err.println("Interrupted!");
                     } catch(Exception ex) {
 						ex.printStackTrace();
 					}
@@ -390,29 +397,34 @@ public class Client extends JPanel {
             this.task.start();
             Main.log("[Client: " + this.clientNumber + "] Task Thread started");
         } catch (UnknownHostException uhex) {
-
+            System.err.println("Why?");
+        } catch (ClassNotFoundException cnfex) {
+            System.err.println("CHRIS!");
         } catch (IOException ioex) {
-
-        } catch (Exception ex) {
-
+            System.err.println("How?");
         }
-        Main.log("[Client: " + this.clientNumber + "] Client Launch Complete");
+        Main.log("[Client: " + this.clientNumber + "] Client Launch Complete?");
         return;
     }
 
-    private void log(VectorClock clock, String log) {
+    private void clientLog(VectorClock clock, String log) {
         try {
             //PC clock based log
             GlobalLogger.writePC(clock, log);
             //Controller clock and timestamp based log
             GlobalLogger.writeController(clock, log);
         } catch (IOException iex) {}
-        //Viual
-        this.pcLog.append(clock + log);
+        //Visual
+        visualLog(clock + log);
         //PC timestamp based log
         this.logger.log(log);   
         //Controller Log
         Main.server.visualLog(clock + log);
+
+        return;
+    }
+    public void visualLog(String log) {
+        this.pcLog.append(log + "\n");
 
         return;
     }
@@ -461,6 +473,7 @@ public class Client extends JPanel {
         this.pcLog = new JTextArea(5, 30);
         this.changeFont(this.pcLog, -3);
         this.pcLog.setEditable(false);
+        this.pcLog.setText("[Client] CLIENT VISUAL\n");
         this.pcLogPane = new JScrollPane(this.pcLog, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.pcLogPane.setBackground(Color.WHITE);
         this.add(this.pcLogPane, BorderLayout.CENTER);
@@ -520,6 +533,8 @@ public class Client extends JPanel {
         this.readPlus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("READPLUS BUTTON PUSHED");
+                visualLog("[CLIENT: " + clientNumber + "] READPLUS PUSHED");
+                
             }
         });
         Main.log("[Client: " + this.clientNumber + "] Read+ button function added");
@@ -528,14 +543,16 @@ public class Client extends JPanel {
         this.readMinus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("READMINUS BUTTON PUSHED");
+                visualLog("[CLIENT: " + clientNumber + "] READMINUS PUSHED");
             }
         });
-        Main.log("[Client: " + this.clientNumber + "] Read- buttno function added");
+        Main.log("[Client: " + this.clientNumber + "] Read- button function added");
 
         Main.log("[Client: " + this.clientNumber + "] Adding write+ button function");
         this.writePlus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("WRITEPLUS BUTTON PUSHED");
+                visualLog("[CLIENT: " + clientNumber + "] WRITEPLUS PUSHED");
             }
         });
         Main.log("[Client: " + this.clientNumber + "] Write+ button function added");
@@ -544,6 +561,7 @@ public class Client extends JPanel {
         this.writeMinus.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("WRITEMINUS BUTTON PUSHED");
+                visualLog("[CLIENT: " + clientNumber + "] WRITEMINUS PUSHED");
             }
         });
         Main.log("[Client: " + this.clientNumber + "] Write- button function added");

@@ -41,6 +41,10 @@ public class GlobalLogger {
 	 * @see {@link osp.VectorClock#toString() VectorClock}
 	\*****************************************************************/
 	public static void writePC(VectorClock clock, String message) throws IOException {
+		if (clock == null) {
+			System.err.println("NULL CLOCK: " + message);
+			return;
+		}
 		String dir = "./data/PC" + clock.ID + "/" + Constants.FILE_GLOBAL_LOG;
 
 		//RandomAccessFile used to write to certain area of file
@@ -66,6 +70,10 @@ public class GlobalLogger {
 	 * @see {@link osp.VectorClock#toString() VectorClock}
 	\*****************************************************************/
 	public static void writeController(VectorClock clock, String message) throws IOException {
+		if (clock == null) {
+			System.err.println("NULL CLOCK: " + message);
+			return;
+		}
 		String dir = Constants.DIRECTORY_PATH_CONTROLLER + Constants.FILE_GLOBAL_LOG;
 
 		//RandomAccessFile used to write to certain area of file

@@ -33,6 +33,7 @@ public class ServerThread extends Thread {
     
     public void run() {
 		Main.log("[ServerThread: " + this.id + "] Running");
+		//serverThreadLog("[ServerThread: " + this.id + "] Running");
 		try {
 			//this.log(clock + "Writing clock");
 			oos.writeObject(this.clock);
@@ -134,7 +135,7 @@ public class ServerThread extends Thread {
 		return;
 	}
 	
-	private void log(String log) {
+	private void serverThreadLog(String log) {
 		Main.server.visualLog(log);
 	}
 }
