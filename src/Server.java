@@ -117,9 +117,9 @@ public class Server extends JPanel {
             System.out.println("Waiting for client");
             Main.log("[Server] Server started, waiting for clients");
             
-            int clientID = 1;
+            this.id = 1;
             Main.log("[Server] Begin listening for requests");
-            while(clientID < 6) {
+            while(this.id < 6) {
                 this.client = null;
                 try {
                     Main.log("[Server] Listening for connection request");
@@ -171,9 +171,9 @@ public class Server extends JPanel {
         Client client = null;
         for (int i = 0; i < Constants.NUMBER_OF_CLIENTS; i++) {
             client = Main.cv.get(i);
-            Main.log("[Server] Launching Client: " + i);
+            Main.log("[Server] Launching Client: " + (i + 1));
             client.launch();
-            Main.log("[Server] Client Launched: " + i);
+            Main.log("[Server] Client Launched: " + (i + 1));
         }
         Main.log("[Server] Clients Launched");
         return;
