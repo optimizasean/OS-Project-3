@@ -97,6 +97,7 @@ public class Client extends JPanel {
 	private Vector<VectorClock> queue = new Vector<VectorClock>();
 	private int counter = 0;//keep track of how many PCs responded
 	private volatile Semaphore fileLock = new Semaphore(1);
+    private volatile Semaphore copyLock = new Semaphore(1);
     //private volatile Semaphore //streamLock = new Semaphore(1);
     private Semaphore commandLock = new Semaphore(1);
 	private String command = null;
@@ -303,6 +304,7 @@ public class Client extends JPanel {
                                 //LOG
                                 clientLog(clock, "PC" + temp.ID + " replied OK to read request");
                                 
+                                copyLock.acquire();
 								//if PC1 responded OK, perform read action
 								clock.inc();
                                 Read.makeCopy();
@@ -314,6 +316,7 @@ public class Client extends JPanel {
 								Read.deleteCopy();
 								status = "idle";
 								System.out.println("PC"+clock.ID+": done reading");
+                                copyLock.release();
                                 commandLock.release();
 							}//end read_reply
 							
@@ -407,6 +410,7 @@ public class Client extends JPanel {
 									counter = 0;//reset if we get another writing command
 									status = "idle";
 									System.out.println("PC"+clock.ID+": done writing");
+                                    commandLock.release();
 								}
                                 fileLock.release();
 							}//end write_reply
