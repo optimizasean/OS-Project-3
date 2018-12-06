@@ -94,7 +94,7 @@ public class Client extends JPanel {
     private int clientNumber = 0;
     private int port = 0;
     private volatile String status = "idle";
-	private volatile Vector<VectorClock> queue = new Vector<VectorClock>();
+	private Vector<VectorClock> queue = new Vector<VectorClock>();
 	private int counter = 0;//keep track of how many PCs responded
 	private volatile Semaphore fileLock = new Semaphore(1);
     //private volatile Semaphore //streamLock = new Semaphore(1);
@@ -370,6 +370,7 @@ public class Client extends JPanel {
 									}
 									else {
 										System.err.println("write_request error");
+                                        System.err.println("PC"+clock.ID+": "+clock+temp);
 									}
 								}
 							}//end write_request
@@ -412,24 +413,27 @@ public class Client extends JPanel {
 
 
                             //Handles all requests in queue before proceeding
-                            if(done == false) {
-                                System.err.println("PC"+clock.ID+": status is "+status);
-                                while(queue.size()>0 && status.equals("idle")) {
-                                    temp = queue.remove(0);
-                                    System.err.println("PC"+clock.ID+" execute PC"+temp.ID);
-                                    
-                                    clock.inc();
-                                    clientLog(clock, "replied OK to PC"+temp.ID+" write request");
-                                    
-                                    //streamLock.acquire();
-                                    oos.writeUTF("write_reply");
-                                    oos.writeObject(clock);
-                                    oos.writeInt(temp.ID);
-                                    oos.flush();
-                                    oos.reset();
-                                    //streamLock.release();
+                            while(done == false && status.equals("idle")) {
+
+                                System.err.println("PC"+clock.ID+": queue size is "+queue.size());
+                                
+                                temp = queue.remove(0);
+                                System.err.println("PC"+clock.ID+": execute PC"+temp.ID);
+                                
+                                clock.inc();
+                                clientLog(clock, "replied OK to PC"+temp.ID+" write request");
+                                
+                                //streamLock.acquire();
+                                oos.writeUTF("write_reply");
+                                oos.writeObject(clock);
+                                oos.writeInt(temp.ID);
+                                oos.flush();
+                                oos.reset();
+                                //streamLock.release();
+                                
+                                if(queue.size() <= 0){
+                                    done = true;
                                 }
-							    done = true;
 						    }
 
 						}//while loop
