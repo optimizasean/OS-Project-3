@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-/**************************
+/*****************************************************************\
  * Read class is used by the
  * client class to read from
- * the file in PC1
- **************************/
+ * the file in PC1.
+ * 
+ * @author Chistopher-Sparks
+\*****************************************************************/
 public class Read {
 	public static void makeCopy() throws IOException {
 		File source = new File("./data/PC1/target.txt");

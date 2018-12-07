@@ -50,13 +50,14 @@ import java.util.concurrent.Semaphore;
 import java.io.File;
 
 
-/***************************
- * Client class is used for the client
- * connections to the server and will
- * also provide the GUI interface to
- * interact with them whenever they
- * successfully connect.
- ***************************/
+
+/*****************************************************************\
+ * Client class is used for the client connections to the server
+ * and will also provide the GUI interface to interact with them
+ * whenever they successfully connect.
+ * 
+ * @author Shadowbomb
+\*****************************************************************/
 public class Client extends JPanel {
     /**************************
      * Define Swing variables
@@ -113,7 +114,15 @@ public class Client extends JPanel {
     public Thread instruction = null;
     public Thread task = null;
 
-    //Client constructor to setup basic client
+    /*****************************************************************\
+     * Client constructor is used to set up basic Client.
+     * 
+     * @param clientNumber the number that the client is, int.
+     * @see osp.Main#log(String)
+     * @see osp.Constants
+     * @see osp.LocalLogger
+     * @see #GUI()
+    \*****************************************************************/
     public Client(int clientNumber) {
         //Set Client Number
         Main.log("[Client] Creating Client: " + clientNumber);
@@ -161,6 +170,18 @@ public class Client extends JPanel {
 
     }
 
+    /*****************************************************************\
+     * Client {@link #GUI() GUI} is used to set up the client visuals.
+     * It calls the {@link #GUIVisual() GUIVisual} method to create the
+     * visual aspects and th {@link #GUIFunctional() GUIFunctional}
+     * method to attach the functional elements.
+     * 
+     * @see osp.Main#log(String)
+     * @see osp.Constants
+     * @see osp.LocalLogger
+     * @see #GUIVisual()
+     * @see #GUIFunctional()
+    \*****************************************************************/
     private void GUI() {
         Main.log("[Client: " + this.clientNumber + "] Creating Visual");
         this.GUIVisual();
@@ -170,6 +191,19 @@ public class Client extends JPanel {
         return;
     }
 
+    /*****************************************************************\
+     * Client {@link #launch() launch} is used to launch the client and
+     * give it network access to our system.
+     * 
+     * @see osp.Main#log(String)
+     * @see osp.Constants
+     * @see osp.LocalLogger
+     * @see #visualLog()
+     * @see osp.VectorClock
+     * @see osp.Read
+     * @see osp.Write
+     * @see #clientLog(VectorClock, String)
+    \*****************************************************************/
     public void launch() {
         Main.log("[Client: " + this.clientNumber + "] Launching Client");
         try {
@@ -470,6 +504,11 @@ public class Client extends JPanel {
         return;
     }
 
+    /*****************************************************************\
+     * Client {@link #readPercentagePlus() readPercentagePlus} is used
+     * to change the read/write percentage when the read+ button is
+     * pushed.
+    \*****************************************************************/
     private void readPercentagePlus() {
         //Change
         if (this.readPercentage >= 100) {
@@ -486,6 +525,12 @@ public class Client extends JPanel {
 
         return;
     }
+
+    /*****************************************************************\
+     * Client {@link #readPercentageMinus() readPercentageMinus} is used
+     * to change the read/write percentage when the read- button is
+     * pushed.
+    \*****************************************************************/
     private void readPercentageMinus() {
         if (this.readPercentage <= 0) {
             this.readPercentage = 100;
@@ -501,6 +546,12 @@ public class Client extends JPanel {
 
         return;
     }
+
+    /*****************************************************************\
+     * Client {@link #writePercentagePlus() writePercentagePlus} is used
+     * to change the read/write percentage when the write+ button is
+     * pushed.
+    \*****************************************************************/
     private void writePercentagePlus() {
         if (this.writePercentage >= 100) {
             this.writePercentage = 0;
@@ -516,6 +567,12 @@ public class Client extends JPanel {
 
         return;
     }
+
+    /*****************************************************************\
+     * Client {@link #writePercentageMinus() writePercentageMinus} is used
+     * to change the read/write percentage when the write- button is
+     * pushed.
+    \*****************************************************************/
     private void writePercentageMinus() {
         if (this.writePercentage <= 0) {
             this.writePercentage = 100;
@@ -532,6 +589,16 @@ public class Client extends JPanel {
         return;
     }
 
+    /*****************************************************************\
+     * Client {@link #clientLog(VectorClock, String) clientLog} is used
+     * to log things to the clients files, the controller, the client
+     * visual and a few other places.
+     * 
+     * @see osp.GlobalLogger
+     * @see #visualLog(String)
+     * @see osp.LocalLogger
+     * @see osp.Server#visualLog()
+    \*****************************************************************/
     private void clientLog(VectorClock clock, String log) {
         //System.out.println("CLIENTLOG: " + clock + " : " + log);
         try {
@@ -549,6 +616,11 @@ public class Client extends JPanel {
 
         return;
     }
+
+    /*****************************************************************\
+     * Client {@link #visualLog(String) visualLog} is used to visually
+     * log the events to the client on the GUI.
+    \*****************************************************************/
     public void visualLog(String log) {
         this.pcLog.append(log + "\n");
         pcLogBar.setValue(pcLogBar.getMaximum() - 1);
@@ -556,6 +628,12 @@ public class Client extends JPanel {
         return;
     }
 
+    /*****************************************************************\
+     * Client {@link #GUIVisual() GUIVisual} is used to put everything
+     * for the client visuals together onto the GUI.
+     * 
+     * @see osp.Main#log(String)
+    \*****************************************************************/
     private void GUIVisual() {
         Main.log("[Client: " + this.clientNumber + "] Preparing Visual of GUI");
         //Set base panel background
@@ -655,6 +733,12 @@ public class Client extends JPanel {
         return;
     }
 
+    /*****************************************************************\
+     * Client {@link #GUIFunctional() GUIFunctional} is used to put everything
+     * for the client functional of the GUI elements together onto the GUI.
+     * 
+     * @see osp.Main#log(String)
+    \*****************************************************************/
     private void GUIFunctional() {
         Main.log("[Client: " + this.clientNumber + "] Beginning GUI Functionality");
         Main.log("[Client: " + this.clientNumber + "] Adding read+ button function");
@@ -701,6 +785,10 @@ public class Client extends JPanel {
         return;
     }
 
+    /*****************************************************************\
+     * Client {@link #changeFont(JComponent, int) changefont} is used
+     * to set the fonts sizes of components on the GUI.
+    \*****************************************************************/
     private void changeFont(JComponent base, int size) {
         Font origin, prime;
 

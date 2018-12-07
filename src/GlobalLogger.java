@@ -31,14 +31,13 @@ public class GlobalLogger {
 	 * {@link osp.VectorClock VectorClock} to get an accurate distributed
 	 * systems clock for event timing and follows the paths and filenames
 	 * in the {@link osp.Constants Constants} interface. It uses the
-	 * {@link osp.VectorClock.toString() VectorClock.toString()} method
+	 * {@link osp.VectorClock#toString() VectorClock.toString()} method
 	 * to print it to the log.
 	 * 
 	 * @exception FileNotFoundException
 	 * @throws IOException
-	 * @return void
-	 * @see {@link osp.Constants Constants}
-	 * @see {@link osp.VectorClock#toString() VectorClock}
+	 * @see osp.Constants Constants
+	 * @see osp.VectorClock#toString()
 	\*****************************************************************/
 	public static void writePC(VectorClock clock, String message) throws IOException {
 		if (clock == null) {
@@ -65,9 +64,8 @@ public class GlobalLogger {
 	 * 
 	 * @exception FileNotFoundException
 	 * @throws IOException
-	 * @return void
-	 * @see {@link osp.Constants}
-	 * @see {@link osp.VectorClock#toString() VectorClock}
+	 * @see osp.Constants
+	 * @see osp.VectorClock#toString()
 	\*****************************************************************/
 	public static void writeController(VectorClock clock, String message) throws IOException {
 		if (clock == null) {
@@ -93,8 +91,7 @@ public class GlobalLogger {
 	 * 
 	 * @exception FileNotFoundException
 	 * @throws IOException
-	 * @return void
-	 * @see {@link osp.Constants Constants}
+	 * @see osp.Constants
 	\*****************************************************************/
 	public static void writeBackground(String message) throws IOException {
 		String dir = Constants.BACKGROUND_LOG_PATH + Constants.FILE_BACKGROUND_LOG;
@@ -116,8 +113,7 @@ public class GlobalLogger {
 	 * 
 	 * @exception FileNotFoundException
 	 * @throws IOException
-	 * @return void
-	 * @see {@link osp.Constants Constants}
+	 * @see osp.Constants
 	 * @deprecated
 	\*****************************************************************/
 	public static void cleanup() throws FileNotFoundException {

@@ -25,8 +25,6 @@ public class DirectoryStructure {
      * ensure the directories and files necessary for the program to
      * ensure their existence before attempting to read, write, or open
      * to save from exceptions.
-     * 
-     * @return DirectoryStructure Object
     \*****************************************************************/
     public DirectoryStructure() {}
 
@@ -42,9 +40,8 @@ public class DirectoryStructure {
      * 
      * @exception FileNotFoundException
      * @exception IOException
-     * @return void
-     * @see {@link osp.Constants Constants}
-     * @see {@link #wipeFile(File)}
+     * @see osp.Constants
+     * @see #wipeFile(File)
     \*****************************************************************/
     public void ensureStructure() {
         Main.log("[DirectoryStructure] Ensuring Directory Structure");
@@ -231,9 +228,8 @@ public class DirectoryStructure {
      * 
      * @exception FileNotFoundException
      * @exception IOException
-     * @return void
-     * @see {@link Constants Constants}
-     * @see {@link #wipeFile(File) wipeFile}
+     * @see osp.Constants
+     * @see #wipeFile(File)
     \*****************************************************************/
     public static void makeBackgroundLog() {
         try {
@@ -258,7 +254,6 @@ public class DirectoryStructure {
      * 
      * @exception FileNotFoundException
      * @exception IOException
-     * @return void
     \*****************************************************************/
     public static void wipeFile(String path) {
         try {
@@ -281,7 +276,6 @@ public class DirectoryStructure {
      * 
      * @exception FileNotFoundException
      * @exception IOException
-     * @return void
     \*****************************************************************/
     public static void wipeFile(File file) {
         try {

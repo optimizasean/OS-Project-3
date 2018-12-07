@@ -58,11 +58,10 @@ public class Main {
      * {@link osp.DirectoryStructure#makeBackgroundLog() DirectoryStructure background log}
      * function to begin logging the environment events early.
      * 
-     * @param String[]: The arguments passed in by command line
-     * @return void
-     * @see {@link #log(String) log}
-     * @see {@link #run() run}
-     * @see {@link osp.DirectoryStructure#makeBackgroundLog() DirectoryStructure background log}
+     * @param args The arguments passed in by command line, String[].
+     * @see #log(String)
+     * @see #run()
+     * @see osp.DirectoryStructure#makeBackgroundLog()
     \*****************************************************************/
     public static void main(String[] args) {
         //Make Background Log
@@ -76,8 +75,6 @@ public class Main {
     /*****************************************************************\
      * Main {@link #Main() Main} is the blank constructor we use to
      * instantiate the main class and therefore un-static many fields.
-     * 
-     * @return Main
     \*****************************************************************/
     public Main() {}
 
@@ -87,9 +84,8 @@ public class Main {
      * newer {@link #run() run} method we use to launch everything now.
      * It calls the GUI function which loads all of the visuals.
      * 
-     * @return void
-     * @see {@link #GUI() GUI}
-     * @see {@link #run() run}
+     * @see #GUI()
+     * @see #run()
      * @deprecated
     \*****************************************************************/
     public void start() {
@@ -109,11 +105,10 @@ public class Main {
      * method as well as the {@link #GUI() GUI} method to launch all of
      * the visuals.
      * 
-     * @return void
-     * @see {@link #log(String) log}
-     * @see {@link osp.DirectoryStructure DirectoryStructure}
-     * @see {@link osp.DirectoryStructure#ensureStructure() ensureStructure}
-     * @see {@link #GUI() GUI}
+     * @see #log(String)
+     * @see osp.DirectoryStructure
+     * @see osp.DirectoryStructure#ensureStructure()
+     * @see #GUI()
     \*****************************************************************/
     private void run() {
         //Ensuring Directory Structure
@@ -134,8 +129,7 @@ public class Main {
      * the visual base of the GUI for our entire Application. It uses
      * the {@link #log(String) log} function to record events.
      * 
-     * @return void
-     * @see {@link #log(String) log}
+     * @see #log(String)
     \*****************************************************************/
     private void GUI() {
         //Building GUI
@@ -196,7 +190,7 @@ public class Main {
     }
 
     /*****************************************************************\
-     * Main {@link #log() log} method is the new method we use to log
+     * Main {@link #log(String) log} method is the new method we use to log
      * almost every single system event in our Application. It
      * accomplishes this using the {@link osp.GlobalLogger GlobalLogger}
      * class and its
@@ -204,10 +198,9 @@ public class Main {
      * method to save to the file synchronously with a timestamp from
      * all components.
      * 
-     * @return void
      * @exception IOException
-     * @see {@link osp.GlobalLogger GlobalLogger}
-     * @see {@link osp.GlobalLogger#writeBackground(String) writeBackground}
+     * @see osp.GlobalLogger
+     * @see osp.GlobalLogger#writeBackground(String)
     \*****************************************************************/
     public static void log(String log) {
         try {

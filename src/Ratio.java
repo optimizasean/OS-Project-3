@@ -11,14 +11,14 @@ package osp;
 \*****************************************************************/
 public class Ratio{
     /*****************************************************************\
-     * Ratio {@link #request(double, double) request} method takes two
+     * Ratio {@link #command(int, int) request} method takes two
      * doubles and calculates a probability based on this for reading
      * and writing percetage. It returns the result as read, write, or
      * idle.
      * 
-     * @param write_percent: probability of writing, int.
-     * @param read_percent: probability of reading. int.
-     * @return String: read, write, idle
+     * @param read_percent probability of reading, int.
+     * @param write_percent probability of writing, int.
+     * @return String read, write, idle
     \*****************************************************************/
     public static String command(int read_percent, int write_percent) {
         double r_p = (double)read_percent / 100.0;

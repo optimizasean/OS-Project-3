@@ -32,7 +32,6 @@ public class LocalLogger {
      * 
      * @exception FileNotFoundException
      * @exception IOException
-     * @return LocalLogger
     \*****************************************************************/
     public LocalLogger(File file) {
         try {
@@ -56,8 +55,6 @@ public class LocalLogger {
     /*****************************************************************\
      * LocalLogger {@link #log(String) log} method takes a String
      * and logs it to the file with the current timestamp.
-     * 
-     * @return void
     \*****************************************************************/
     public void log(String log) {
         this.timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
@@ -69,8 +66,6 @@ public class LocalLogger {
     /*****************************************************************\
      * LocalLogger {@link #close() close} method closes the logger and
      * saves the file.
-     * 
-     * @return void
     \*****************************************************************/
     public void close() {
         this.logger.flush();
