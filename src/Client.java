@@ -93,15 +93,16 @@ public class Client extends JPanel {
     //Client
     private int clientNumber = 0;
     private int port = 0;
-    private String status = "idle";
+    private volatile String status = "idle";
 	private Vector<VectorClock> queue = new Vector<VectorClock>();
 	private int counter = 0;//keep track of how many PCs responded
-	private static volatile Semaphore fileLock = new Semaphore(1);
-    private volatile Semaphore streamLock = new Semaphore(1);
-    private volatile Semaphore commandLock = new Semaphore(1);
+	private volatile Semaphore fileLock = new Semaphore(1);
+    private volatile Semaphore copyLock = new Semaphore(1);
+    //private volatile Semaphore //streamLock = new Semaphore(1);
+    private Semaphore commandLock = new Semaphore(1);
 	private String command = null;
 	private VectorClock clock = null;
-	private boolean done = true;
+	private volatile boolean done = true;
     private Socket socket = null;
 
     //PERCENTS
@@ -192,7 +193,6 @@ public class Client extends JPanel {
             visualLog("[Client: " + this.clientNumber + "] Setting vector clock");
             this.clock = (VectorClock) ois.readObject();//set clock associated with the PC
             if (this.clock == null) System.err.println("ERROR CLOCK NULL");
-            System.out.println("CLIENT " + this.clientNumber + ": clock:" + this.clock);
             
             Main.log("[Client: " + this.clientNumber + "] Creating Instruction Thread");
             this.instruction = new Thread(new Runnable() {
@@ -200,7 +200,7 @@ public class Client extends JPanel {
 					try {
                         Main.log("[Client: " + clientNumber + "] Instruction thread started successfully");
                         visualLog("[Client: " + clientNumber + "] Instruction thread started successfully");
-						System.out.println("PC"+clock.ID);
+
 						while(true) {
                             //Check for stop and interrupt
 							if (Main.stopThreads) Thread.currentThread().interrupt();
@@ -212,21 +212,23 @@ public class Client extends JPanel {
                             command = Ratio.command(readPercentage, writePercentage);
 							
 							if(command.equals("read")) {
+                                System.out.println("PC"+clock.ID+": request to read");
 								status = "reading";
                                 clock.inc();
                                 
                                 //LOG
                                 clientLog(clock, "request to read");
 
-                                streamLock.acquire();
+                                //streamLock.acquire();
 								oos.writeUTF("read_request");
 							    oos.writeObject(clock);
 							    oos.flush();
                                 oos.reset();
-                                streamLock.release();
+                                //streamLock.release();
 							}
 							
 							if(command.equals("write")) {
+                                System.out.println("PC"+clock.ID+": request to write");
 								status = "writing";
                                 clock.inc();
                                 clock.setWriteTime(clock);
@@ -234,21 +236,20 @@ public class Client extends JPanel {
                                 //System.out.println(clientNumber + " clock: " + clock.ID + " " + clock);
                                 //LOG
                                 clientLog(clock, "request to write");
-                                System.out.println("CLIENT: " + clientNumber + ":" + clock + " " + clock.ID);
 
-                                streamLock.acquire();
+                                //streamLock.acquire();
 								oos.writeUTF("write_request");
 							    oos.writeObject(clock);
 							    oos.flush();
                                 oos.reset();
-                                streamLock.release();
+                                //streamLock.release();
 							}
 							
 							if(command.equals("quit")) {
-                                streamLock.acquire();
+                                //streamLock.acquire();
 								oos.writeObject("quit");
                                 oos.flush();
-                                streamLock.release();
+                                //streamLock.release();
 							}
                         }
                         //Main.log("[Client: " + clientNumber + "] Instruction Thread Ended");
@@ -270,10 +271,10 @@ public class Client extends JPanel {
                             //Check for stop and interrupt
 							if (Main.stopThreads) Thread.currentThread().interrupt();
 
-                            streamLock.acquire();
+                            //streamLock.acquire();
 							String msg = ois.readUTF();
 							VectorClock temp = (VectorClock) ois.readObject();
-                            streamLock.release();
+                            //streamLock.release();
 							
 							if(msg.equals("read_request")) {
 								clock.inc();
@@ -287,13 +288,13 @@ public class Client extends JPanel {
                                 //LOG
                                 clientLog(clock, "replied OK to PC" + temp.ID + " read request");
 
-								streamLock.acquire();
+								//streamLock.acquire();
                                 oos.writeUTF("read_reply");
                                 oos.writeObject(clock);
                                 oos.writeInt(temp.ID);
                                 oos.flush();
                                 oos.reset();
-                                streamLock.release();
+                                //streamLock.release();
 							}//end read_request
 							
 							if(msg.equals("read_reply")) {
@@ -303,6 +304,7 @@ public class Client extends JPanel {
                                 //LOG
                                 clientLog(clock, "PC" + temp.ID + " replied OK to read request");
                                 
+                                copyLock.acquire();
 								//if PC1 responded OK, perform read action
 								clock.inc();
                                 Read.makeCopy();
@@ -313,7 +315,8 @@ public class Client extends JPanel {
                                 Thread.sleep(2000);//simulate time taken to read file
 								Read.deleteCopy();
 								status = "idle";
-								System.out.println("done reading");
+								System.out.println("PC"+clock.ID+": done reading");
+                                copyLock.release();
                                 commandLock.release();
 							}//end read_reply
 							
@@ -333,13 +336,13 @@ public class Client extends JPanel {
                                     //LOG
                                     clientLog(clock, "replied OK to PC" + temp.ID + " write request");
 
-									streamLock.acquire();
+									//streamLock.acquire();
                                     oos.writeUTF("write_reply");
                                     oos.writeObject(clock);
                                     oos.writeInt(temp.ID);
                                     oos.flush();
                                     oos.reset();
-                                    streamLock.release();
+                                    //streamLock.release();
 								}
 								
 								//if this PC is writing, determine who requested first
@@ -347,28 +350,30 @@ public class Client extends JPanel {
 									String cmp = VectorClock.compare(clock, temp);
 									
 									//if this PC requested after, respond OK
-									if(cmp.equals("second->first")) {
+									if(cmp.equals("second->first") || (cmp.equals("first<->second") && clock.ID>temp.ID)) {
                                         clock.inc();
                                         
                                         //LOG
 										clientLog(clock, "replied OK to PC" + temp.ID + " write request");
 
-										streamLock.acquire();
+										//streamLock.acquire();
                                         oos.writeUTF("write_reply");
                                         oos.writeObject(clock);
                                         oos.writeInt(temp.ID);
                                         oos.flush();
                                         oos.reset();
-                                        streamLock.release();
+                                        //streamLock.release();
 									}
 									//if this PC requested earlier, finish critical section first
-									else if(cmp.equals("first->second")) {
+									else if(cmp.equals("first->second") || (cmp.equals("first<->second") && clock.ID<temp.ID)) {
 											//Add to queue to be processed later
 											queue.add(temp);
                                             done = false;
+                                            System.err.println("PC"+clock.ID+": added PC"+temp.ID+" to memory");
 									}
 									else {
 										System.err.println("write_request error");
+                                        System.err.println("PC"+clock.ID+": "+clock+temp);
 									}
 								}
 							}//end write_request
@@ -404,30 +409,35 @@ public class Client extends JPanel {
 									
 									counter = 0;//reset if we get another writing command
 									status = "idle";
-									System.out.println("done writing");
+									System.out.println("PC"+clock.ID+": done writing");
+                                    commandLock.release();
 								}
                                 fileLock.release();
 							}//end write_reply
 
 
                             //Handles all requests in queue before proceeding
-                            if(done == false) {
-                                while(queue.size()>0 && status.equals("idle")) {
-                                    temp = queue.remove(0);
-                                    System.err.println("execute PC"+temp.ID);
-                                    
-                                    clock.inc();
-                                    clientLog(clock, "replied OK to PC"+temp.ID+" write request");
-                                    
-                                    streamLock.acquire();
-                                    oos.writeUTF("write_reply");
-                                    oos.writeObject(clock);
-                                    oos.writeInt(temp.ID);
-                                    oos.flush();
-                                    oos.reset();
-                                    streamLock.release();
+                            while(done == false && status.equals("idle")) {
+
+                                System.err.println("PC"+clock.ID+": queue size is "+queue.size());
+                                
+                                temp = queue.remove(0);
+                                System.err.println("PC"+clock.ID+": execute PC"+temp.ID);
+                                
+                                clock.inc();
+                                clientLog(clock, "replied OK to PC"+temp.ID+" write request");
+                                
+                                //streamLock.acquire();
+                                oos.writeUTF("write_reply");
+                                oos.writeObject(clock);
+                                oos.writeInt(temp.ID);
+                                oos.flush();
+                                oos.reset();
+                                //streamLock.release();
+                                
+                                if(queue.size() <= 0){
+                                    done = true;
                                 }
-							    done = true;
 						    }
 
 						}//while loop
@@ -523,7 +533,7 @@ public class Client extends JPanel {
     }
 
     private void clientLog(VectorClock clock, String log) {
-        System.out.println("CLIENTLOG: " + clock + " : " + log);
+        //System.out.println("CLIENTLOG: " + clock + " : " + log);
         try {
             //PC clock based log
             GlobalLogger.writePC(clock, log);

@@ -45,7 +45,7 @@ public class VectorClock implements Serializable {
 	
 	
 	public static String compare(VectorClock first, VectorClock second) {
-		String ret = "Error";
+		String ret = "first<->second";
 		
 		int countFirst = 0;
 		int countSecond = 0;
@@ -55,7 +55,7 @@ public class VectorClock implements Serializable {
 			if(second.writeTS.get(i) <= first.writeTS.get(i))countSecond++;
 		}
 		
-		if(countFirst == countSecond) ret = "first<->second";
+		if(countFirst == countSecond) ret = "first=second";
 		else if(countFirst == 5)ret = "first->second";
 		else if(countSecond == 5) ret = "second->first";
 		
