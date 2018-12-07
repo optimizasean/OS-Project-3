@@ -15,17 +15,19 @@
      <-           Variables for Ant Buildfile             ->
      <-                                                   ->
     < - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <!--Source Code Directory -->
+    <!-- Source Code Directory -->
     <property name = "src.dir"      value = "src"/>
-    <!--Build Directory -->
+    <!-- Build Directory -->
     <property name = "build.dir"    value = "build"/>
-    <!--Class Directory -->
+    <!-- Class Directory -->
     <property name = "classes.dir"  value = "${build.dir}/classes"/>
-    <!--Jar Directory -->
+    <!-- Jar Directory -->
     <property name = "jar.dir"      value = "${build.dir}/jar"/>
-    <!--Main Class Name -->
+    <!-- Javadoc Directory -->
+    <property name = "doc.dir"      value = "${doc.dir}"/>
+    <!-- Main Class Name -->
     <property name = "main-class"   value = "osp.Main"/>
-    <!--Data Diretory -->
+    <!-- Data Diretory -->
     <property name = "data.dir"     value = "data/"/>
 
 
@@ -62,9 +64,13 @@
      <-               Build Ant Targets                 ->
      <-                                                 ->
     < - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-- Set up Environment -->
+    <target name = "initialize">
+        <mkdir dir = "${classes.dir}"/>
+    </target>
+
     <!-- Compile Program -->
     <target name = "compile">
-        <mkdir dir = "${classes.dir}"/>
         <javac srcdir = "${src.dir}" destdir = "${classes.dir}"/>
     </target>
 
@@ -76,6 +82,19 @@
                 <attribute name = "Main-Class" value = "${main-class}"/>
             </manifest>
         </jar>
+    </target>
+
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - ->
+     <-                                                 ->
+     <-              Javadoc Ant Targets                ->
+     <-                                                 ->
+    < - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <target name = "javadoc">
+        <javadoc destdir="${doc.dir}">
+            <fileset dir = "${src.dir}"/>
+        </javadoc>
     </target>
 
 
@@ -99,27 +118,35 @@
     < - - - - - - - - - - - - - - - - - - - - - - - - - -->
     <!-- Clean -->
     <target name = "c" depends = "clean"/>
+    <!-- Initialize -->
+    <target name = "init" depends = "initialize"/>
+    <!-- Initialize -->
+    <target name = "i" depends = "initialize"/>
+    <!-- Javadoc -->
+    <target name = "doc" depends = "javadoc"/>
+    <!-- Javadoc -->
+    <target name = "d" depends = "javadoc"/>
     <!-- Compile -->
-    <target name = "build" depends = "compile"/>
+    <target name = "build" depends = "initialize, compile"/>
     <!-- Compile -->
-    <target name = "b" depends = "compile"/>
+    <target name = "b" depends = "initialize, compile"/>
     <!-- Compile -->
-    <target name = "bj" depends = "compile, jar"/>
+    <target name = "bj" depends = "initialize, compile, jar"/>
     <!-- Clean and Compile -->
-    <target name = "cb" depends = "clean, compile"/>
+    <target name = "cb" depends = "clean, initialize, compile"/>
     <!-- Clean, Compile, and Jar -->
-    <target name = "cbj" depends = "clean, compile, jar"/>
+    <target name = "cbj" depends = "clean, initialize, compile, jar"/>
     <!-- Clean, Compile, Jar, and Run -->
-    <target name = "cbjr" depends = "clean, compile, jar, run"/>
+    <target name = "cbjr" depends = "clean, initialize, compile, jar, run"/>
     <!-- Compile, Jar, and Run -->
-    <target name = "br" depends = "compile, jar, run"/>
+    <target name = "br" depends = "initialize, compile, jar, run"/>
     <!-- Compile, Jar -->
-    <target name = "j" depends = "compile, jar"/>
+    <target name = "j" depends = "initialize, compile, jar"/>
     <!-- Run -->
     <target name = "r" depends = "run"/>
 
 
-
+    
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - ->
      <-                                                 ->
      <-               Primary Ant Target                ->
