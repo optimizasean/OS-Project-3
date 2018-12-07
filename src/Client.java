@@ -198,7 +198,7 @@ public class Client extends JPanel {
      * @see osp.Main#log(String)
      * @see osp.Constants
      * @see osp.LocalLogger
-     * @see #visualLog()
+     * @see #visualLog(String)
      * @see osp.VectorClock
      * @see osp.Read
      * @see osp.Write
