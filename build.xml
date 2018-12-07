@@ -24,7 +24,7 @@
     <!-- Jar Directory -->
     <property name = "jar.dir"      value = "${build.dir}/jar"/>
     <!-- Javadoc Directory -->
-    <property name = "doc.dir"      value = "${doc.dir}"/>
+    <property name = "doc.dir"      value = "doc"/>
     <!-- Main Class Name -->
     <property name = "main-class"   value = "osp.Main"/>
     <!-- Data Diretory -->
