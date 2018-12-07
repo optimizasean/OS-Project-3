@@ -62,6 +62,7 @@ public class LocalLogger {
     public void log(String log) {
         this.timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         this.logger.println("[" + timeStamp + "] " + log);
+        this.logger.flush();
         return;
     }
 
@@ -72,6 +73,7 @@ public class LocalLogger {
      * @return void
     \*****************************************************************/
     public void close() {
+        this.logger.flush();
         this.logger.close();
         return;
     }
