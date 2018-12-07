@@ -57,6 +57,7 @@ import java.io.File;
  * whenever they successfully connect.
  * 
  * @author Shadowbomb
+ * @author Christopher-Sparks
 \*****************************************************************/
 public class Client extends JPanel {
     /**************************

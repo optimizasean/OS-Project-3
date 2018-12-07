@@ -11,11 +11,13 @@ import java.nio.channels.FileLock;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-/**********************
- * Write class is used by the
- * Client to write to the file
- * in PC1
- **********************/
+
+
+/*****************************************************************\
+ * Write class is used by the Client to write to the file in PC1.
+ * 
+ * @author Chistopher-Sparks
+\*****************************************************************/
 public class Write {
 	public static void downloadFile(VectorClock clock) throws IOException {
 		File source = new File("./data/PC1/target.txt");

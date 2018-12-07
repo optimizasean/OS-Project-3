@@ -50,6 +50,13 @@ import java.util.Vector;
  * connections as well as work with
  * the GUI as a panel to show things
  ********************************/
+/*****************************************************************\
+ * Read class is used by the client class to read from the file in
+ * PC1.
+ * 
+ * @author Shadowbomb
+ * @author Christopher-Sparks
+\*****************************************************************/
 public class Server extends JPanel {
     /**************************
      * Define Swing variables

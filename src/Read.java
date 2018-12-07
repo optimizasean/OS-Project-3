@@ -7,9 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 /*****************************************************************\
- * Read class is used by the
- * client class to read from
- * the file in PC1.
+ * Read class is used by the client class to read from the file in
+ * PC1.
  * 
  * @author Chistopher-Sparks
 \*****************************************************************/
